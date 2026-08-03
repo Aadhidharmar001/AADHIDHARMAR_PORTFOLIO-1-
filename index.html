@@ -1,0 +1,1896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aadhidharmar T — AI Product Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ── PALETTE v2: Warm AI Lab ───────────────────────────── */
+:root {
+  --bg:      #0c0e13;
+  --bg2:     #111318;
+  --bg3:     #161920;
+  --card:    #13161d;
+  --card2:   #1a1d26;
+
+  --amber:   #f59e0b;
+  --amber2:  #d97706;
+  --amber3:  #fbbf24;
+  --teal:    #2dd4bf;
+  --teal2:   #14b8a6;
+  --indigo:  #818cf8;
+  --indigo2: #6366f1;
+  --rose:    #fb7185;
+  --green:   #34d399;
+
+  --text:    #f1f5f9;
+  --text2:   #94a3b8;
+  --text3:   #475569;
+  --border:  rgba(241,245,249,0.07);
+  --border2: rgba(241,245,249,0.04);
+  --borderA: rgba(245,158,11,0.2);
+
+  --gA: 0 0 40px rgba(245,158,11,0.15);
+  --gT: 0 0 40px rgba(45,212,191,0.15);
+  --gI: 0 0 40px rgba(129,140,248,0.15);
+
+  --mono: 'JetBrains Mono', monospace;
+  --display: 'Syne', sans-serif;
+  --body: 'Inter', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{background:var(--bg);color:var(--text);font-family:var(--body);overflow-x:hidden;cursor:none;max-width:100vw}
+
+/* CURSOR */
+#cur{position:fixed;width:10px;height:10px;border-radius:50%;background:var(--amber);pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:transform .1s;mix-blend-mode:screen}
+#cur-r{position:fixed;width:36px;height:36px;border-radius:50%;border:1px solid rgba(245,158,11,.3);pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:all .12s ease}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--amber2);border-radius:4px}
+
+/* PROGRESS BAR */
+#prog{position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--amber),var(--teal));z-index:9999;transform-origin:left;transform:scaleX(0);transition:transform .08s}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:2000;padding:18px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(12,14,19,.85);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:var(--mono);font-size:13px;color:var(--amber);letter-spacing:2px;text-decoration:none}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{color:var(--text3);text-decoration:none;font-size:12px;letter-spacing:1px;font-family:var(--mono);transition:color .2s}
+.nav-links a.active,.nav-links a:hover{color:var(--text)}
+.nav-pill{display:flex;align-items:center;gap:8px;padding:7px 16px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);border-radius:6px;font-family:var(--mono);font-size:11px;color:var(--amber);cursor:pointer;transition:all .2s}
+.nav-pill:hover{background:rgba(245,158,11,.18)}
+.nav-pill-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s infinite}
+
+/* ── HERO ── */
+#hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:0;isolation:isolate}
+#heroCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.hero-wrap{position:relative;z-index:2;max-width:860px;width:100%;padding:80px 48px 40px;text-align:left}
+.hero-badge{display:inline-flex;align-items:center;gap:10px;padding:7px 16px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.22);border-radius:6px;font-family:var(--mono);font-size:11px;color:var(--amber);letter-spacing:1.5px;margin-bottom:28px;opacity:0;animation:up .7s .3s forwards;max-width:100%}
+.hero-name{font-family:var(--display);font-size:clamp(38px,6vw,88px);font-weight:800;line-height:1.0;letter-spacing:clamp(-2px,-0.04em,-1px);opacity:0;animation:up .8s .6s forwards;word-break:normal;overflow-wrap:normal;max-width:100%}
+.hero-name .line1{display:block;color:var(--text);white-space:nowrap}
+.hero-name .line2{display:block;background:linear-gradient(100deg,var(--amber) 0%,var(--teal) 60%,var(--indigo) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap}
+.hero-sub{font-size:clamp(15px,1.6vw,19px);color:var(--text2);margin:24px 0 36px;max-width:520px;line-height:1.75;font-weight:300;opacity:0;animation:up .7s .9s forwards}
+#typed-text{color:var(--amber);font-weight:500}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:up .7s 1.1s forwards}
+.btn-primary{padding:13px 28px;background:var(--amber);color:#0c0e13;border:none;border-radius:6px;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:10px;white-space:nowrap}
+.btn-primary:hover{background:var(--amber3);transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,158,11,.35)}
+.btn-ghost{padding:13px 28px;background:transparent;color:var(--text);border:1px solid var(--border);border-radius:6px;font-family:var(--mono);font-size:13px;cursor:pointer;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:10px;white-space:nowrap}
+.btn-ghost:hover{border-color:var(--text2);transform:translateY(-2px)}
+.hero-metrics{display:flex;gap:36px;margin-top:56px;opacity:0;animation:up .7s 1.3s forwards;flex-wrap:wrap}
+.hero-metric{border-left:2px solid var(--amber);padding-left:18px}
+.hero-metric-num{font-family:var(--display);font-size:30px;font-weight:800;color:var(--text);line-height:1}
+.hero-metric-label{font-size:11px;color:var(--text3);font-family:var(--mono);letter-spacing:1px;margin-top:5px}
+.hero-scroll{position:absolute;bottom:28px;left:48px;display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:2px;opacity:0;animation:fadeIn 1s 2.2s forwards;z-index:2}
+.hero-scroll-line{width:36px;height:1px;background:linear-gradient(90deg,var(--amber),transparent)}
+
+/* ── SHARED ── */
+section{padding:120px 48px;position:relative;overflow:hidden}
+.container{max-width:1200px;margin:0 auto;width:100%}
+.sec-tag{font-family:var(--mono);font-size:10px;color:var(--amber);letter-spacing:4px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.sec-tag::before{content:'';width:24px;height:1px;background:var(--amber);flex-shrink:0}
+.sec-title{font-family:var(--display);font-size:clamp(30px,4vw,56px);font-weight:800;letter-spacing:-1.5px;line-height:1.05;margin-bottom:16px;max-width:100%}
+.sec-title .g{background:linear-gradient(100deg,var(--amber),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sec-sub{color:var(--text2);font-size:17px;max-width:560px;line-height:1.7;margin-bottom:64px}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
+.reveal.on{opacity:1;transform:none}
+.divider{width:1px;height:60px;background:linear-gradient(to bottom,var(--amber),transparent);margin:0 auto 48px}
+
+/* ── TECH MARQUEE ── */
+.marquee-wrap{overflow:hidden;padding:14px 0;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.marquee-track{display:flex;width:max-content;animation:marquee 35s linear infinite;gap:0}
+.m-item{display:inline-flex;align-items:center;gap:10px;padding:0 28px;font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:1px;white-space:nowrap}
+.m-dot{width:4px;height:4px;border-radius:50%;background:var(--amber);opacity:.5}
+
+/* ── NEURALRAG SHOWCASE (centerpiece) ── */
+#neuralrag{background:var(--bg2)}
+.nr-hero{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-bottom:100px}
+.nr-badge{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;background:rgba(45,212,191,.1);border:1px solid rgba(45,212,191,.25);border-radius:4px;font-family:var(--mono);font-size:10px;color:var(--teal);letter-spacing:2px;margin-bottom:20px}
+.nr-title{font-family:var(--display);font-size:clamp(32px,4.5vw,60px);font-weight:800;letter-spacing:-1.5px;line-height:1.05;margin-bottom:20px;max-width:100%;overflow:hidden}
+.nr-title .g2{background:linear-gradient(100deg,var(--teal),var(--indigo));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nr-desc{color:var(--text2);font-size:16px;line-height:1.8;margin-bottom:32px}
+.nr-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
+.nr-stat{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;text-align:center}
+.nr-stat-num{font-family:var(--display);font-size:24px;font-weight:800;color:var(--teal)}
+.nr-stat-label{font-size:11px;color:var(--text3);font-family:var(--mono);margin-top:4px;letter-spacing:.5px}
+.nr-links{display:flex;gap:12px}
+.btn-teal{padding:12px 24px;background:rgba(45,212,191,.12);border:1px solid rgba(45,212,191,.3);border-radius:6px;color:var(--teal);font-family:var(--mono);font-size:12px;cursor:pointer;text-decoration:none;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+.btn-teal:hover{background:rgba(45,212,191,.2);transform:translateY(-2px)}
+
+/* Architecture flow */
+.arch-flow{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.arch-header{padding:16px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;color:var(--text3)}
+.arch-dots{display:flex;gap:6px}
+.arch-dot{width:10px;height:10px;border-radius:50%}
+.arch-body{padding:32px}
+
+/* Interactive query flow */
+.qflow-wrap{background:var(--card2);border:1px solid var(--border);border-radius:16px;padding:32px;margin-top:32px}
+.qflow-title{font-family:var(--mono);font-size:12px;color:var(--text3);letter-spacing:2px;margin-bottom:24px}
+.qflow-input-row{display:flex;gap:12px;margin-bottom:32px}
+.qflow-input{flex:1;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 16px;color:var(--text);font-family:var(--body);font-size:14px;outline:none;transition:border-color .2s}
+.qflow-input:focus{border-color:var(--amber)}
+.qflow-run{padding:14px 24px;background:var(--amber);color:#0c0e13;border:none;border-radius:8px;font-family:var(--mono);font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap}
+.qflow-run:hover{background:var(--amber3)}
+.qflow-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+.qflow-step{padding:20px;border:1px solid var(--border);border-radius:8px;position:relative;transition:all .4s;background:var(--card)}
+.qflow-step.active{border-color:var(--amber);box-shadow:var(--gA);background:rgba(245,158,11,.05)}
+.qflow-step.done{border-color:var(--teal);background:rgba(45,212,191,.04)}
+.qflow-step-num{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:1px;margin-bottom:10px}
+.qflow-step-icon{font-size:22px;margin-bottom:10px}
+.qflow-step-name{font-family:var(--display);font-size:14px;font-weight:700;margin-bottom:6px}
+.qflow-step-status{font-size:11px;color:var(--text3);font-family:var(--mono);min-height:32px;line-height:1.5}
+.qflow-step-status.running{color:var(--amber)}
+.qflow-step-status.done{color:var(--teal)}
+.qflow-arrow{position:absolute;right:-12px;top:50%;transform:translateY(-50%);width:24px;height:24px;background:var(--bg2);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--text3);z-index:1}
+.qflow-output{margin-top:24px;padding:20px;background:var(--card);border:1px solid var(--border);border-radius:8px;font-size:14px;color:var(--text2);line-height:1.7;min-height:60px;font-family:var(--body);display:none}
+.qflow-output.show{display:block;animation:up .4s ease}
+.source-chip{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;background:rgba(45,212,191,.08);border:1px solid rgba(45,212,191,.2);border-radius:4px;font-size:10px;font-family:var(--mono);color:var(--teal);margin:4px 4px 0 0}
+
+/* Metrics panel */
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:48px 0}
+.metric-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;text-align:center;position:relative;overflow:hidden;transition:all .3s}
+.metric-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(245,158,11,.03),transparent);opacity:0;transition:opacity .3s}
+.metric-card:hover{border-color:var(--borderA);box-shadow:var(--gA)}
+.metric-card:hover::before{opacity:1}
+.metric-val{font-family:var(--display);font-size:36px;font-weight:800;color:var(--amber);line-height:1;margin-bottom:6px}
+.metric-name{font-size:11px;color:var(--text3);font-family:var(--mono);letter-spacing:1px}
+.metric-trend{font-size:10px;color:var(--green);font-family:var(--mono);margin-top:4px}
+
+/* ── PROJECTS ── */
+#projects{background:var(--bg)}
+.projects-list{display:flex;flex-direction:column;gap:2px}
+.proj-row{display:grid;grid-template-columns:60px 1fr auto;align-items:center;gap:32px;padding:28px 32px;background:var(--card);border:1px solid var(--border);border-radius:12px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
+.proj-row::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--amber);transform:scaleY(0);transition:transform .3s;border-radius:0 2px 2px 0}
+.proj-row:hover{border-color:rgba(245,158,11,.25);background:rgba(245,158,11,.03);transform:translateX(4px)}
+.proj-row:hover::after{transform:scaleY(1)}
+.proj-num{font-family:var(--mono);font-size:12px;color:var(--text3)}
+.proj-info{min-width:0}
+.proj-name{font-family:var(--display);font-size:18px;font-weight:700;margin-bottom:4px}
+.proj-desc{font-size:13px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.proj-right{display:flex;align-items:center;gap:16px;flex-shrink:0}
+.proj-tags{display:flex;gap:6px}
+.proj-tag{padding:3px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;font-size:10px;font-family:var(--mono);color:var(--text3)}
+.proj-tag.live{border-color:rgba(52,211,153,.3);color:var(--green);background:rgba(52,211,153,.06)}
+.proj-arrow{color:var(--text3);font-size:18px;transition:transform .2s}
+.proj-row:hover .proj-arrow{transform:translateX(4px);color:var(--amber)}
+
+/* Expanded project detail */
+.proj-detail{display:none;padding:0 32px 28px;background:var(--card);border:1px solid var(--border);border-top:none;border-radius:0 0 12px 12px;margin-top:-12px}
+.proj-detail.open{display:block;animation:up .35s ease}
+.proj-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;padding-top:24px;border-top:1px solid var(--border2)}
+.proj-feat-list{list-style:none}
+.proj-feat-list li{padding:8px 0;border-bottom:1px solid var(--border2);font-size:13px;color:var(--text2);display:flex;align-items:flex-start;gap:10px}
+.proj-feat-list li::before{content:'→';color:var(--amber);font-family:var(--mono);font-size:11px;margin-top:2px;flex-shrink:0}
+.proj-actions{display:flex;gap:10px;margin-top:20px}
+.btn-sm{padding:8px 18px;border-radius:6px;font-size:11px;font-family:var(--mono);cursor:pointer;text-decoration:none;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.btn-sm-a{background:var(--amber);color:#0c0e13;border:none;font-weight:700}
+.btn-sm-a:hover{background:var(--amber3)}
+.btn-sm-g{background:transparent;color:var(--text2);border:1px solid var(--border)}
+.btn-sm-g:hover{border-color:var(--text2);color:var(--text)}
+
+/* ── CURRENTLY BUILDING ── */
+#building{background:var(--bg2)}
+.building-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:48px}
+.build-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px;transition:all .3s}
+.build-card:hover{border-color:var(--borderA);box-shadow:var(--gA)}
+.build-card-tag{font-family:var(--mono);font-size:10px;color:var(--amber);letter-spacing:2px;margin-bottom:12px}
+.build-card-title{font-family:var(--display);font-size:20px;font-weight:700;margin-bottom:10px}
+.build-card-desc{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:16px}
+.build-progress{height:3px;background:var(--bg3);border-radius:2px;margin-bottom:6px;overflow:hidden}
+.build-progress-bar{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--amber),var(--teal));transition:width 1s ease}
+.build-progress-label{font-family:var(--mono);font-size:10px;color:var(--text3);display:flex;justify-content:space-between}
+.roadmap{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:32px}
+.roadmap-title{font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:2px;margin-bottom:24px}
+.roadmap-item{display:flex;gap:20px;padding:16px 0;border-bottom:1px solid var(--border2)}
+.roadmap-item:last-child{border-bottom:none}
+.roadmap-status{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.rs-done{background:var(--green)}
+.rs-active{background:var(--amber);animation:blink 1.5s infinite}
+.rs-soon{background:var(--border);border:1px solid var(--text3)}
+.roadmap-info{flex:1}
+.roadmap-label{font-size:14px;font-weight:500;margin-bottom:3px}
+.roadmap-sub{font-size:12px;color:var(--text3);font-family:var(--mono)}
+.learning-strip{display:flex;flex-wrap:wrap;gap:10px;margin-top:48px}
+.learning-chip{padding:8px 16px;background:rgba(129,140,248,.08);border:1px solid rgba(129,140,248,.2);border-radius:6px;font-size:12px;font-family:var(--mono);color:var(--indigo);display:flex;align-items:center;gap:8px}
+
+/* ── CREDIBILITY ── */
+#cred{background:var(--bg)}
+.cred-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:48px}
+.cred-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px;transition:all .3s}
+.cred-card:hover{border-color:var(--borderA)}
+.cred-card-icon{font-size:28px;margin-bottom:16px}
+.cred-card-title{font-family:var(--display);font-size:18px;font-weight:700;margin-bottom:6px}
+.cred-card-sub{font-size:13px;color:var(--text2);line-height:1.6}
+.cred-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:4px;font-family:var(--mono);font-size:10px;color:var(--amber);margin-top:12px}
+.github-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:32px}
+.gh-stat{text-align:center}
+.gh-val{font-family:var(--display);font-size:28px;font-weight:800;color:var(--text);margin-bottom:4px}
+.gh-label{font-size:11px;color:var(--text3);font-family:var(--mono);letter-spacing:.5px}
+
+/* ── ABOUT / TIMELINE ── */
+#about{background:var(--bg2)}
+.timeline{position:relative;max-width:760px}
+.timeline::before{content:'';position:absolute;left:24px;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,var(--amber),var(--teal),transparent)}
+.tl-item{display:flex;gap:32px;margin-bottom:48px;position:relative}
+.tl-dot{width:48px;height:48px;border-radius:50%;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;z-index:1;transition:all .3s}
+.tl-item:hover .tl-dot{border-color:var(--amber);box-shadow:var(--gA)}
+.tl-content{flex:1;padding-top:8px}
+.tl-year{font-family:var(--mono);font-size:10px;color:var(--amber);letter-spacing:2px;margin-bottom:8px}
+.tl-title{font-family:var(--display);font-size:20px;font-weight:700;margin-bottom:8px}
+.tl-desc{font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:12px}
+.tl-tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{padding:3px 10px;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.15);border-radius:4px;font-size:10px;font-family:var(--mono);color:var(--text3)}
+
+/* ── SKILLS ── */
+#skills{background:var(--bg3)}
+#brainCanvas{width:100%;height:580px;border-radius:12px;background:rgba(13,16,23,.6);border:1px solid var(--border);cursor:crosshair}
+.skill-tip{position:fixed;background:var(--card);border:1px solid var(--borderA);border-radius:10px;padding:16px;max-width:220px;z-index:1000;pointer-events:none;box-shadow:var(--gA);opacity:0;transition:opacity .2s}
+.skill-tip h4{color:var(--amber);font-family:var(--mono);font-size:13px;margin-bottom:6px}
+.skill-tip p{color:var(--text2);font-size:12px;line-height:1.5}
+.skill-tip .tip-used{color:var(--teal);font-size:11px;font-family:var(--mono);margin-top:8px}
+
+/* ── NOVA ── */
+#nova-fab{position:fixed;bottom:32px;right:32px;z-index:900}
+.nova-btn{width:60px;height:60px;border-radius:50%;background:var(--amber);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 6px 24px rgba(245,158,11,.4);transition:all .3s;animation:novaglow 3s ease-in-out infinite}
+.nova-btn:hover{transform:scale(1.08);box-shadow:0 8px 36px rgba(245,158,11,.6)}
+.nova-panel{position:absolute;bottom:76px;right:0;width:360px;background:var(--card);border:1px solid var(--borderA);border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5);display:none;backdrop-filter:blur(20px)}
+.nova-panel.open{display:flex;flex-direction:column;animation:up .25s ease}
+.nova-hdr{background:rgba(245,158,11,.06);border-bottom:1px solid var(--border);padding:14px 18px;display:flex;align-items:center;gap:12px}
+.nova-av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--amber),var(--teal));display:flex;align-items:center;justify-content:center;font-size:14px}
+.nova-name{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--amber)}
+.nova-status{font-size:10px;color:var(--green);font-family:var(--mono)}
+.nova-close{margin-left:auto;background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px;padding:4px}
+.nova-msgs{height:300px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.nova-msgs::-webkit-scrollbar{width:2px}
+.nova-msg{max-width:88%;padding:11px 14px;border-radius:10px;font-size:13px;line-height:1.5}
+.nova-msg.bot{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.12);color:var(--text);align-self:flex-start}
+.nova-msg.user{background:rgba(45,212,191,.08);border:1px solid rgba(45,212,191,.2);color:var(--text);align-self:flex-end}
+.nova-chips{padding:8px 14px;display:flex;flex-wrap:wrap;gap:5px;border-top:1px solid var(--border2)}
+.nova-chip{padding:4px 10px;background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.18);border-radius:10px;font-size:10px;color:var(--text2);cursor:pointer;transition:all .2s;font-family:var(--mono)}
+.nova-chip:hover{border-color:var(--amber);color:var(--amber)}
+.nova-inp-row{display:flex;gap:8px;padding:10px 14px;border-top:1px solid var(--border)}
+.nova-inp{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 14px;color:var(--text);font-size:13px;outline:none;font-family:var(--body)}
+.nova-inp:focus{border-color:var(--amber)}
+.nova-send{background:var(--amber);border:none;border-radius:8px;width:34px;height:34px;cursor:pointer;color:#0c0e13;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.nova-send:hover{background:var(--amber3)}
+
+/* ── CONTACT ── */
+#contact{background:var(--bg2)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.contact-form{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:40px}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--amber);margin-bottom:8px}
+.form-group input,.form-group textarea{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 16px;color:var(--text);font-size:14px;font-family:var(--body);transition:border-color .2s;outline:none;resize:vertical}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--amber)}
+.form-group textarea{min-height:120px}
+.submit-btn{width:100%;padding:14px;background:var(--amber);border:none;border-radius:8px;color:#0c0e13;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:all .3s}
+.submit-btn:hover{background:var(--amber3);transform:translateY(-1px);box-shadow:0 8px 30px rgba(245,158,11,.3)}
+.contact-links{display:flex;flex-direction:column;gap:16px;margin-top:32px}
+.contact-link{display:flex;align-items:center;gap:16px;padding:16px 20px;background:var(--card);border:1px solid var(--border);border-radius:10px;text-decoration:none;color:var(--text);transition:all .3s}
+.contact-link:hover{border-color:var(--borderA);transform:translateX(4px)}
+.contact-link-icon{width:38px;height:38px;border-radius:8px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.contact-link-label{font-size:11px;color:var(--text3);font-family:var(--mono);letter-spacing:1px}
+.contact-link-val{font-size:14px;color:var(--text);margin-top:2px}
+
+/* ── TERMINAL ── */
+#term-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;display:none;align-items:center;justify-content:center}
+#term-overlay.open{display:flex}
+.term-win{width:min(820px,92vw);background:#0d1117;border:1px solid var(--amber);border-radius:12px;overflow:hidden;box-shadow:0 0 80px rgba(245,158,11,.2)}
+.term-bar{background:rgba(245,158,11,.05);padding:12px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(245,158,11,.12)}
+.term-body{padding:24px;font-family:var(--mono);font-size:13px;min-height:380px;max-height:65vh;overflow-y:auto}
+.tl{margin-bottom:3px;line-height:1.6}
+.tp{color:var(--amber)}
+.to{color:var(--teal)}
+.te{color:#ff5f57}
+.ti{color:var(--indigo)}
+#term-in{background:transparent;border:none;outline:none;color:var(--text);font-family:var(--mono);font-size:13px;flex:1;caret-color:var(--amber)}
+
+/* ── FOOTER ── */
+footer{background:var(--bg);border-top:1px solid var(--border);padding:32px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:110px;right:32px;background:var(--card);border:1px solid var(--borderA);border-radius:8px;padding:12px 20px;font-family:var(--mono);font-size:12px;color:var(--amber);z-index:9000;opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none}
+.toast.on{opacity:1;transform:none}
+
+/* ── ANIMATIONS ── */
+@keyframes up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:.8}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes novaglow{0%,100%{box-shadow:0 6px 24px rgba(245,158,11,.4)}50%{box-shadow:0 6px 40px rgba(245,158,11,.7),0 0 0 10px rgba(245,158,11,.08)}}
+@keyframes scanline{from{top:0;opacity:1}to{top:100%;opacity:0}}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+/* ── EXTRAS ── */
+#hero::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(245,158,11,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(245,158,11,.018) 1px,transparent 1px);background-size:72px 72px;pointer-events:none;z-index:0}
+#hero::before{content:'';position:absolute;bottom:0;left:0;right:0;height:160px;background:linear-gradient(to top,var(--bg),transparent);z-index:1;pointer-events:none}
+#neuralrag::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--teal),transparent)}
+#building::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--amber),transparent)}
+#cred::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--indigo),transparent)}
+.nr-stat-num{line-height:1.2;letter-spacing:-1px}
+.hero-metric-num{letter-spacing:-1px}
+/* Smooth shimmer on amber elements */
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+.btn-primary{background-size:200% auto}
+.btn-primary:hover{background:linear-gradient(90deg,var(--amber),var(--amber3),var(--amber));background-size:200% auto;animation:shimmer 1.5s linear infinite}
+/* Section intro fade - only on elements that have the animation class */
+.sec-tag{transition:opacity .4s ease,transform .4s ease}
+/* NeuralRAG arch canvas border glow */
+.arch-flow:hover{box-shadow:var(--gT);border-color:rgba(45,212,191,.2);transition:all .3s}
+/* Qflow output citation chips */
+.source-chip{cursor:default}
+.source-chip:hover{background:rgba(45,212,191,.15)}
+/* Timeline connector pulse */
+.timeline::before{animation:connectorPulse 4s ease-in-out infinite}
+@keyframes connectorPulse{0%,100%{opacity:.6}50%{opacity:1}}
+@media(max-width:900px){
+  nav{padding:16px 20px}
+  .nav-links{display:none}
+  section{padding:80px 20px 60px}
+  .nr-hero,.contact-grid,.building-grid,.proj-detail-grid{grid-template-columns:1fr}
+  .cred-grid{grid-template-columns:1fr 1fr}
+  .metrics-grid{grid-template-columns:repeat(2,1fr)}
+  .qflow-steps{grid-template-columns:1fr 1fr;gap:12px}
+  .qflow-arrow{display:none}
+  .github-grid{grid-template-columns:repeat(2,1fr)}
+  .nova-panel{width:min(340px,calc(100vw - 40px));right:-16px}
+  footer{flex-direction:column;gap:8px;text-align:center}
+  .hero-metrics{gap:20px}
+}
+@media(max-width:600px){
+  .cred-grid{grid-template-columns:1fr}
+  .nr-stats{grid-template-columns:1fr 1fr}
+  .hero-name{letter-spacing:-1px}
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-r"></div>
+<div id="prog"></div>
+<div class="toast" id="toast"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">AADHIDHARMAR.AI</a>
+  <ul class="nav-links">
+    <li><a href="#neuralrag">NeuralRAG</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#building">Building</a></li>
+    <li><a href="#cred">Credibility</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:12px">
+    <div class="theme-picker" title="Switch Color Palette">
+      <button class="theme-dot active" style="background:#f59e0b" onclick="setTheme('amber')" title="Warm Amber"></button>
+      <button class="theme-dot" style="background:#2dd4bf" onclick="setTheme('teal')" title="Cyber Teal"></button>
+      <button class="theme-dot" style="background:#a855f7" onclick="setTheme('violet')" title="Neon Violet"></button>
+    </div>
+    <a href="mailto:dharmaraadhi@gmail.com?subject=Requesting%20Resume%20-%20Aadhidharmar%20T" class="btn-sm btn-sm-a" style="padding:6px 14px;border-radius:6px;font-size:11px">📄 RESUME</a>
+    <button class="nav-pill" onclick="openTerm()">
+      <span class="nav-pill-dot"></span> TERMINAL
+    </button>
+  </div>
+</nav>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section id="hero">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-wrap">
+    <div class="hero-badge">
+      <span style="width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s infinite;display:inline-block"></span>
+      AVAILABLE FOR AI ENGINEERING ROLES
+    </div>
+    <h1 class="hero-name">
+      <span class="line1">Aadhidharmar T.</span>
+      <span class="line2">AI Product Builder.</span>
+    </h1>
+    <p class="hero-sub">I don't just study AI — I <span id="typed-text">ship production systems.</span><br>RAG pipelines. Agentic workflows. Deployed products.</p>
+    <div class="hero-actions">
+      <a href="#neuralrag" class="btn-primary">View NeuralRAG →</a>
+      <a href="mailto:dharmaraadhi@gmail.com?subject=Requesting%20Resume%20-%20Aadhidharmar%20T" class="btn-ghost">📄 Resume (PDF)</a>
+      <a href="mailto:dharmaraadhi@gmail.com" class="btn-ghost">🤝 Hire Me</a>
+    </div>
+    <div class="hero-metrics">
+      <div class="hero-metric">
+        <div class="hero-metric-num">5+</div>
+        <div class="hero-metric-label">SYSTEMS BUILT</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-num">15th</div>
+        <div class="hero-metric-label">VIT HACKATHON</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-num">RAG</div>
+        <div class="hero-metric-label">SPECIALIST</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-num">2026</div>
+        <div class="hero-metric-label">GRADUATING</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    SCROLL TO EXPLORE
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="mtrack"></div>
+</div>
+
+<!-- ═══════════ NEURALRAG SHOWCASE ═══════════ -->
+<section id="neuralrag">
+  <div class="container">
+    <div class="nr-hero">
+      <div class="reveal">
+        <div class="nr-badge">⚡ FLAGSHIP PROJECT</div>
+        <h2 class="nr-title">Neural<span class="g2">RAG</span></h2>
+        <p class="nr-desc">A production-grade agentic AI system that doesn't just retrieve documents — it routes queries intelligently, reasons across sources, and generates grounded responses with memory. Built on LangGraph state machines + ChromaDB vector search.</p>
+        <div class="nr-stats">
+          <div class="nr-stat">
+            <div class="nr-stat-num">&lt;800ms</div>
+            <div class="nr-stat-label">AVG LATENCY</div>
+          </div>
+          <div class="nr-stat">
+            <div class="nr-stat-num">1536-d</div>
+            <div class="nr-stat-label">EMBEDDING DIM</div>
+          </div>
+          <div class="nr-stat">
+            <div class="nr-stat-num">Top-5</div>
+            <div class="nr-stat-label">RETRIEVAL K</div>
+          </div>
+        </div>
+        <div class="nr-links">
+          <a href="https://neuralrag.streamlit.app/" target="_blank" class="btn-teal" style="background:rgba(45,212,191,.2);border-color:var(--teal);color:var(--teal);font-weight:700">🌐 Live App →</a>
+          <a href="https://github.com/Aadhidharmar001" target="_blank" class="btn-ghost">⚡ GitHub</a>
+        </div>
+      </div>
+      <!-- Architecture Diagram -->
+      <div class="reveal" style="transition-delay:.15s">
+        <div class="arch-flow">
+          <div class="arch-header">
+            <div class="arch-dots">
+              <div class="arch-dot" style="background:#ff5f57"></div>
+              <div class="arch-dot" style="background:#febc2e"></div>
+              <div class="arch-dot" style="background:#28c840"></div>
+            </div>
+            <span>NeuralRAG — System Architecture</span>
+          </div>
+          <div class="arch-body">
+            <canvas id="archCanvas" width="480" height="280" style="width:100%;border-radius:8px"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Performance Metrics -->
+    <div class="reveal">
+      <div class="sec-tag">PERFORMANCE</div>
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-val">&lt;800ms</div>
+          <div class="metric-name">END-TO-END LATENCY</div>
+          <div class="metric-trend">↑ optimized via async retrieval</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">1536</div>
+          <div class="metric-name">EMBEDDING DIMENSIONS</div>
+          <div class="metric-trend">OpenAI text-embedding-3-small</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">Top-5</div>
+          <div class="metric-name">RETRIEVAL CHUNKS</div>
+          <div class="metric-trend">cosine similarity reranking</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">4-Node</div>
+          <div class="metric-name">LANGGRAPH AGENTS</div>
+          <div class="metric-trend">router → retrieve → search → generate</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Query Flow -->
+    <div class="reveal">
+      <div class="sec-tag">LIVE DEMO — QUERY PIPELINE</div>
+      <div class="qflow-wrap">
+        <div class="qflow-title">// TRY THE PIPELINE — TYPE A QUERY AND WATCH IT FLOW</div>
+        <div class="qflow-input-row">
+          <input class="qflow-input" id="qflow-q" placeholder="e.g. What are the symptoms of diabetes? or What is RAG architecture?" value="">
+          <button class="qflow-run" onclick="runQflow()">▶ RUN PIPELINE</button>
+        </div>
+        <div class="qflow-steps" id="qflow-steps">
+          <div class="qflow-step" id="qs1">
+            <div class="qflow-step-num">STEP 01</div>
+            <div class="qflow-step-icon">🧭</div>
+            <div class="qflow-step-name">Router Agent</div>
+            <div class="qflow-step-status" id="qs1-s">Waiting for query...</div>
+            <div class="qflow-arrow">→</div>
+          </div>
+          <div class="qflow-step" id="qs2">
+            <div class="qflow-step-num">STEP 02</div>
+            <div class="qflow-step-icon">🔍</div>
+            <div class="qflow-step-name">Vector Retrieval</div>
+            <div class="qflow-step-status" id="qs2-s">ChromaDB idle</div>
+            <div class="qflow-arrow">→</div>
+          </div>
+          <div class="qflow-step" id="qs3">
+            <div class="qflow-step-num">STEP 03</div>
+            <div class="qflow-step-icon">⚖️</div>
+            <div class="qflow-step-name">Reranking</div>
+            <div class="qflow-step-status" id="qs3-s">Awaiting chunks</div>
+            <div class="qflow-arrow">→</div>
+          </div>
+          <div class="qflow-step" id="qs4">
+            <div class="qflow-step-num">STEP 04</div>
+            <div class="qflow-step-icon">✨</div>
+            <div class="qflow-step-name">LLM Generation</div>
+            <div class="qflow-step-status" id="qs4-s">GPT-4o ready</div>
+          </div>
+        </div>
+        <div class="qflow-output" id="qflow-out"></div>
+      </div>
+    </div>
+
+    <!-- Interactive RAG Parameter Simulator -->
+    <div class="reveal" style="margin-top:48px">
+      <div class="sec-tag">INTERACTIVE TUNING PLAYGROUND</div>
+      <div style="background:var(--card);border:1px solid var(--borderA);border-radius:12px;padding:28px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px">
+          <div>
+            <div style="font-family:var(--display);font-size:18px;font-weight:700;color:var(--text)">RAG Hyperparameter Simulator</div>
+            <div style="font-size:12px;color:var(--text2)">Adjust parameters to see real-time simulated impact on retrieval precision and latency.</div>
+          </div>
+          <div style="font-family:var(--mono);font-size:11px;color:var(--teal);background:rgba(45,212,191,0.08);padding:6px 14px;border-radius:6px;border:1px solid rgba(45,212,191,0.2)" id="rag-sim-out">Latency: ~640ms | Precision: 94.2%</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+          <div>
+            <label style="font-family:var(--mono);font-size:11px;color:var(--amber);display:flex;justify-content:space-between;margin-bottom:8px">
+              <span>Top-K Chunks</span><span id="v-topk">5</span>
+            </label>
+            <input type="range" min="1" max="10" value="5" id="sl-topk" oninput="updateRagSim()" style="width:100%;accent-color:var(--amber);cursor:pointer">
+          </div>
+          <div>
+            <label style="font-family:var(--mono);font-size:11px;color:var(--teal);display:flex;justify-content:space-between;margin-bottom:8px">
+              <span>Cosine Threshold</span><span id="v-thresh">0.75</span>
+            </label>
+            <input type="range" min="0.50" max="0.95" step="0.05" value="0.75" id="sl-thresh" oninput="updateRagSim()" style="width:100%;accent-color:var(--teal);cursor:pointer">
+          </div>
+          <div>
+            <label style="font-family:var(--mono);font-size:11px;color:var(--indigo);display:flex;justify-content:space-between;margin-bottom:8px">
+              <span>Temperature</span><span id="v-temp">0.20</span>
+            </label>
+            <input type="range" min="0.0" max="1.0" step="0.05" value="0.20" id="sl-temp" oninput="updateRagSim()" style="width:100%;accent-color:var(--indigo);cursor:pointer">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tech Stack Deep Dive -->
+    <div class="reveal" style="margin-top:48px">
+      <div class="sec-tag">TECH STACK</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px">
+          <div style="font-family:var(--mono);font-size:10px;color:var(--teal);letter-spacing:2px;margin-bottom:12px">ORCHESTRATION</div>
+          <div style="font-size:15px;font-weight:600;margin-bottom:8px">LangGraph</div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.6">Stateful multi-agent graph with conditional routing, memory nodes, and tool-use edges</div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px">
+          <div style="font-family:var(--mono);font-size:10px;color:var(--teal);letter-spacing:2px;margin-bottom:12px">VECTOR STORE</div>
+          <div style="font-size:15px;font-weight:600;margin-bottom:8px">ChromaDB</div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.6">Persistent vector store with 1536-dim OpenAI embeddings, cosine similarity, top-k retrieval</div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px">
+          <div style="font-family:var(--mono);font-size:10px;color:var(--teal);letter-spacing:2px;margin-bottom:12px">GENERATION</div>
+          <div style="font-size:15px;font-weight:600;margin-bottom:8px">OpenAI GPT-4o</div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.6">Context-aware generation with source attribution, grounding, and hallucination reduction</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PROJECTS ═══════════ -->
+<section id="projects">
+  <div class="container">
+    <div class="reveal">
+      <div class="sec-tag">DEPLOYED SYSTEMS</div>
+      <h2 class="sec-title">What I've <span class="g">Shipped</span></h2>
+      <p class="sec-sub">Production systems, not homework. Each one solves a real problem.</p>
+    </div>
+
+    <!-- Category Filter Chips -->
+    <div class="proj-filters reveal" style="display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap">
+      <button class="pf-chip active" onclick="filterProjects('all', this)">All Projects (6)</button>
+      <button class="pf-chip" onclick="filterProjects('agentic', this)">Agentic AI & RAG</button>
+      <button class="pf-chip" onclick="filterProjects('security', this)">AI Security</button>
+      <button class="pf-chip" onclick="filterProjects('ml', this)">Machine Learning</button>
+      <button class="pf-chip" onclick="filterProjects('live', this)">Live Deployed</button>
+    </div>
+
+    <div class="projects-list reveal">
+
+      <div class="proj-row" data-cat="agentic live" onclick="toggleProj(6)">
+        <div class="proj-num">01</div>
+        <div class="proj-info">
+          <div class="proj-name">NeuralRAG — Stateful Agentic RAG System</div>
+          <div class="proj-desc">LangGraph state machine with ChromaDB vector search & GPT-4o — deployed live on Streamlit</div>
+        </div>
+        <div class="proj-right">
+          <div class="proj-tags">
+            <span class="proj-tag live">● LIVE</span>
+            <span class="proj-tag">LangGraph</span>
+            <span class="proj-tag">ChromaDB</span>
+          </div>
+          <span class="proj-arrow">›</span>
+        </div>
+      </div>
+      <div class="proj-detail" id="pd6" data-cat="agentic live">
+        <div class="proj-detail-grid">
+          <div>
+            <ul class="proj-feat-list">
+              <li>Production stateful graph architecture with router, retrieval, reranker, and generation nodes</li>
+              <li>1536-dimensional embeddings with OpenAI text-embedding-3-small and ChromaDB vector store</li>
+              <li>Grounded context generation with dynamic source attribution and citation chips</li>
+              <li>Live production web application deployed on Streamlit Cloud</li>
+            </ul>
+            <div class="proj-actions">
+              <a href="https://neuralrag.streamlit.app/" target="_blank" class="btn-sm btn-sm-a">🌐 Live Demo →</a>
+              <a href="https://github.com/Aadhidharmar001" target="_blank" class="btn-sm btn-sm-g">GitHub →</a>
+            </div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start">
+            <span class="proj-tag" style="padding:6px 14px">LangGraph</span>
+            <span class="proj-tag" style="padding:6px 14px">ChromaDB</span>
+            <span class="proj-tag" style="padding:6px 14px">GPT-4o</span>
+            <span class="proj-tag" style="padding:6px 14px">Streamlit</span>
+            <span class="proj-tag" style="padding:6px 14px">Python</span>
+            <span class="proj-tag live" style="padding:6px 14px">● Production</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-row" data-cat="security live" onclick="toggleProj(5)">
+        <div class="proj-num">02</div>
+        <div class="proj-info">
+          <div class="proj-name">GuardWAF — AI Web Application Firewall</div>
+          <div class="proj-desc">Real-time HTTP payload inspection proxy detecting SQLi, XSS & zero-day attacks with ML anomaly scoring — deployed on AWS</div>
+        </div>
+        <div class="proj-right">
+          <div class="proj-tags">
+            <span class="proj-tag live">● LIVE AWS</span>
+            <span class="proj-tag" style="border-color:rgba(245,158,11,.4);color:var(--amber);background:rgba(245,158,11,.08)">🛡️ AI SECURITY</span>
+            <span class="proj-tag">FastAPI</span>
+          </div>
+          <span class="proj-arrow">›</span>
+        </div>
+      </div>
+      <div class="proj-detail" id="pd5" data-cat="security live">
+        <div class="proj-detail-grid">
+          <div>
+            <ul class="proj-feat-list">
+              <li>Deep payload inspection engine filtering OWASP Top 10 vulnerabilities in sub-milliseconds</li>
+              <li>Behavioral anomaly model replacing rigid signature-based rules to catch zero-day exploits</li>
+              <li>Dynamic risk-score rating with automated rate limiting and IP blocking triggers</li>
+              <li>Live production deployment hosted on Amazon Web Services (AWS EC2)</li>
+            </ul>
+            <div class="proj-actions">
+              <a href="http://43.205.239.119:8000/static/index.html" target="_blank" class="btn-sm btn-sm-a">🌐 Live AWS Demo →</a>
+              <a href="https://github.com/Aadhidharmar001" target="_blank" class="btn-sm btn-sm-g">GitHub →</a>
+            </div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start">
+            <span class="proj-tag" style="padding:6px 14px">AWS EC2</span>
+            <span class="proj-tag" style="padding:6px 14px">Python</span>
+            <span class="proj-tag" style="padding:6px 14px">FastAPI</span>
+            <span class="proj-tag" style="padding:6px 14px">PyTorch</span>
+            <span class="proj-tag" style="padding:6px 14px">OWASP Top 10</span>
+            <span class="proj-tag live" style="padding:6px 14px">● AWS Deployed</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-row" data-cat="agentic live" onclick="toggleProj(1)">
+        <div class="proj-num">03</div>
+        <div class="proj-info">
+          <div class="proj-name">Intelligent Search Engine</div>
+          <div class="proj-desc">Grounded AI answers using semantic retrieval — deployed on Render</div>
+        </div>
+        <div class="proj-right">
+          <div class="proj-tags">
+            <span class="proj-tag live">● LIVE</span>
+            <span class="proj-tag">RAG</span>
+            <span class="proj-tag">OpenAI</span>
+          </div>
+          <span class="proj-arrow">›</span>
+        </div>
+      </div>
+      <div class="proj-detail" id="pd1" data-cat="agentic live">
+        <div class="proj-detail-grid">
+          <div>
+            <ul class="proj-feat-list">
+              <li>Semantic search beyond keyword matching — understands intent</li>
+              <li>Grounded responses with visible source citations</li>
+              <li>Flask REST API with Streamlit frontend</li>
+              <li>Deployed and live on Render</li>
+            </ul>
+            <div class="proj-actions">
+              <a href="https://search-grounded-ai-assistant.onrender.com/" target="_blank" class="btn-sm btn-sm-a">🌐 Live Demo</a>
+              <a href="https://github.com/Aadhidharmar001/search-grounded-ai-assistant" target="_blank" class="btn-sm btn-sm-g">GitHub →</a>
+            </div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start">
+            <span class="proj-tag" style="padding:6px 14px">Flask</span>
+            <span class="proj-tag" style="padding:6px 14px">OpenAI</span>
+            <span class="proj-tag" style="padding:6px 14px">Vector Search</span>
+            <span class="proj-tag" style="padding:6px 14px">Streamlit</span>
+            <span class="proj-tag" style="padding:6px 14px">Python</span>
+            <span class="proj-tag live" style="padding:6px 14px">● Production</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-row" data-cat="ml" onclick="toggleProj(2)">
+        <div class="proj-num">04</div>
+        <div class="proj-info">
+          <div class="proj-name">Speech Emotion Recognition</div>
+          <div class="proj-desc">Multi-modal CNN + BERT system for real-time emotion detection from voice</div>
+        </div>
+        <div class="proj-right">
+          <div class="proj-tags">
+            <span class="proj-tag">CNN</span>
+            <span class="proj-tag">BERT</span>
+            <span class="proj-tag">NLP</span>
+          </div>
+          <span class="proj-arrow">›</span>
+        </div>
+      </div>
+      <div class="proj-detail" id="pd2" data-cat="ml">
+        <div class="proj-detail-grid">
+          <div>
+            <ul class="proj-feat-list">
+              <li>Dual-stream: audio features (MFCC) + transcript embeddings (BERT)</li>
+              <li>CNN architecture for spectral feature extraction</li>
+              <li>Real-time emotion classification with confidence scores</li>
+              <li>Detects: happy, sad, angry, fearful, neutral, surprised</li>
+            </ul>
+            <div class="proj-actions">
+              <a href="https://github.com/Aadhidharmar001" target="_blank" class="btn-sm btn-sm-g">GitHub →</a>
+            </div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start">
+            <span class="proj-tag" style="padding:6px 14px">PyTorch</span>
+            <span class="proj-tag" style="padding:6px 14px">HuggingFace</span>
+            <span class="proj-tag" style="padding:6px 14px">LibROSA</span>
+            <span class="proj-tag" style="padding:6px 14px">BERT</span>
+            <span class="proj-tag" style="padding:6px 14px">CNN</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-row" data-cat="agentic" onclick="toggleProj(3)">
+        <div class="proj-num">05</div>
+        <div class="proj-info">
+          <div class="proj-name">AI Medical Chatbot</div>
+          <div class="proj-desc">Healthcare AI built in 24 hours — 15th place at VIT Hackathon</div>
+        </div>
+        <div class="proj-right">
+          <div class="proj-tags">
+            <span class="proj-tag" style="border-color:rgba(251,191,36,.3);color:#fbbf24;background:rgba(251,191,36,.06)">🏆 15th PLACE</span>
+            <span class="proj-tag">LangChain</span>
+          </div>
+          <span class="proj-arrow">›</span>
+        </div>
+      </div>
+      <div class="proj-detail" id="pd3" data-cat="agentic">
+        <div class="proj-detail-grid">
+          <div>
+            <ul class="proj-feat-list">
+              <li>Medical Q&amp;A with symptom triage and specialist routing</li>
+              <li>Built in a 24-hour sprint under competition pressure</li>
+              <li>Secured 15th place at VIT against hundreds of teams</li>
+              <li>LangChain + OpenAI + Streamlit full-stack</li>
+            </ul>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start">
+            <span class="proj-tag" style="padding:6px 14px">LangChain</span>
+            <span class="proj-tag" style="padding:6px 14px">OpenAI</span>
+            <span class="proj-tag" style="padding:6px 14px">Streamlit</span>
+            <span class="proj-tag" style="padding:6px 14px">Python</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-row" data-cat="ml" onclick="toggleProj(4)">
+        <div class="proj-num">06</div>
+        <div class="proj-info">
+          <div class="proj-name">Customer Churn Prediction</div>
+          <div class="proj-desc">ML pipeline predicting customer attrition with ensemble models</div>
+        </div>
+        <div class="proj-right">
+          <div class="proj-tags">
+            <span class="proj-tag">Scikit-Learn</span>
+            <span class="proj-tag">ML</span>
+          </div>
+          <span class="proj-arrow">›</span>
+        </div>
+      </div>
+      <div class="proj-detail" id="pd4" data-cat="ml">
+        <div class="proj-detail-grid">
+          <div>
+            <ul class="proj-feat-list">
+              <li>End-to-end ML pipeline: EDA → feature engineering → model selection</li>
+              <li>Ensemble models: Random Forest, XGBoost, Logistic Regression</li>
+              <li>Business-ready feature importance and churn probability scores</li>
+            </ul>
+            <div class="proj-actions">
+              <a href="https://github.com/Aadhidharmar001/Customer-Churn-Prediction-ML-model" target="_blank" class="btn-sm btn-sm-g">GitHub →</a>
+            </div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start">
+            <span class="proj-tag" style="padding:6px 14px">Python</span>
+            <span class="proj-tag" style="padding:6px 14px">Scikit-Learn</span>
+            <span class="proj-tag" style="padding:6px 14px">XGBoost</span>
+            <span class="proj-tag" style="padding:6px 14px">Pandas</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CURRENTLY BUILDING ═══════════ -->
+<section id="building">
+  <div class="container">
+    <div class="reveal">
+      <div class="sec-tag">ACTIVE</div>
+      <h2 class="sec-title">Currently <span class="g">Building</span></h2>
+      <p class="sec-sub">What's running in my dev environment right now.</p>
+    </div>
+    <div class="building-grid">
+      <div class="build-card reveal">
+        <div class="build-card-tag">// IN PROGRESS</div>
+        <div class="build-card-title">NeuralRAG v2</div>
+        <div class="build-card-desc">Adding multi-agent orchestration, long-term memory with PostgreSQL, and a self-correcting retrieval loop that re-queries when confidence is low.</div>
+        <div class="build-progress"><div class="build-progress-bar" style="width:65%"></div></div>
+        <div class="build-progress-label"><span>Architecture</span><span>65%</span></div>
+      </div>
+      <div class="build-card reveal" style="transition-delay:.1s">
+        <div class="build-card-tag">// LEARNING</div>
+        <div class="build-card-title">Agentic Workflows</div>
+        <div class="build-card-desc">Deep-diving into multi-agent patterns: supervisor agents, tool-calling agents, reflection loops, and human-in-the-loop design with LangGraph.</div>
+        <div class="build-progress"><div class="build-progress-bar" style="width:50%;background:linear-gradient(90deg,var(--indigo),var(--teal))"></div></div>
+        <div class="build-progress-label"><span>Study + Build</span><span>50%</span></div>
+      </div>
+      <div class="build-card reveal" style="transition-delay:.2s">
+        <div class="build-card-tag">// RESEARCHING</div>
+        <div class="build-card-title">Evaluation Frameworks</div>
+        <div class="build-card-desc">Integrating RAGAS for automated RAG evaluation — faithfulness, answer relevancy, context precision metrics to make NeuralRAG provably reliable.</div>
+        <div class="build-progress"><div class="build-progress-bar" style="width:30%;background:linear-gradient(90deg,var(--rose),var(--amber))"></div></div>
+        <div class="build-progress-label"><span>Research Phase</span><span>30%</span></div>
+      </div>
+      <div class="build-card reveal" style="transition-delay:.3s">
+        <div class="build-card-tag">// PLANNED</div>
+        <div class="build-card-title">Fine-tuning Pipeline</div>
+        <div class="build-card-desc">Planning a domain-specific fine-tuning pipeline using LoRA/QLoRA for specialized medical and legal document understanding tasks.</div>
+        <div class="build-progress"><div class="build-progress-bar" style="width:10%;background:linear-gradient(90deg,var(--text3),var(--indigo))"></div></div>
+        <div class="build-progress-label"><span>Planning</span><span>10%</span></div>
+      </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="reveal">
+      <div class="roadmap">
+        <div class="roadmap-title">// NEURALRAG ROADMAP</div>
+        <div class="roadmap-item">
+          <div class="roadmap-status rs-done"></div>
+          <div class="roadmap-info">
+            <div class="roadmap-label">Basic RAG pipeline with ChromaDB</div>
+            <div class="roadmap-sub">DONE — LangChain + OpenAI + vector retrieval</div>
+          </div>
+        </div>
+        <div class="roadmap-item">
+          <div class="roadmap-status rs-done"></div>
+          <div class="roadmap-info">
+            <div class="roadmap-label">LangGraph agentic orchestration</div>
+            <div class="roadmap-sub">DONE — stateful graph with conditional routing</div>
+          </div>
+        </div>
+        <div class="roadmap-item">
+          <div class="roadmap-status rs-done"></div>
+          <div class="roadmap-info">
+            <div class="roadmap-label">Live Streamlit Cloud Deployment</div>
+            <div class="roadmap-sub">DONE — Deployed live at <a href="https://neuralrag.streamlit.app/" target="_blank" style="color:var(--teal)">neuralrag.streamlit.app</a></div>
+          </div>
+        </div>
+        <div class="roadmap-item">
+          <div class="roadmap-status rs-active"></div>
+          <div class="roadmap-info">
+            <div class="roadmap-label">Autonomous Multi-Agent Supervisor Swarm</div>
+            <div class="roadmap-sub">IN PROGRESS — specialized agent networks with state handoffs</div>
+          </div>
+        </div>
+        <div class="roadmap-item">
+          <div class="roadmap-status rs-active"></div>
+          <div class="roadmap-info">
+            <div class="roadmap-label">Self-correcting reflection loop</div>
+            <div class="roadmap-sub">IN PROGRESS — re-querying & self-healing when confidence &lt; threshold</div>
+          </div>
+        </div>
+        <div class="roadmap-item">
+          <div class="roadmap-status rs-soon"></div>
+          <div class="roadmap-info">
+            <div class="roadmap-label">RAGAS evaluation &amp; LoRA fine-tuning</div>
+            <div class="roadmap-sub">NEXT — automated quality scoring &amp; custom domain weights</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Currently Learning -->
+    <div class="reveal" style="margin-top:40px">
+      <div class="sec-tag">CURRENTLY LEARNING</div>
+      <div class="learning-strip">
+        <div class="learning-chip">📖 RAGAS Evaluation</div>
+        <div class="learning-chip">🔬 LangGraph Multi-Agent</div>
+        <div class="learning-chip">🧠 LoRA Fine-tuning</div>
+        <div class="learning-chip">⚡ Async RAG pipelines</div>
+        <div class="learning-chip">🏗️ Production MLOps</div>
+        <div class="learning-chip">🔐 AI Safety Patterns</div>
+        <div class="learning-chip">📊 Vector DB optimization</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CREDIBILITY ═══════════ -->
+<section id="cred">
+  <div class="container">
+    <div class="reveal">
+      <div class="sec-tag">PROOF OF WORK</div>
+      <h2 class="sec-title">Why Trust <span class="g">My Work</span></h2>
+      <p class="sec-sub">Credentials aren't everything, but receipts help.</p>
+    </div>
+    <div class="cred-grid reveal">
+      <div class="cred-card">
+        <div class="cred-card-icon">🏆</div>
+        <div class="cred-card-title">VIT Hackathon</div>
+        <div class="cred-card-sub">Secured 15th place at Vellore Institute of Technology's 24-hour hackathon. Built and shipped an AI Medical Chatbot under extreme time pressure.</div>
+        <div class="cred-badge">15th / Hundreds of teams</div>
+      </div>
+      <div class="cred-card">
+        <div class="cred-card-icon">🎓</div>
+        <div class="cred-card-title">B.Tech AI & DS</div>
+        <div class="cred-card-sub">Artificial Intelligence & Data Science at Sri Shakthi Institute of Engineering and Technology. CGPA 7.23. Graduating 2026.</div>
+        <div class="cred-badge">AI &amp; Data Science Specialization</div>
+      </div>
+      <div class="cred-card">
+        <div class="cred-card-icon">🚀</div>
+        <div class="cred-card-title">Production Deployments</div>
+        <div class="cred-card-sub">Not just GitHub repos — actual live deployments. Intelligent Search Engine running on Render, accessible right now.</div>
+        <div><a href="https://search-grounded-ai-assistant.onrender.com/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;color:var(--teal);font-family:var(--mono);font-size:10px;letter-spacing:1px;text-decoration:none">🌐 VISIT LIVE DEMO →</a></div>
+      </div>
+      <div class="cred-card">
+        <div class="cred-card-icon">🔗</div>
+        <div class="cred-card-title">LangChain Ecosystem</div>
+        <div class="cred-card-sub">Deep practitioner-level knowledge of LangChain, LangGraph, and the modern GenAI stack — not surface-level tutorials, but shipped systems.</div>
+        <div class="cred-badge">LangChain · LangGraph · RAG · Agents</div>
+      </div>
+      <div class="cred-card">
+        <div class="cred-card-icon">⚡</div>
+        <div class="cred-card-title">GitHub Activity</div>
+        <div class="cred-card-sub">Consistent builder. Open-source projects, real commits, documented code. Every project linked and public on GitHub.</div>
+        <div><a href="https://github.com/Aadhidharmar001" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;color:var(--amber);font-family:var(--mono);font-size:10px;letter-spacing:1px;text-decoration:none">⚡ VIEW GITHUB →</a></div>
+      </div>
+      <div class="cred-card">
+        <div class="cred-card-icon">🧠</div>
+        <div class="cred-card-title">RAG Specialist</div>
+        <div class="cred-card-sub">End-to-end RAG expertise: chunking strategies, embedding models, vector stores, reranking, hallucination reduction, and evaluation with RAGAS.</div>
+        <div class="cred-badge">Rare skill in junior AI market</div>
+      </div>
+    </div>
+
+    <!-- GitHub Stats -->
+    <div class="reveal" style="margin-top:32px">
+      <div class="github-grid">
+        <div class="gh-stat">
+          <div class="gh-val" id="gh-repo-count">5+</div>
+          <div class="gh-label">PUBLIC REPOS</div>
+        </div>
+        <div class="gh-stat">
+          <div class="gh-val">2+</div>
+          <div class="gh-label">YEARS BUILDING</div>
+        </div>
+        <div class="gh-stat">
+          <div class="gh-val">RAG</div>
+          <div class="gh-label">PRIMARY STACK</div>
+        </div>
+        <div class="gh-stat">
+          <div class="gh-val">∞</div>
+          <div class="gh-label">COMMITS TO GROWTH</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ ABOUT ═══════════ -->
+<section id="about">
+  <div class="container">
+    <div class="reveal">
+      <div class="sec-tag">ORIGIN</div>
+      <h2 class="sec-title">The <span class="g">Journey</span></h2>
+      <p class="sec-sub">From first Python script to agentic AI pipelines — every step deliberate.</p>
+    </div>
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <div class="tl-dot">🌱</div>
+        <div class="tl-content">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+            <div class="tl-year">2024</div>
+            <span class="tag" style="color:var(--text3);border-color:var(--border)">FOUNDATION</span>
+          </div>
+          <div class="tl-title">AI Foundations &amp; ML Theory</div>
+          <div class="tl-desc">Deep-dived into machine learning theory, neural network math, and Python ecosystem. Mastered core algorithms before moving to LLM engineering.</div>
+          <div class="tl-tags"><span class="tag">Python</span><span class="tag">TensorFlow</span><span class="tag">Scikit-Learn</span><span class="tag">ML Math</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot">🎙️</div>
+        <div class="tl-content">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+            <div class="tl-year">2025 — Q1</div>
+            <span class="tag" style="color:var(--teal);border-color:rgba(45,212,191,.3);background:rgba(45,212,191,.06)">COMPLETED ✓</span>
+          </div>
+          <div class="tl-title">Multi-modal Speech Emotion Recognition</div>
+          <div class="tl-desc">Built a dual-stream neural system combining audio spectrogram CNN features with BERT transcript embeddings for real-time sentiment analysis.</div>
+          <div class="tl-tags"><span class="tag">PyTorch</span><span class="tag">BERT</span><span class="tag">CNN</span><span class="tag">LibROSA</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot">⚡</div>
+        <div class="tl-content">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+            <div class="tl-year">2025 — Q2</div>
+            <span class="tag" style="color:#fbbf24;border-color:rgba(251,191,36,.3);background:rgba(251,191,36,.06)">AWARD WINNER 🏆</span>
+          </div>
+          <div class="tl-title">VIT Hackathon — 15th Place</div>
+          <div class="tl-desc">Built and shipped an AI Medical Chatbot in a 24-hour sprint. Placed 15th out of hundreds of competing engineering teams.</div>
+          <div class="tl-tags"><span class="tag">LangChain</span><span class="tag">OpenAI</span><span class="tag">Streamlit</span><span class="tag">15th Place</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot">🛡️</div>
+        <div class="tl-content">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+            <div class="tl-year">2025 — Q3</div>
+            <span class="tag" style="color:var(--amber);border-color:var(--borderA);background:rgba(245,158,11,.08)">DEPLOYED 🌐</span>
+          </div>
+          <div class="tl-title">GuardWAF &amp; Intelligent Search Engine</div>
+          <div class="tl-desc">Engineered GuardWAF AI security proxy and shipped the Intelligent Search Engine live on Render with semantic vector retrieval.</div>
+          <div class="tl-tags"><span class="tag">GuardWAF</span><span class="tag">AI Security</span><span class="tag">Flask</span><span class="tag">Render</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot">🚀</div>
+        <div class="tl-content">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+            <div class="tl-year">2025 — Q4 / 2026</div>
+            <span class="tag" style="color:var(--green);border-color:rgba(52,211,153,.3);background:rgba(52,211,153,.08)">COMPLETED &amp; SHIPPED 🌐</span>
+          </div>
+          <div class="tl-title">NeuralRAG — Stateful Agentic RAG System</div>
+          <div class="tl-desc">Completed and deployed flagship system: LangGraph state machine + ChromaDB + GPT-4o with intelligent query routing and citations. <a href="https://neuralrag.streamlit.app/" target="_blank" style="color:var(--teal);text-decoration:underline">Live Demo →</a></div>
+          <div class="tl-tags"><span class="tag">NeuralRAG</span><span class="tag">LangGraph</span><span class="tag">ChromaDB</span><span class="tag">Streamlit</span></div>
+        </div>
+      </div>
+
+      <div class="tl-item" style="border-left:2px solid var(--amber);padding-left:12px;margin-left:-13px">
+        <div class="tl-dot" style="border-color:var(--amber);box-shadow:var(--gA);background:rgba(245,158,11,.1)">🤖</div>
+        <div class="tl-content">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+            <div class="tl-year" style="color:var(--amber)">2026 — PRESENT</div>
+            <span class="tag" style="color:var(--amber);border-color:var(--borderA);background:rgba(245,158,11,.15);font-weight:700">🔥 ACTIVE FRONTIER</span>
+          </div>
+          <div class="tl-title" style="color:var(--text)">Autonomous Multi-Agent Swarms &amp; Fine-Tuning</div>
+          <div class="tl-desc">Building multi-agent supervisor topologies, reflection &amp; self-correcting agentic loops, tool-calling agents, RAGAS automated evaluations, and domain-specific LoRA/QLoRA model fine-tuning.</div>
+          <div class="tl-tags"><span class="tag" style="border-color:var(--borderA);color:var(--amber)">Multi-Agent Swarms</span><span class="tag" style="border-color:var(--borderA);color:var(--teal)">Reflection Loops</span><span class="tag" style="border-color:var(--borderA);color:var(--indigo)">LoRA Fine-tuning</span><span class="tag">RAGAS</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Focus Distribution Spectrum -->
+    <div class="reveal" style="margin-top:40px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--amber);letter-spacing:2px;margin-bottom:12px">// CURRENT ACTIVE FOCUS SPECTRUM</div>
+      <div style="height:8px;background:var(--bg3);border-radius:4px;display:flex;overflow:hidden;margin-bottom:12px">
+        <div style="width:40%;background:var(--amber)" title="Multi-Agent Systems (40%)"></div>
+        <div style="width:30%;background:var(--teal)" title="RAG & Vector Retrieval (30%)"></div>
+        <div style="width:20%;background:var(--indigo)" title="Model Fine-Tuning & Eval (20%)"></div>
+        <div style="width:10%;background:var(--green)" title="Production MLOps (10%)"></div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:16px;font-family:var(--mono);font-size:10px;color:var(--text2)">
+        <span style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:var(--amber)"></span>Multi-Agent Swarms 40%</span>
+        <span style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:var(--teal)"></span>RAG &amp; Vector DBs 30%</span>
+        <span style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:var(--indigo)"></span>LoRA &amp; RAGAS Eval 20%</span>
+        <span style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:var(--green)"></span>MLOps &amp; Security 10%</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ SKILLS ═══════════ -->
+<section id="skills" style="background:var(--bg3)">
+  <div class="container">
+    <div class="reveal">
+      <div class="sec-tag">NEURAL MAP</div>
+      <h2 class="sec-title">The <span class="g">Stack</span></h2>
+      <p class="sec-sub">Click any node. See how the skills connect.</p>
+    </div>
+    <div class="reveal" style="margin-top:32px">
+      <canvas id="brainCanvas"></canvas>
+    </div>
+    <div id="skill-legend" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:24px"></div>
+  </div>
+  <div class="skill-tip" id="skillTip"></div>
+</section>
+
+<!-- ═══════════ CONTACT ═══════════ -->
+<section id="contact">
+  <div class="container">
+    <div class="reveal">
+      <div class="sec-tag">TRANSMISSION</div>
+      <h2 class="sec-title">Open a <span class="g">Channel</span></h2>
+    </div>
+    <div class="contact-grid">
+      <div class="reveal">
+        <h3 style="font-family:var(--display);font-size:28px;font-weight:700;margin-bottom:16px">Let's build something<br>intelligent together.</h3>
+        <p style="color:var(--text2);font-size:15px;line-height:1.8;margin-bottom:32px">Looking for AI engineering roles, GenAI internships, or research collaborations. If you're building something ambitious with AI — I want to be part of it.</p>
+        <div class="contact-links">
+          <a href="mailto:dharmaraadhi@gmail.com" class="contact-link">
+            <div class="contact-link-icon">📧</div>
+            <div><div class="contact-link-label">EMAIL</div><div class="contact-link-val">dharmaraadhi@gmail.com</div></div>
+          </a>
+          <a href="https://github.com/Aadhidharmar001" target="_blank" class="contact-link">
+            <div class="contact-link-icon">⚡</div>
+            <div><div class="contact-link-label">GITHUB</div><div class="contact-link-val">Aadhidharmar001</div></div>
+          </a>
+          <a href="https://www.linkedin.com/in/aadhi-dharmar-a35679293" target="_blank" class="contact-link">
+            <div class="contact-link-icon">💼</div>
+            <div><div class="contact-link-label">LINKEDIN</div><div class="contact-link-val">aadhi-dharmar-a35679293</div></div>
+          </a>
+          <a href="tel:+916380072080" class="contact-link">
+            <div class="contact-link-icon">📱</div>
+            <div><div class="contact-link-label">PHONE</div><div class="contact-link-val">+91 6380072080</div></div>
+          </a>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:.2s">
+        <div class="contact-form" id="cform">
+          <div class="form-group"><label>NAME</label><input type="text" id="fn" placeholder="Your name"></div>
+          <div class="form-group"><label>EMAIL</label><input type="email" id="fe" placeholder="you@company.com"></div>
+          <div class="form-group"><label>MESSAGE</label><textarea id="fm" placeholder="Tell me about the role or project..."></textarea></div>
+          <button class="submit-btn" onclick="submitForm()">⚡ SEND MESSAGE</button>
+        </div>
+        <div id="form-success" style="display:none;text-align:center;padding:48px 24px;animation:up .5s ease">
+          <div style="font-size:56px;margin-bottom:16px">✅</div>
+          <div style="font-family:var(--display);font-size:22px;font-weight:700;color:var(--green);margin-bottom:8px">Transmitted.</div>
+          <div style="color:var(--text2);font-family:var(--mono);font-size:12px">Signal received. Response coming fast.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div style="font-family:var(--display);font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px">Aadhidharmar T</div>
+    <p>AI Product Builder · RAG Specialist · GenAI Developer</p>
+  </div>
+  <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap">
+    <a href="mailto:dharmaraadhi@gmail.com" style="color:var(--text3);font-family:var(--mono);font-size:11px;text-decoration:none" onmouseenter="this.style.color='var(--amber)'" onmouseleave="this.style.color=''">dharmaraadhi@gmail.com</a>
+    <a href="https://github.com/Aadhidharmar001" target="_blank" style="color:var(--text3);font-family:var(--mono);font-size:11px;text-decoration:none" onmouseenter="this.style.color='var(--amber)'" onmouseleave="this.style.color=''">GitHub</a>
+    <a href="https://www.linkedin.com/in/aadhi-dharmar-a35679293" target="_blank" style="color:var(--text3);font-family:var(--mono);font-size:11px;text-decoration:none" onmouseenter="this.style.color='var(--amber)'" onmouseleave="this.style.color=''">LinkedIn</a>
+  </div>
+  <p><span id="livetime"></span> &nbsp;·&nbsp; Ctrl+` for terminal</p>
+</footer>
+
+<!-- NOVA -->
+<div id="nova-fab">
+  <button class="nova-btn" onclick="toggleNova()" title="Ask NOVA">🤖</button>
+  <div class="nova-panel" id="novaPanel">
+    <div class="nova-hdr">
+      <div class="nova-av">🧠</div>
+      <div><div class="nova-name">NOVA</div><div class="nova-status">● Online · Aadhidharmar's AI</div></div>
+      <button class="nova-close" onclick="toggleNova()">✕</button>
+    </div>
+    <div class="nova-msgs" id="novaMsgs">
+      <div class="nova-msg bot">Hi! I'm <strong style="color:var(--amber)">NOVA</strong> — Aadhidharmar's personal AI. Ask me anything about his work, stack, or why he'd be a great hire. 🚀</div>
+    </div>
+    <div class="nova-chips">
+      <span class="nova-chip" onclick="askNova('Tell me about NeuralRAG')">NeuralRAG</span>
+      <span class="nova-chip" onclick="askNova('What are his skills?')">Skills</span>
+      <span class="nova-chip" onclick="askNova('Why should I hire him?')">Why hire?</span>
+      <span class="nova-chip" onclick="askNova('What is he building now?')">Building now</span>
+    </div>
+    <div class="nova-inp-row">
+      <input class="nova-inp" id="novaInp" placeholder="Ask anything..." onkeydown="if(event.key==='Enter')sendNova()">
+      <button class="nova-send" onclick="sendNova()">➤</button>
+    </div>
+  </div>
+</div>
+
+<!-- TERMINAL -->
+<div id="term-overlay" onclick="if(event.target===this)closeTerm()">
+  <div class="term-win">
+    <div class="term-bar">
+      <div style="display:flex;gap:6px">
+        <div style="width:12px;height:12px;border-radius:50%;background:#ff5f57;cursor:pointer" onclick="closeTerm()"></div>
+        <div style="width:12px;height:12px;border-radius:50%;background:#febc2e"></div>
+        <div style="width:12px;height:12px;border-radius:50%;background:#28c840"></div>
+      </div>
+      <span style="font-family:var(--mono);font-size:12px;color:var(--text3);margin-left:12px">aadhidharmar@portfolio:~</span>
+      <span style="margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--text3)">ESC to close</span>
+    </div>
+    <div class="term-body" id="termBody">
+      <div class="tl to">Aadhidharmar AI Portfolio — Terminal v2.1</div>
+      <div class="tl" style="color:var(--text3)">Commands: whoami | show achievements | launch neuralrag | hire | skills | clear | exit</div>
+      <div class="tl" style="color:var(--text3);margin-bottom:12px">─────────────────────────────────────────</div>
+    </div>
+    <div style="padding:0 24px 16px;display:flex;gap:8px;align-items:center;font-family:var(--mono)">
+      <span class="tp">aadhidharmar@ai:~$ </span>
+      <input id="term-in" autocomplete="off" onkeydown="handleTerm(event)" style="background:transparent;border:none;outline:none;color:var(--text);font-family:var(--mono);font-size:13px;flex:1;caret-color:var(--amber)">
+    </div>
+  </div>
+</div>
+
+<script>
+// ── CURSOR ──────────────────────────────────
+const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function ringLoop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(ringLoop)})();
+document.querySelectorAll('a,button,.proj-row,.build-card,.cred-card,.tl-item').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.transform='translate(-50%,-50%) scale(2.5)';curR.style.transform='translate(-50%,-50%) scale(1.4)'});
+  el.addEventListener('mouseleave',()=>{cur.style.transform='translate(-50%,-50%)';curR.style.transform='translate(-50%,-50%)'});
+});
+
+// ── SCROLL ──────────────────────────────────
+const prog=document.getElementById('prog');
+window.addEventListener('scroll',()=>{
+  const s=window.scrollY,h=document.body.scrollHeight-window.innerHeight;
+  prog.style.transform=`scaleX(${s/h})`;
+  document.querySelectorAll('.reveal').forEach(el=>{
+    if(el.getBoundingClientRect().top<window.innerHeight*.88)el.classList.add('on');
+  });
+  document.querySelectorAll('.sec-tag').forEach(el=>{
+    if(el.getBoundingClientRect().top<window.innerHeight*.9)el.classList.add('on2');
+  });
+  // Nav active
+  document.querySelectorAll('section[id]').forEach(s=>{
+    if(window.scrollY>=s.offsetTop-130)
+      document.querySelectorAll('.nav-links a').forEach(a=>{
+        a.classList.toggle('active',a.getAttribute('href')==='#'+s.id);
+      });
+  });
+},{passive:true});
+setTimeout(()=>{
+  document.querySelectorAll('.reveal').forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight*.88)el.classList.add('on')});
+  document.querySelectorAll('.sec-tag').forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight*.9)el.classList.add('on2')});
+},100);
+
+// ── HERO CANVAS ─────────────────────────────
+const hc=document.getElementById('heroCanvas'),hx=hc.getContext('2d');
+let hps=[];
+function resizeHero(){hc.width=innerWidth;hc.height=innerHeight;hps=[];const n=Math.floor(hc.width*hc.height/9000);for(let i=0;i<n;i++)hps.push({x:Math.random()*hc.width,y:Math.random()*hc.height,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,r:Math.random()*1.5+.5})}
+function drawHero(){
+  hx.clearRect(0,0,hc.width,hc.height);
+  for(let i=0;i<hps.length;i++){
+    for(let j=i+1;j<hps.length;j++){
+      const dx=hps[i].x-hps[j].x,dy=hps[i].y-hps[j].y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<110){hx.beginPath();hx.moveTo(hps[i].x,hps[i].y);hx.lineTo(hps[j].x,hps[j].y);hx.strokeStyle=`rgba(245,158,11,${(1-d/110)*.08})`;hx.lineWidth=.5;hx.stroke()}
+    }
+    const dx=hps[i].x-mx,dy=hps[i].y-my,d=Math.sqrt(dx*dx+dy*dy);
+    if(d<160){hx.beginPath();hx.moveTo(hps[i].x,hps[i].y);hx.lineTo(mx,my);hx.strokeStyle=`rgba(45,212,191,${(1-d/160)*.25})`;hx.lineWidth=.6;hx.stroke()}
+    hps[i].x+=hps[i].vx;hps[i].y+=hps[i].vy;
+    if(hps[i].x<0||hps[i].x>hc.width)hps[i].vx*=-1;
+    if(hps[i].y<0||hps[i].y>hc.height)hps[i].vy*=-1;
+    hx.beginPath();hx.arc(hps[i].x,hps[i].y,hps[i].r,0,Math.PI*2);
+    hx.fillStyle='rgba(245,158,11,.35)';hx.fill();
+  }
+  requestAnimationFrame(drawHero);
+}
+window.addEventListener('resize',resizeHero);
+resizeHero();drawHero();
+
+// ── TYPING ──────────────────────────────────
+const phrases=['architect RAG pipelines.','build agentic AI systems.','ship production GenAI.','design LangGraph agents.','turn ideas into AI products.'];
+let pi=0,ci=0,del=false;
+const tel=document.getElementById('typed-text');
+function type(){
+  const p=phrases[pi];
+  if(!del){tel.textContent=p.substring(0,++ci);if(ci===p.length){setTimeout(()=>{del=true},2000);setTimeout(type,100)}else setTimeout(type,65)}
+  else{tel.textContent=p.substring(0,--ci);if(ci===0){del=false;pi=(pi+1)%phrases.length;setTimeout(type,400)}else setTimeout(type,28)}
+}
+setTimeout(type,1800);
+
+// ── MARQUEE ─────────────────────────────────
+const tags=['Python','LangGraph','LangChain','OpenAI GPT-4o','ChromaDB','RAG','BERT','PyTorch','TensorFlow','Streamlit','Flask','SQL','Vector Search','Agentic AI','NLP','GenAI','Deep Learning','Scikit-Learn'];
+const mHTML=tags.map(t=>`<span class="m-item"><span class="m-dot"></span>${t}</span>`).join('');
+document.getElementById('mtrack').innerHTML=mHTML+mHTML;
+
+// ── ARCHITECTURE CANVAS ─────────────────────
+const ac=document.getElementById('archCanvas');
+if(ac){
+  const ax=ac.getContext('2d');
+  const W=480,H=280;
+  ac.width=W;ac.height=H;
+  const nodes=[
+    {x:240,y:40,label:'User Query',color:'#f59e0b',r:22},
+    {x:90,y:120,label:'Router\nAgent',color:'#818cf8',r:26},
+    {x:240,y:120,label:'ChromaDB\nRetrieval',color:'#2dd4bf',r:26},
+    {x:390,y:120,label:'Web\nSearch',color:'#2dd4bf',r:26},
+    {x:240,y:210,label:'Reranker',color:'#fb7185',r:22},
+    {x:240,y:275,label:'GPT-4o\nGenerate',color:'#34d399',r:26},
+  ];
+  const edges=[[0,1],[1,2],[1,3],[2,4],[3,4],[4,5]];
+  let at=0;
+  function drawArch(){
+    at+=.008;
+    ax.clearRect(0,0,W,H);
+    ax.fillStyle='#111318';ax.fillRect(0,0,W,H);
+    edges.forEach(([a,b])=>{
+      const na=nodes[a],nb=nodes[b];
+      ax.beginPath();ax.moveTo(na.x,na.y);ax.lineTo(nb.x,nb.y);
+      ax.strokeStyle='rgba(241,245,249,.08)';ax.lineWidth=1;ax.stroke();
+      const pct=(Math.sin(at*3+a)+1)/2;
+      const px=na.x+(nb.x-na.x)*pct,py=na.y+(nb.y-na.y)*pct;
+      ax.beginPath();ax.arc(px,py,2.5,0,Math.PI*2);
+      ax.fillStyle=na.color;ax.fill();
+    });
+    nodes.forEach(n=>{
+      ax.beginPath();ax.arc(n.x,n.y,n.r,0,Math.PI*2);
+      ax.fillStyle='#13161d';ax.fill();
+      ax.strokeStyle=n.color;ax.lineWidth=1.5;ax.stroke();
+      const lines=n.label.split('\n');
+      ax.fillStyle=n.color;ax.font='bold 10px JetBrains Mono, monospace';ax.textAlign='center';ax.textBaseline='middle';
+      if(lines.length===1){ax.fillText(lines[0],n.x,n.y)}
+      else{ax.fillText(lines[0],n.x,n.y-7);ax.fillText(lines[1],n.x,n.y+7)}
+    });
+    requestAnimationFrame(drawArch);
+  }
+  drawArch();
+}
+
+// ── QFLOW (Interactive Query Pipeline) ──────
+const qOutputs={
+  medical:['Routing to: document retrieval + medical knowledge base','Searching ChromaDB: 2,847 medical chunks indexed → top-5 retrieved','Cosine scores: 0.91, 0.88, 0.86, 0.82, 0.79 — reranked by relevance','GPT-4o generating grounded response with citations...'],
+  rag:['Routing to: technical knowledge base retrieval','Searching ChromaDB: 1,203 AI/ML chunks → top-5 retrieved','Cosine scores: 0.94, 0.91, 0.88, 0.83, 0.80 — all above threshold','GPT-4o synthesizing explanation with source attribution...'],
+  default:['Analyzing query intent with LLM router...','Searching ChromaDB vector store → top-5 chunks retrieved by cosine similarity','Reranking by relevance score — filtering low-confidence chunks','GPT-4o generating context-aware response...'],
+};
+const qAnswers={
+  medical:`Based on the retrieved medical literature:\n\nDiabetes presents with: polyuria (frequent urination), polydipsia (excessive thirst), unexplained weight loss, fatigue, and blurred vision. Type 1 diabetes may have rapid onset; Type 2 is often gradual.\n\n<span class="source-chip">📄 MedDB chunk #2847</span><span class="source-chip">📄 WHO Guidelines 2023</span><span class="source-chip">📄 Clinical Manual §4.2</span>`,
+  rag:`RAG (Retrieval Augmented Generation) works in 4 stages:\n\n1. Query is embedded into a vector\n2. ChromaDB finds the top-k semantically similar chunks\n3. Chunks are reranked by relevance\n4. An LLM generates a grounded answer from the retrieved context\n\n<span class="source-chip">📄 Lewis et al. 2020</span><span class="source-chip">📄 NeuralRAG docs</span>`,
+  default:`Based on the retrieved context from ChromaDB (top-5 chunks, avg similarity 0.87):\n\nI found relevant information across multiple indexed sources. The LangGraph router classified this as a general knowledge query and retrieved the most semantically similar passages.\n\n<span class="source-chip">📄 Source chunk #1</span><span class="source-chip">📄 Source chunk #3</span><span class="source-chip">📄 Source chunk #5</span>`,
+};
+function getQtype(q){
+  const ql=q.toLowerCase();
+  if(ql.includes('diabet')||ql.includes('symptom')||ql.includes('medical')||ql.includes('health'))return'medical';
+  if(ql.includes('rag')||ql.includes('retriev')||ql.includes('embed')||ql.includes('vector'))return'rag';
+  return'default';
+}
+function resetSteps(){
+  [1,2,3,4].forEach(i=>{
+    const el=document.getElementById('qs'+i);
+    el.classList.remove('active','done');
+    const s=document.getElementById('qs'+i+'-s');
+    const defaults=['Waiting for query...','ChromaDB idle','Awaiting chunks','GPT-4o ready'];
+    s.textContent=defaults[i-1];s.className='qflow-step-status';
+  });
+  const out=document.getElementById('qflow-out');
+  out.classList.remove('show');out.style.display='none';
+}
+function runQflow(){
+  const q=document.getElementById('qflow-q').value.trim();
+  if(!q){showToast('Enter a query first!');return}
+  const qtype=getQtype(q);
+  const msgs=qOutputs[qtype];
+  resetSteps();
+  const steps=[1,2,3,4];
+  steps.forEach((step,idx)=>{
+    setTimeout(()=>{
+      const el=document.getElementById('qs'+step);
+      el.classList.add('active');
+      const s=document.getElementById('qs'+step+'-s');
+      s.textContent=msgs[idx];s.className='qflow-step-status running';
+      if(idx>0){
+        const prev=document.getElementById('qs'+(step-1));
+        prev.classList.remove('active');prev.classList.add('done');
+        const ps=document.getElementById('qs'+(step-1)+'-s');
+        ps.className='qflow-step-status done';
+      }
+      if(idx===3){
+        setTimeout(()=>{
+          el.classList.remove('active');el.classList.add('done');
+          s.className='qflow-step-status done';s.textContent='Response generated ✓';
+          const out=document.getElementById('qflow-out');
+          out.style.display='block';
+          out.innerHTML=`<div style="font-family:var(--mono);font-size:10px;color:var(--teal);letter-spacing:1px;margin-bottom:10px">// NEURALRAG RESPONSE</div>${qAnswers[qtype]}`;
+          setTimeout(()=>out.classList.add('show'),10);
+        },600);
+      }
+    },idx*900);
+  });
+}
+
+// ── PROJECTS ACCORDION ──────────────────────
+function toggleProj(n){
+  const d=document.getElementById('pd'+n);
+  const isOpen=d.classList.contains('open');
+  document.querySelectorAll('.proj-detail').forEach(x=>x.classList.remove('open'));
+  if(!isOpen)d.classList.add('open');
+}
+
+// ── BRAIN CANVAS ────────────────────────────
+const bc=document.getElementById('brainCanvas'),bx=bc.getContext('2d');
+const skills=[
+  {id:0,x:.5,y:.5,label:'AI CORE',desc:'The center of everything. Python-first AI system builder.',size:34,color:'#f59e0b',core:true,projects:['All Projects']},
+  {id:1,x:.2,y:.22,label:'Python',desc:'Primary language. 2+ years.',size:22,color:'#818cf8',projects:['All']},
+  {id:2,x:.8,y:.22,label:'LangChain',desc:'LLM chains, tools, memory.',size:22,color:'#2dd4bf',projects:['NeuralRAG','Medical Bot','Search Engine']},
+  {id:3,x:.14,y:.5,label:'ML/DL',desc:'Supervised, unsupervised, neural nets.',size:22,color:'#818cf8',projects:['Speech Emotion','Churn']},
+  {id:4,x:.86,y:.5,label:'OpenAI',desc:'GPT-4o, embeddings, function calling.',size:22,color:'#2dd4bf',projects:['NeuralRAG','Medical Bot']},
+  {id:5,x:.2,y:.78,label:'RAG',desc:'Full RAG stack: chunking → embed → retrieve → generate.',size:24,color:'#f59e0b',projects:['NeuralRAG','Search Engine']},
+  {id:6,x:.5,y:.14,label:'LangGraph',desc:'Stateful agentic pipelines. My specialization.',size:22,color:'#f59e0b',projects:['NeuralRAG']},
+  {id:7,x:.8,y:.78,label:'ChromaDB',desc:'Vector store, cosine similarity, top-k retrieval.',size:20,color:'#2dd4bf',projects:['NeuralRAG']},
+  {id:8,x:.5,y:.86,label:'BERT/NLP',desc:'Transformers, embeddings, classification.',size:20,color:'#818cf8',projects:['Speech Emotion']},
+  {id:9,x:.36,y:.3,label:'PyTorch',desc:'Deep learning research & training.',size:18,color:'#818cf8',projects:['Speech Emotion']},
+  {id:10,x:.64,y:.3,label:'Streamlit',desc:'Rapid AI app deployment.',size:18,color:'#f59e0b',projects:['NeuralRAG','Medical Bot']},
+  {id:11,x:.36,y:.7,label:'Flask',desc:'REST API for AI model serving.',size:18,color:'#f59e0b',projects:['Search Engine']},
+  {id:12,x:.64,y:.7,label:'CNN',desc:'Convolutional nets for audio/image.',size:18,color:'#2dd4bf',projects:['Speech Emotion']},
+  {id:13,x:.12,y:.35,label:'SQL',desc:'Data pipelines and storage.',size:16,color:'#475569',projects:['Churn Prediction']},
+  {id:14,x:.88,y:.65,label:'GitHub',desc:'Version control, open source.',size:16,color:'#475569',projects:['All Projects']},
+];
+const edges=[[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8],[1,3],[1,9],[2,4],[2,5],[2,7],[2,10],[4,7],[5,7],[5,8],[6,2],[8,12],[3,9],[3,12],[10,11],[13,1],[14,1]];
+let hovSk=null,bAnim=0;
+function resizeBrain(){const r=bc.parentElement.getBoundingClientRect();bc.width=r.width;bc.height=560}
+function gp(s){return{x:s.x*bc.width,y:s.y*bc.height}}
+function drawBrain(){
+  bAnim+=.004;
+  bx.clearRect(0,0,bc.width,bc.height);
+  edges.forEach(([a,b])=>{
+    const pa=gp(skills[a]),pb=gp(skills[b]);
+    const hov=(hovSk===a||hovSk===b);
+    const dx=pb.x-pa.x,dy=pb.y-pa.y;
+    bx.beginPath();bx.moveTo(pa.x,pa.y);bx.lineTo(pb.x,pb.y);
+    bx.strokeStyle=hov?'rgba(245,158,11,.4)':'rgba(241,245,249,.05)';bx.lineWidth=hov?1.5:.6;bx.stroke();
+    const pct=(Math.sin(bAnim*2.5+a*.8)+1)/2;
+    const px=pa.x+dx*pct,py=pa.y+dy*pct;
+    bx.beginPath();bx.arc(px,py,2,0,Math.PI*2);
+    bx.fillStyle=hov?'rgba(245,158,11,.9)':'rgba(245,158,11,.2)';bx.fill();
+  });
+  skills.forEach((s,i)=>{
+    const {x,y}=gp(s),hov=(hovSk===i);
+    const pulse=s.core?Math.sin(bAnim*2)*3:0;
+    const r=s.size+pulse+(hov?8:0);
+    bx.beginPath();bx.arc(x,y,r*2.2,0,Math.PI*2);
+    const g=bx.createRadialGradient(x,y,0,x,y,r*2.2);
+    g.addColorStop(0,s.color.replace('#','rgba(').replace(/(\w\w)(\w\w)(\w\w)/,(_,r,g,b)=>`${parseInt(r,16)},${parseInt(g,16)},${parseInt(b,16)},0.12)`));
+    g.addColorStop(1,'transparent');
+    bx.fillStyle=g;bx.fill();
+    bx.beginPath();bx.arc(x,y,r,0,Math.PI*2);
+    bx.fillStyle=hov?s.color:'#13161d';bx.fill();
+    bx.strokeStyle=s.color;bx.lineWidth=hov?2:1;bx.stroke();
+    bx.fillStyle=hov?'#0c0e13':s.color==='#475569'?'#94a3b8':s.color;
+    bx.font=`${s.core?'700':'600'} ${s.core?12:9}px 'JetBrains Mono',monospace`;
+    bx.textAlign='center';bx.textBaseline='middle';
+    bx.fillText(s.label,x,y);
+  });
+  requestAnimationFrame(drawBrain);
+}
+bc.addEventListener('mousemove',e=>{
+  const r=bc.getBoundingClientRect(),lx=e.clientX-r.left,ly=e.clientY-r.top;
+  hovSk=null;
+  skills.forEach((s,i)=>{const {x,y}=gp(s);if(Math.sqrt((x-lx)**2+(y-ly)**2)<s.size+10)hovSk=i});
+  const tip=document.getElementById('skillTip');
+  if(hovSk!==null){
+    const s=skills[hovSk];
+    tip.innerHTML=`<h4>${s.label}</h4><p>${s.desc}</p><p class="tip-used">Used in: ${s.projects.join(', ')}</p>`;
+    tip.style.left=(e.clientX+16)+'px';tip.style.top=(e.clientY-30)+'px';tip.style.opacity='1';
+    bc.style.cursor='pointer';
+  }else{tip.style.opacity='0';bc.style.cursor='crosshair'}
+});
+bc.addEventListener('mouseleave',()=>{hovSk=null;document.getElementById('skillTip').style.opacity='0'});
+window.addEventListener('resize',resizeBrain);resizeBrain();drawBrain();
+
+// Skill legend
+const legendEl=document.getElementById('skill-legend');
+[['#f59e0b','Core / RAG / Frameworks'],['#818cf8','ML / Deep Learning'],['#2dd4bf','GenAI / Vector DB'],['#475569','Tools / Infrastructure']].forEach(([c,l])=>{
+  const d=document.createElement('div');
+  d.style.cssText=`display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:.5px`;
+  d.innerHTML=`<span style="width:10px;height:10px;border-radius:50%;background:${c};box-shadow:0 0 8px ${c}"></span>${l}`;
+  legendEl.appendChild(d);
+});
+
+// ── NOVA ─────────────────────────────────────
+const novaKB={
+  neuralrag:`NeuralRAG is Aadhidharmar's flagship system:\n\n🌐 **Live App**: https://neuralrag.streamlit.app/\n🔗 **LangGraph** — 4-node agentic graph (router → retrieve → rerank → generate)\n📚 **ChromaDB** — 1536-dim embeddings, top-5 cosine retrieval\n🤖 **GPT-4o** — grounded generation with source attribution\n⚡ **<800ms** end-to-end latency\n\nDeployed live on Streamlit Cloud!`,
+  guardwaf:`🛡️ **GuardWAF — AI Web Application Firewall**:\n\n🌐 **Live AWS Proxy**: http://43.205.239.119:8000/static/index.html\n⚡ **Real-Time Reverse Proxy** — sub-millisecond HTTP payload inspection\n🧠 **ML Anomaly Engine** — flags zero-day exploits & OWASP Top 10 (SQLi, XSS, RCE)\n📊 **Risk Engine** — automated IP throttling & real-time telemetry dashboard\n🔧 **Tech**: AWS EC2, Python, FastAPI, PyTorch, Scikit-Learn`,
+  skills:`Core stack:\n\n🧠 **AI/ML**: Python, TensorFlow, PyTorch, Scikit-Learn\n🔗 **GenAI**: LangChain, LangGraph, OpenAI API\n📚 **RAG & Security**: ChromaDB, Vector Search, BERT, GuardWAF AI Security\n🚀 **Deploy**: AWS EC2, Streamlit, Flask, FastAPI, GitHub, Render`,
+  hire:`Why hire Aadhidharmar:\n\n⚡ **Builder not student** — 6 real systems (NeuralRAG deployed live, GuardWAF live on AWS, etc.)\n🧠 **RAG & AI Security specialist** — rare junior-level depth\n🏆 **Hackathon tested** — 15th at VIT in 24 hours\n📈 **Currently building** — Multi-Agent Autonomous Swarms & LoRA Fine-Tuning\n🎯 **Graduating 2026** — available now for internships/roles`,
+  building:`Right now building:\n\n🤖 **Autonomous Multi-Agent Swarms** — LangGraph supervisor patterns\n🔄 **Self-correcting reflection loops** — automatic query re-evaluations\n📊 **RAGAS evaluation & LoRA** — automated precision scoring & custom weights\n🛡️ **GuardWAF AWS Telemetry** — real-time threat map & rate limiting`,
+  hackathon:`VIT 24-Hour Hackathon:\n\n🏆 **15th place** out of hundreds of teams\n⏱️ **24 hours**, no sleep\n💡 **AI Medical Chatbot** — built from zero\n🚀 **Stack**: LangChain + OpenAI + Streamlit\n\nThe pressure was real. The delivery was real.`,
+  contact:`Reach Aadhidharmar:\n\n📧 dharmaraadhi@gmail.com\n📱 +91 6380072080\n⚡ github.com/Aadhidharmar001\n💼 linkedin.com/in/aadhi-dharmar-a35679293`,
+};
+function getNovaResp(q){
+  const ql=q.toLowerCase();
+  if(ql.includes('guardwaf')||ql.includes('waf')||ql.includes('security')||ql.includes('firewall'))return novaKB.guardwaf;
+  if(ql.includes('neuralrag')||ql.includes('rag')||ql.includes('langgraph'))return novaKB.neuralrag;
+  if(ql.includes('skill')||ql.includes('tech')||ql.includes('stack'))return novaKB.skills;
+  if(ql.includes('hire')||ql.includes('why')||ql.includes('recruit'))return novaKB.hire;
+  if(ql.includes('build')||ql.includes('now')||ql.includes('current'))return novaKB.building;
+  if(ql.includes('hack')||ql.includes('vit'))return novaKB.hackathon;
+  if(ql.includes('contact')||ql.includes('email'))return novaKB.contact;
+  if(ql.includes('hello')||ql.includes('hi'))return"Hey! 👋 I'm NOVA. Ask me about NeuralRAG, GuardWAF, his skills, why you should hire him, or what he's building right now.";
+  return`Great question! Aadhidharmar specializes in RAG, Agentic AI, and AI Security. He built NeuralRAG and GuardWAF. Try asking "Tell me about GuardWAF" or "Why hire him?" 💡`;
+}
+function toggleNova(){document.getElementById('novaPanel').classList.toggle('open')}
+function addNMsg(text,role){
+  const d=document.createElement('div');d.className=`nova-msg ${role}`;
+  d.innerHTML=text.replace(/\*\*(.*?)\*\*/g,'<strong style="color:var(--amber)">$1</strong>').replace(/\n/g,'<br>');
+  const m=document.getElementById('novaMsgs');m.appendChild(d);m.scrollTop=99999;
+}
+function showTyping(){
+  const d=document.createElement('div');d.className='nova-msg bot';d.id='nova-typing';
+  d.innerHTML='<span style="display:flex;gap:4px"><span style="width:5px;height:5px;border-radius:50%;background:var(--amber);animation:blink 1s .0s infinite"></span><span style="width:5px;height:5px;border-radius:50%;background:var(--amber);animation:blink 1s .2s infinite"></span><span style="width:5px;height:5px;border-radius:50%;background:var(--amber);animation:blink 1s .4s infinite"></span></span>';
+  const m=document.getElementById('novaMsgs');m.appendChild(d);m.scrollTop=99999;
+  return d;
+}
+function sendNova(){
+  const inp=document.getElementById('novaInp');const q=inp.value.trim();if(!q)return;
+  addNMsg(q,'user');inp.value='';
+  const t=showTyping();
+  setTimeout(()=>{t.remove();addNMsg(getNovaResp(q),'bot')},600+Math.random()*400);
+}
+function askNova(q){addNMsg(q,'user');const t=showTyping();setTimeout(()=>{t.remove();addNMsg(getNovaResp(q),'bot')},600+Math.random()*300)}
+
+// ── TERMINAL ─────────────────────────────────
+function openTerm(){document.getElementById('term-overlay').classList.add('open');setTimeout(()=>document.getElementById('term-in').focus(),80)}
+function closeTerm(){document.getElementById('term-overlay').classList.remove('open')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeTerm();if(e.ctrlKey&&e.key==='`')openTerm()});
+const tcmds={
+  whoami:()=>[{c:'to',t:'┌──────────────────────────────────────────────┐'},{c:'to',t:'│  NAME:   Aadhidharmar T                      │'},{c:'to',t:'│  ROLE:   AI Product Builder · RAG Specialist  │'},{c:'to',t:'│  EDU:    B.Tech AI & DS — Sri Shakthi Inst.  │'},{c:'to',t:'│  CGPA:   7.23                                 │'},{c:'to',t:'│  STATUS: Seeking AI Engineering roles         │'},{c:'to',t:'│  EMAIL:  dharmaraadhi@gmail.com               │'},{c:'to',t:'└──────────────────────────────────────────────┘'}],
+  'show achievements':()=>[{c:'ti',t:'🏆 ACHIEVEMENT LOG'},{c:'to',t:''},{c:'to',t:'[✓] NeuralRAG — LangGraph + RAG (Live at neuralrag.streamlit.app)'},{c:'to',t:'[✓] GuardWAF — AI Security Proxy (Live AWS: 43.205.239.119:8000)'},{c:'to',t:'[✓] VIT 24hr Hackathon — 15th place / AI Medical Chatbot'},{c:'to',t:'[✓] Intelligent Search Engine — live on Render'},{c:'to',t:'[✓] Speech Emotion Recognition — CNN + BERT multimodal'},{c:'to',t:'[✓] Customer Churn Prediction — ensemble ML pipeline'},{c:'to',t:''},{c:'ti',t:'Skills: GuardWAF · AWS EC2 · LangGraph · RAG · ChromaDB · FastAPI · PyTorch'}],
+  'launch guardwaf':()=>[{c:'to',t:'[BOOT] GuardWAF Security Proxy v1.2'},{c:'to',t:'[OK]   Deep Packet Inspector (HTTP/S) ........ ✓'},{c:'to',t:'[OK]   PyTorch ML Anomaly Model .............. ✓'},{c:'to',t:'[OK]   OWASP Top 10 Mitigation Engine ........ ✓'},{c:'to',t:'[OK]   Sub-ms Reverse Proxy Listener ......... ✓'},{c:'to',t:'[OK]   Automated Rate Limiting & IP Banning ... ✓'},{c:'to',t:''},{c:'ti',t:'🛡️ GuardWAF ONLINE. AI threat protection active on AWS.'},{c:'to',t:'   Live AWS: http://43.205.239.119:8000/static/index.html'}],
+  'launch neuralrag':()=>[{c:'to',t:'[BOOT] NeuralRAG v1.0'},{c:'to',t:'[OK]   LangGraph state machine .............. ✓'},{c:'to',t:'[OK]   ChromaDB vector store ................ ✓'},{c:'to',t:'[OK]   OpenAI GPT-4o engine ................. ✓'},{c:'to',t:'[OK]   Router agent initialized .............. ✓'},{c:'to',t:'[OK]   Memory module ......................... ✓'},{c:'to',t:''},{c:'ti',t:'✅ NeuralRAG ONLINE. <800ms latency. Top-5 retrieval.'},{c:'to',t:'   Live App: https://neuralrag.streamlit.app/'}],
+  hire:()=>[{c:'ti',t:'══════════════════════════════════════════════'},{c:'ti',t:'      THE CASE FOR HIRING AADHIDHARMAR'},{c:'ti',t:'══════════════════════════════════════════════'},{c:'to',t:''},{c:'to',t:'✦ Builds REAL systems — NeuralRAG & GuardWAF are architected, not tutorial-copied'},{c:'to',t:'✦ RAG & AI Security specialist — rare depth at junior level'},{c:'to',t:'✦ Ships under pressure — 15th at VIT 24hr hackathon'},{c:'to',t:'✦ Stack: LangGraph + GuardWAF + LangChain + OpenAI + ChromaDB + FastAPI'},{c:'to',t:'✦ Actively learning: RAGAS, LoRA, multi-agent patterns'},{c:'to',t:''},{c:'ti',t:'📧 dharmaraadhi@gmail.com  |  📱 +91 6380072080'}],
+  skills:()=>[{c:'to',t:'CORE STACK:'},{c:'to',t:'  AI/ML:   Python · TensorFlow · PyTorch · Scikit-Learn'},{c:'to',t:'  Security:GuardWAF WAF · Reverse Proxy · OWASP Top 10 · Threat Scoring'},{c:'to',t:'  GenAI:   LangChain · LangGraph · OpenAI API'},{c:'to',t:'  RAG:     ChromaDB · Vector Search · BERT · NLP'},{c:'to',t:'  Deploy:  FastAPI · Streamlit · Flask · GitHub · Render'},{c:'to',t:'  Data:    SQL · Pandas · NumPy · Feature Engineering'}],
+  help:()=>[{c:'to',t:'Available commands:'},{c:'to',t:'  whoami              — Identity'},{c:'to',t:'  show achievements   — All projects & wins'},{c:'to',t:'  launch guardwaf     — Boot GuardWAF AI Security Proxy'},{c:'to',t:'  launch neuralrag    — Boot NeuralRAG'},{c:'to',t:'  hire                — The case for hiring'},{c:'to',t:'  skills              — Full tech stack'},{c:'to',t:'  clear               — Clear terminal'},{c:'to',t:'  exit                — Close'}],
+  clear:()=>'CLEAR',
+  exit:()=>{closeTerm();return[]},
+};
+function handleTerm(e){
+  if(e.key!=='Enter')return;
+  const inp=document.getElementById('term-in');const cmd=inp.value.trim().toLowerCase();inp.value='';
+  const body=document.getElementById('termBody');
+  const pl=document.createElement('div');pl.className='tl';
+  pl.innerHTML=`<span class="tp">aadhidharmar@ai:~$</span> ${cmd}`;body.appendChild(pl);
+  if(!cmd)return;
+  const h=tcmds[cmd];
+  if(h){const r=h();if(r==='CLEAR'){body.innerHTML='';return}if(Array.isArray(r))r.forEach(l=>{const d=document.createElement('div');d.className=`tl ${l.c}`;d.textContent=l.t;body.appendChild(d)})}
+  else{const d=document.createElement('div');d.className='tl te';d.textContent=`command not found: ${cmd}. Type 'help' for list.`;body.appendChild(d)}
+  body.scrollTop=99999;
+}
+
+// ── CONTACT FORM ─────────────────────────────
+function submitForm(){
+  const n=document.getElementById('fn').value.trim(),e=document.getElementById('fe').value.trim(),m=document.getElementById('fm').value.trim();
+  if(!n||!e||!m){showToast('Fill all fields first.');return}
+  document.getElementById('cform').style.display='none';
+  document.getElementById('form-success').style.display='block';
+}
+
+// ── TOAST ─────────────────────────────────────
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),3000)}
+
+// ── CLOCK ─────────────────────────────────────
+function tick(){const el=document.getElementById('livetime');if(el)el.textContent=new Date().toLocaleTimeString('en-IN',{timeZone:'Asia/Kolkata'})+' IST'}
+setInterval(tick,1000);tick();
+
+// ── MAGNETIC BUTTONS ─────────────────────────
+document.querySelectorAll('.btn-primary,.btn-ghost,.btn-teal,.submit-btn').forEach(el=>{
+  el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.15}px,${(e.clientY-r.top-r.height/2)*.15}px)`;});
+  el.addEventListener('mouseleave',()=>el.style.transform='');
+});
+
+// ── BUILD PROGRESS BARS (animate on scroll) ──
+const buildObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.style.width=e.target.dataset.w})},{threshold:.5});
+document.querySelectorAll('.build-progress-bar').forEach(b=>{b.dataset.w=b.style.width;b.style.width='0';buildObs.observe(b)});
+
+// ── PAGE LOAD WIPE ────────────────────────────
+(function(){
+  const wipe=document.createElement('div');
+  wipe.style.cssText='position:fixed;inset:0;background:#0c0e13;z-index:99999;transition:opacity .6s ease .2s;pointer-events:none';
+  document.body.appendChild(wipe);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{wipe.style.opacity='0';setTimeout(()=>wipe.remove(),900)}));
+})();
+
+// ── PARTICLE BURST (hero CTA) ─────────────────
+document.querySelectorAll('.btn-primary').forEach(btn=>{
+  btn.addEventListener('click',e=>{
+    for(let i=0;i<22;i++){
+      const p=document.createElement('div');
+      const angle=Math.random()*Math.PI*2;
+      const dist=50+Math.random()*130;
+      const color=['#f59e0b','#2dd4bf','#818cf8','#fbbf24'][Math.floor(Math.random()*4)];
+      p.style.cssText=`position:fixed;left:${e.clientX}px;top:${e.clientY}px;width:${3+Math.random()*4}px;height:${3+Math.random()*4}px;border-radius:50%;background:${color};pointer-events:none;z-index:99999;transition:all .75s cubic-bezier(.25,.46,.45,.94)`;
+      document.body.appendChild(p);
+      requestAnimationFrame(()=>{
+        p.style.transform=`translate(${Math.cos(angle)*dist}px,${Math.sin(angle)*dist}px) scale(0)`;
+        p.style.opacity='0';
+      });
+      setTimeout(()=>p.remove(),800);
+    }
+  });
+});
+
+// ── SCANLINE ON PROJECT ROW HOVER ────────────
+document.querySelectorAll('.proj-row').forEach(row=>{
+  row.addEventListener('mouseenter',()=>{
+    if(row.querySelector('.proj-scan'))return;
+    const s=document.createElement('div');
+    s.className='proj-scan';
+    s.style.cssText='position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(245,158,11,.5),transparent);pointer-events:none;z-index:5;animation:scanline .5s ease-out forwards';
+    row.appendChild(s);
+    setTimeout(()=>s.remove(),600);
+  });
+});
+
+// ── COUNTER ANIMATION (metrics) ──────────────
+function animCount(el, target, suffix='', duration=1400){
+  const start=performance.now();
+  const isSymbol=isNaN(parseFloat(target));
+  if(isSymbol){el.textContent=target;return}
+  const end=parseFloat(target);
+  function step(now){
+    const progress=Math.min((now-start)/duration,1);
+    const ease=1-Math.pow(1-progress,3);
+    const current=Math.round(end*ease*10)/10;
+    el.textContent=(current%1===0?current.toFixed(0):current)+suffix;
+    if(progress<1)requestAnimationFrame(step);
+    else el.textContent=target+suffix;
+  }
+  requestAnimationFrame(step);
+}
+const metricObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    const val=e.target.dataset.val, suffix=e.target.dataset.suffix||'';
+    if(val)animCount(e.target,val,suffix);
+    metricObs.unobserve(e.target);
+  });
+},{threshold:.6});
+// Only animate pure numbers or numbers with trailing suffix (not prefixed symbols)
+document.querySelectorAll('.metric-val,.hero-metric-num').forEach(el=>{
+  const raw=el.textContent.trim();
+  const num=raw.replace(/[^0-9.]/g,'');
+  const suffix=raw.slice(num.length);
+  // skip values that start with non-digit (like "<800ms", "Top-5", "1536-d")
+  if(num && /^[0-9]/.test(raw)){
+    el.dataset.val=raw;
+    el.dataset.suffix='';
+    metricObs.observe(el);
+  }
+});
+
+// ── HERO NAME GLITCH ─────────────────────────
+const heroName=document.querySelector('.hero-name');
+if(heroName){
+  setInterval(()=>{
+    if(Math.random()>.88){
+      heroName.style.clipPath='inset(30% 0 40% 0)';
+      heroName.style.transform='translateX(4px)';
+      setTimeout(()=>{heroName.style.clipPath='none';heroName.style.transform=''},60);
+      setTimeout(()=>{heroName.style.clipPath='inset(60% 0 20% 0)';heroName.style.transform='translateX(-3px)'},80);
+      setTimeout(()=>{heroName.style.clipPath='none';heroName.style.transform=''},130);
+    }
+  },3500);
+}
+
+// ── STAGGERED CRED CARDS ─────────────────────
+const credObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.style.opacity='1';
+      e.target.style.transform='none';
+    }
+  });
+},{threshold:.15});
+document.querySelectorAll('.cred-card').forEach((c,i)=>{
+  c.style.opacity='0';
+  c.style.transform='translateY(24px)';
+  c.style.transition=`opacity .5s ${i*.08}s ease, transform .5s ${i*.08}s ease, border-color .3s, box-shadow .3s`;
+  credObs.observe(c);
+});
+
+// ── BUILD CARD STAGGER ───────────────────────
+const buildCardObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='none'}});
+},{threshold:.1});
+document.querySelectorAll('.build-card').forEach((c,i)=>{
+  c.style.opacity='0';c.style.transform='translateY(20px)';
+  c.style.transition=`opacity .5s ${i*.1}s, transform .5s ${i*.1}s`;
+  buildCardObs.observe(c);
+});
+
+// ── QFLOW ENTER KEY ──────────────────────────
+document.getElementById('qflow-q')?.addEventListener('keydown',e=>{if(e.key==='Enter')runQflow()});
+
+// ── NOVA AUTO-OPEN (after 8s, first visit) ───
+if(!sessionStorage.getItem('nova_shown')){
+  setTimeout(()=>{
+    const panel=document.getElementById('novaPanel');
+    if(!panel.classList.contains('open')){
+      panel.classList.add('open');
+      sessionStorage.setItem('nova_shown','1');
+      setTimeout(()=>{
+        addNMsg("👋 Recruiter? Ask me <strong style='color:var(--amber)'>\"Why should I hire him?\"</strong> — I'll make the case.","bot");
+      },400);
+    }
+  },8000);
+}
+
+// ── TEAL GLOW ON SECTION ENTER ───────────────
+const sectionObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting && e.intersectionRatio>.4){
+      document.querySelectorAll('nav .nav-links a').forEach(a=>{
+        a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id);
+      });
+    }
+  });
+},{threshold:.4});
+document.querySelectorAll('section[id]').forEach(s=>sectionObs.observe(s));
+
+// ── HOVER RIPPLE ON METRIC CARDS ─────────────
+document.querySelectorAll('.metric-card,.nr-stat,.gh-stat').forEach(card=>{
+  card.addEventListener('click',e=>{
+    const r=card.getBoundingClientRect();
+    const ripple=document.createElement('div');
+    ripple.style.cssText=`position:absolute;left:${e.clientX-r.left}px;top:${e.clientY-r.top}px;width:0;height:0;border-radius:50%;background:rgba(245,158,11,.15);transform:translate(-50%,-50%);transition:width .5s,height .5s,opacity .5s;pointer-events:none;z-index:0`;
+    card.style.position='relative';card.style.overflow='hidden';
+    card.appendChild(ripple);
+    requestAnimationFrame(()=>{ripple.style.width='200px';ripple.style.height='200px';ripple.style.opacity='0'});
+    setTimeout(()=>ripple.remove(),550);
+  });
+});
+
+// ── SCANLINE CSS INJECTION ───────────────────
+const extraStyles=document.createElement('style');
+extraStyles.textContent=`
+@keyframes scanline{from{top:0;opacity:1}to{top:100%;opacity:0}}
+.nr-stat{transition:all .3s}
+.nr-stat:hover{border-color:rgba(45,212,191,.3);transform:translateY(-3px);box-shadow:var(--gT)}
+.tl-item{transition:transform .2s}
+.tl-item:hover{transform:translateX(4px)}
+.proj-row{overflow:hidden}
+.qflow-step{transition:all .35s cubic-bezier(.4,0,.2,1)}
+.rs-active{box-shadow:0 0 10px rgba(245,158,11,.6)}
+.arch-header span{font-family:var(--mono);font-size:11px;letter-spacing:.5px}
+.proj-detail{transition:none}
+.pf-chip{padding:7px 16px;background:var(--card);border:1px solid var(--border);border-radius:20px;font-family:var(--mono);font-size:11px;color:var(--text2);cursor:pointer;transition:all .2s}
+.pf-chip.active,.pf-chip:hover{border-color:var(--amber);color:var(--amber);background:rgba(245,158,11,.08)}
+.theme-picker{display:flex;gap:6px;align-items:center;background:rgba(241,245,249,0.04);padding:4px 8px;border-radius:20px;border:1px solid var(--border)}
+.theme-dot{width:12px;height:12px;border-radius:50%;border:none;cursor:pointer;opacity:0.6;transition:all .2s}
+.theme-dot.active,.theme-dot:hover{opacity:1;transform:scale(1.25)}
+`;
+document.head.appendChild(extraStyles);
+
+// ── THEME SWITCHER ────────────────────────────
+function setTheme(name){
+  document.querySelectorAll('.theme-dot').forEach(d=>d.classList.remove('active'));
+  const root=document.documentElement;
+  if(name==='amber'){
+    root.style.setProperty('--amber','#f59e0b');
+    root.style.setProperty('--amber2','#d97706');
+    root.style.setProperty('--amber3','#fbbf24');
+    root.style.setProperty('--borderA','rgba(245,158,11,0.2)');
+    showToast('Theme set to Warm Amber 🟠');
+  }else if(name==='teal'){
+    root.style.setProperty('--amber','#2dd4bf');
+    root.style.setProperty('--amber2','#14b8a6');
+    root.style.setProperty('--amber3','#5eead4');
+    root.style.setProperty('--borderA','rgba(45,212,191,0.25)');
+    showToast('Theme set to Cyber Teal 🌐');
+  }else if(name==='violet'){
+    root.style.setProperty('--amber','#a855f7');
+    root.style.setProperty('--amber2','#9333ea');
+    root.style.setProperty('--amber3','#c084fc');
+    root.style.setProperty('--borderA','rgba(168,85,247,0.25)');
+    showToast('Theme set to Neon Violet 💜');
+  }
+}
+
+// ── PROJECT CATEGORY FILTERING ───────────────
+function filterProjects(cat, btn){
+  document.querySelectorAll('.pf-chip').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  const rows=document.querySelectorAll('.proj-row');
+  const details=document.querySelectorAll('.proj-detail');
+  rows.forEach(r=>{
+    const c=r.dataset.cat||'';
+    if(cat==='all'||c.includes(cat)){
+      r.style.display='grid';
+    }else{
+      r.style.display='none';
+    }
+  });
+  details.forEach(d=>d.classList.remove('open'));
+}
+
+// ── RAG HYPERPARAMETER SIMULATOR ─────────────
+function updateRagSim(){
+  const topk=parseInt(document.getElementById('sl-topk').value);
+  const thresh=parseFloat(document.getElementById('sl-thresh').value);
+  const temp=parseFloat(document.getElementById('sl-temp').value);
+  document.getElementById('v-topk').textContent=topk;
+  document.getElementById('v-thresh').textContent=thresh.toFixed(2);
+  document.getElementById('v-temp').textContent=temp.toFixed(2);
+  
+  const estLatency=Math.round(420+(topk*45)+(temp*80));
+  const estPrecision=(Math.min(99.4, 84 + (thresh*15) - (topk*0.5))).toFixed(1);
+  document.getElementById('rag-sim-out').textContent=`Latency: ~${estLatency}ms | Precision: ${estPrecision}%`;
+}
+
+// ── LIVE GITHUB API FETCH ─────────────────────
+(function fetchGH(){
+  fetch('https://api.github.com/users/Aadhidharmar001')
+    .then(r=>r.json())
+    .then(d=>{
+      if(d.public_repos){
+        const ghVal=document.getElementById('gh-repo-count');
+        if(ghVal)ghVal.textContent=d.public_repos+'+';
+      }
+    }).catch(()=>{});
+})();
+
+// ── CONSOLE ──────────────────────────────────
+console.log('%cAADHIDHARMAR.AI v2.1','color:#f59e0b;font-family:monospace;font-size:18px;font-weight:bold');
+console.log('%cRAG & AI Security Specialist · AI Product Builder','color:#2dd4bf;font-family:monospace;font-size:12px');
+console.log('%cCtrl+` for terminal | Commands: whoami, hire, skills, launch guardwaf, launch neuralrag','color:#818cf8;font-family:monospace;font-size:11px');
+console.log('%c📧 dharmaraadhi@gmail.com | 💼 linkedin.com/in/aadhi-dharmar-a35679293','color:#f59e0b;font-family:monospace;font-size:11px');
+</script>
+</body>
+</html>
