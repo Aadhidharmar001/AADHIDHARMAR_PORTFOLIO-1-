@@ -2503,11 +2503,6 @@
                             <ul class="proj-feat-list">
                                 <li>Medical Q&amp;A with symptom triage and specialist routing</li>
                                 <li>Built in a 24-hour sprint under competition pressure</li>
-                                <li>Secured 15th place at VIT against hundreds of teams</li>
-                                <li>LangChain + OpenAI + Streamlit full-stack</li>
-                            </ul>
-                        </div>
-                        <div style="display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start">
                             <span class="proj-tag" style="padding:6px 14px">LangChain</span>
                             <span class="proj-tag" style="padding:6px 14px">OpenAI</span>
                             <span class="proj-tag" style="padding:6px 14px">Streamlit</span>
@@ -2519,13 +2514,14 @@
                 <div class="proj-row" onclick="toggleProj(4)">
                     <div class="proj-num">04</div>
                     <div class="proj-info">
-                        <div class="proj-name">Customer Churn Prediction</div>
-                        <div class="proj-desc">ML pipeline predicting customer attrition with ensemble models</div>
+                        <div class="proj-name">GuardWAF — AI Agent Gateway</div>
+                        <div class="proj-desc">Enterprise AI agent security gateway & action guardrail proxy on AWS ECS Fargate</div>
                     </div>
                     <div class="proj-right">
                         <div class="proj-tags">
-                            <span class="proj-tag">Scikit-Learn</span>
-                            <span class="proj-tag">ML</span>
+                            <span class="proj-tag live">● AWS LIVE</span>
+                            <span class="proj-tag">FastAPI</span>
+                            <span class="proj-tag">AWS ECS</span>
                         </div>
                         <span class="proj-arrow">›</span>
                     </div>
@@ -2534,20 +2530,22 @@
                     <div class="proj-detail-grid">
                         <div>
                             <ul class="proj-feat-list">
-                                <li>End-to-end ML pipeline: EDA → feature engineering → model selection</li>
-                                <li>Ensemble models: Random Forest, XGBoost, Logistic Regression</li>
-                                <li>Business-ready feature importance and churn probability scores</li>
+                                <li>Action guardrail reverse proxy inspecting and authorizing AI agent tool/API calls</li>
+                                <li>Sliding-window rate limiting, stateful sequence validation, and session data scope enforcement</li>
+                                <li>Human-in-the-Loop (HITL) risk approval workflows with PostgreSQL audit logging and SSE monitoring</li>
                             </ul>
                             <div class="proj-actions">
-                                <a href="https://github.com/Aadhidharmar001/Customer-Churn-Prediction-ML-model"
-                                    target="_blank" class="btn-sm btn-sm-g">GitHub →</a>
+                                <a href="http://43.205.239.119:8000/static/index.html" target="_blank" class="btn-sm btn-sm-a">🌐 Live AWS Demo →</a>
+                                <a href="https://github.com/Aadhidharmar001" target="_blank" class="btn-sm btn-sm-g">GitHub →</a>
                             </div>
                         </div>
                         <div style="display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start">
-                            <span class="proj-tag" style="padding:6px 14px">Python</span>
-                            <span class="proj-tag" style="padding:6px 14px">Scikit-Learn</span>
-                            <span class="proj-tag" style="padding:6px 14px">XGBoost</span>
-                            <span class="proj-tag" style="padding:6px 14px">Pandas</span>
+                            <span class="proj-tag" style="padding:6px 14px">FastAPI</span>
+                            <span class="proj-tag" style="padding:6px 14px">AWS ECS Fargate</span>
+                            <span class="proj-tag" style="padding:6px 14px">Docker</span>
+                            <span class="proj-tag" style="padding:6px 14px">PostgreSQL</span>
+                            <span class="proj-tag" style="padding:6px 14px">SQLAlchemy</span>
+                            <span class="proj-tag live" style="padding:6px 14px">● AWS ECS Deployed</span>
                         </div>
                     </div>
                 </div>
@@ -3309,7 +3307,7 @@
         document.addEventListener('keydown', e => { if (e.key === 'Escape') closeTerm(); if (e.ctrlKey && e.key === '`') openTerm() });
         const tcmds = {
             whoami: () => [{ c: 'to', t: '┌──────────────────────────────────────────────┐' }, { c: 'to', t: '│  NAME:   Aadhidharmar T                      │' }, { c: 'to', t: '│  ROLE:   AI Product Builder · RAG Specialist  │' }, { c: 'to', t: '│  EDU:    B.Tech AI & DS — Sri Shakthi Inst.  │' }, { c: 'to', t: '│  CGPA:   7.23                                 │' }, { c: 'to', t: '│  STATUS: Seeking AI Engineering roles         │' }, { c: 'to', t: '│  EMAIL:  dharmaraadhi@gmail.com               │' }, { c: 'to', t: '└──────────────────────────────────────────────┘' }],
-            'show achievements': () => [{ c: 'ti', t: '🏆 ACHIEVEMENT LOG' }, { c: 'to', t: '' }, { c: 'to', t: '[✓] NeuralRAG — LangGraph + RAG + ChromaDB agentic system' }, { c: 'to', t: '[✓] VIT 24hr Hackathon — 15th place / AI Medical Chatbot' }, { c: 'to', t: '[✓] Intelligent Search Engine — live on Render' }, { c: 'to', t: '[✓] Speech Emotion Recognition — CNN + BERT multimodal' }, { c: 'to', t: '[✓] Customer Churn Prediction — ensemble ML pipeline' }, { c: 'to', t: '' }, { c: 'ti', t: 'Skills: LangGraph · RAG · ChromaDB · OpenAI · BERT · PyTorch' }],
+            'show achievements': () => [{ c: 'ti', t: '🏆 ACHIEVEMENT LOG' }, { c: 'to', t: '' }, { c: 'to', t: '[✓] GuardWAF — AI Agent Gateway (Live AWS ECS Fargate: 43.205.239.119:8000)' }, { c: 'to', t: '[✓] NeuralRAG — LangGraph + RAG + ChromaDB agentic system' }, { c: 'to', t: '[✓] VIT 24hr Hackathon — 15th place / AI Medical Chatbot' }, { c: 'to', t: '[✓] Intelligent Search Engine — live on Render' }, { c: 'to', t: '[✓] Speech Emotion Recognition — CNN + BERT multimodal' }, { c: 'to', t: '' }, { c: 'ti', t: 'Skills: GuardWAF · AWS ECS Fargate · LangGraph · RAG · ChromaDB · FastAPI · PostgreSQL' }],
             'launch neuralrag': () => [{ c: 'to', t: '[BOOT] NeuralRAG v1.0' }, { c: 'to', t: '[OK]   LangGraph state machine .............. ✓' }, { c: 'to', t: '[OK]   ChromaDB vector store ................ ✓' }, { c: 'to', t: '[OK]   OpenAI GPT-4o engine ................. ✓' }, { c: 'to', t: '[OK]   Router agent initialized .............. ✓' }, { c: 'to', t: '[OK]   Memory module ......................... ✓' }, { c: 'to', t: '' }, { c: 'ti', t: '✅ NeuralRAG ONLINE. <800ms latency. Top-5 retrieval.' }, { c: 'to', t: '   github.com/Aadhidharmar001' }],
             hire: () => [{ c: 'ti', t: '══════════════════════════════════════════════' }, { c: 'ti', t: '      THE CASE FOR HIRING AADHIDHARMAR' }, { c: 'ti', t: '══════════════════════════════════════════════' }, { c: 'to', t: '' }, { c: 'to', t: '✦ Builds REAL systems — NeuralRAG is architected, not tutorial-copied' }, { c: 'to', t: '✦ RAG specialist — rare depth at junior level' }, { c: 'to', t: '✦ Ships under pressure — 15th at VIT 24hr hackathon' }, { c: 'to', t: '✦ Stack: LangGraph + LangChain + OpenAI + ChromaDB' }, { c: 'to', t: '✦ Actively learning: RAGAS, LoRA, multi-agent patterns' }, { c: 'to', t: '' }, { c: 'ti', t: '📧 dharmaraadhi@gmail.com  |  📱 +91 6380072080' }],
             skills: () => [{ c: 'to', t: 'CORE STACK:' }, { c: 'to', t: '  AI/ML:   Python · TensorFlow · PyTorch · Scikit-Learn' }, { c: 'to', t: '  GenAI:   LangChain · LangGraph · OpenAI API' }, { c: 'to', t: '  RAG:     ChromaDB · Vector Search · BERT · NLP' }, { c: 'to', t: '  Deploy:  Streamlit · Flask · GitHub · Render' }, { c: 'to', t: '  Data:    SQL · Pandas · NumPy · Feature Engineering' }],

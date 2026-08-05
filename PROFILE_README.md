@@ -67,7 +67,16 @@ I'm **Aadhi Dharmar**, an **AI Product Builder** passionate about building **pro
 
 ## 📌 Featured AI Projects & Deployed Systems
 
-### 🧠 01. NeuralRAG — Stateful Agentic RAG System 🚀
+### 🛡️ 01. GuardWAF — AI Agent Security Gateway 🚀
+> **Stack**: `FastAPI` • `AWS ECS Fargate` • `Docker` • `PostgreSQL` • `SQLAlchemy` • `CloudWatch` • `Grok/OpenAI API`
+
+- Production-ready AI Agent WAF and Action Guardrail Gateway intercepting and governing every tool/API call before execution.
+- Features sliding-window rate limiting, stateful sequence validation, data scope verification, HITL approvals, and real-time audit logging.
+- 🌐 **Live AWS Deployment**: [43.205.239.119:8000/static/index.html](http://43.205.239.119:8000/static/index.html)
+
+---
+
+### 🧠 02. NeuralRAG — Stateful Agentic RAG System 🚀
 > **Stack**: `LangGraph` • `ChromaDB` • `OpenAI GPT-4o` • `Streamlit`
 
 - Production stateful graph architecture with router, vector retrieval, reranker, and LLM generation nodes.
@@ -76,20 +85,11 @@ I'm **Aadhi Dharmar**, an **AI Product Builder** passionate about building **pro
 
 ---
 
-### 🛡️ 02. GuardWAF — AI Security Firewall & Proxy 🛡️
-> **Stack**: `PyTorch` • `FastAPI` • `AWS EC2` • `Scikit-Learn` • `Python`
+### 🔍 03. Intelligent Search Engine 🚀
+> **Stack**: `Python` • `FastAPI` • `Vector Embeddings` • `Semantic Search` • `Render`
 
-- Real-time deep packet inspector proxy protecting backend applications against OWASP Top 10 web vulnerabilities.
-- Sub-millisecond PyTorch anomaly detection, automated IP rate-limiting, and live threat telemetry map.
-- 🌐 **Live AWS Deployment**: [43.205.239.119:8000/static/index.html](http://43.205.239.119:8000/static/index.html)
-
----
-
-### 🎙️ 03. Speech Emotion Recognition (SER) — Multimodal AI 🚀
-> **Stack**: `Python` • `TensorFlow/Keras` • `Librosa` • `CNN` • `Flask`
-
-- Deep learning system detecting human emotions from speech signals in real time using MFCC feature extraction.
-- Fuses audio feature representations with text sentiment analysis for enhanced emotional classification.
+- Sub-100ms semantic search engine leveraging vector embeddings and similarity ranking to surface contextually relevant results.
+- Live deployed backend API on Render serving external user traffic.
 
 ---
 
@@ -101,11 +101,11 @@ I'm **Aadhi Dharmar**, an **AI Product Builder** passionate about building **pro
 
 ---
 
-### 📉 05. Customer Churn Prediction System
-> **Stack**: `Python` • `Scikit-Learn` • `Pandas` • `Seaborn`
+### 🎙️ 05. Speech Emotion Recognition (SER) — Multimodal AI
+> **Stack**: `Python` • `TensorFlow/Keras` • `Librosa` • `CNN` • `Flask`
 
-- End-to-end ML business analytics pipeline featuring data cleaning, EDA, feature engineering, and ensemble model tuning.
-- 🔗 **Repository**: [github.com/Aadhidharmar001/Customer-Churn-Prediction-ML-model](https://github.com/Aadhidharmar001/Customer-Churn-Prediction-ML-model)
+- Deep learning system detecting human emotions from speech signals in real time using MFCC feature extraction.
+- Fuses audio feature representations with text sentiment analysis for enhanced emotional classification.
 
 ---
 
