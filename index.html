@@ -231,6 +231,30 @@ section{padding:120px 48px;position:relative;overflow:hidden}
 .gh-val{font-family:var(--display);font-size:28px;font-weight:800;color:var(--text);margin-bottom:4px}
 .gh-label{font-size:11px;color:var(--text3);font-family:var(--mono);letter-spacing:.5px}
 
+/* ── CERTIFICATIONS ── */
+#certifications{background:var(--bg2);padding:100px 0 80px;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.cert-tabs{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:28px;margin-bottom:40px}
+.cert-tab{background:var(--card);border:1px solid var(--border);color:var(--text2);padding:8px 18px;border-radius:20px;font-family:var(--mono);font-size:12px;cursor:pointer;transition:all .25s ease}
+.cert-tab:hover,.cert-tab.active{background:rgba(245,158,11,.12);border-color:var(--amber);color:var(--amber);box-shadow:0 0 16px rgba(245,158,11,.15)}
+.cert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.cert-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:26px;display:flex;flex-direction:column;justify-content:space-between;transition:all .35s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden}
+.cert-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--border),transparent);transition:all .35s ease}
+.cert-card:hover{transform:translateY(-4px);border-color:var(--borderA);box-shadow:0 12px 30px rgba(0,0,0,.4)}
+.cert-card:hover::before{background:linear-gradient(90deg,var(--amber),var(--teal))}
+.cert-card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.cert-issuer-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text);background:rgba(255,255,255,.04);padding:4px 10px;border-radius:6px;border:1px solid var(--border2)}
+.cert-cat-pill{font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:4px}
+.cat-genai{background:rgba(245,158,11,.1);color:var(--amber);border:1px solid rgba(245,158,11,.25)}
+.cat-datascience{background:rgba(45,212,191,.1);color:var(--teal);border:1px solid rgba(45,212,191,.25)}
+.cat-foundations{background:rgba(129,140,248,.1);color:var(--indigo);border:1px solid rgba(129,140,248,.25)}
+.cert-title{font-family:var(--display);font-size:17px;font-weight:700;line-height:1.4;margin-bottom:8px;color:var(--text)}
+.cert-meta{font-family:var(--mono);font-size:11px;color:var(--text3);margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.cert-skills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.cert-skill-tag{font-family:var(--mono);font-size:10px;color:var(--text2);background:rgba(255,255,255,.03);padding:3px 8px;border-radius:4px;border:1px solid var(--border2)}
+.cert-footer{display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:1px solid var(--border2)}
+.cert-id-badge{font-family:var(--mono);font-size:10px;color:var(--teal);background:rgba(45,212,191,.08);padding:4px 10px;border-radius:4px;border:1px solid rgba(45,212,191,.2);cursor:pointer;transition:all .2s ease;display:inline-flex;align-items:center;gap:4px}
+.cert-id-badge:hover{background:rgba(45,212,191,.18);border-color:var(--teal)}
+
 /* ── ABOUT / TIMELINE ── */
 #about{background:var(--bg2)}
 .timeline{position:relative;max-width:760px}
@@ -353,7 +377,7 @@ footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
   .nav-links{display:none}
   section{padding:80px 20px 60px}
   .nr-hero,.contact-grid,.building-grid,.proj-detail-grid{grid-template-columns:1fr}
-  .cred-grid{grid-template-columns:1fr 1fr}
+  .cred-grid,.cert-grid{grid-template-columns:1fr 1fr}
   .metrics-grid{grid-template-columns:repeat(2,1fr)}
   .qflow-steps{grid-template-columns:1fr 1fr;gap:12px}
   .qflow-arrow{display:none}
@@ -363,7 +387,7 @@ footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
   .hero-metrics{gap:20px}
 }
 @media(max-width:600px){
-  .cred-grid{grid-template-columns:1fr}
+  .cred-grid,.cert-grid{grid-template-columns:1fr}
   .nr-stats{grid-template-columns:1fr 1fr}
   .hero-name{letter-spacing:-1px}
 }
@@ -384,6 +408,7 @@ footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
     <li><a href="#projects">Projects</a></li>
     <li><a href="#building">Building</a></li>
     <li><a href="#cred">Credibility</a></li>
+    <li><a href="#certifications">Certifications</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -1041,6 +1066,247 @@ footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
           <div class="gh-label">COMMITS TO GROWTH</div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CERTIFICATIONS ═══════════ -->
+<section id="certifications">
+  <div class="container">
+    <div class="reveal" style="text-align:center">
+      <div class="sec-tag">VERIFIED CREDENTIALS</div>
+      <h2 class="sec-title">Industry <span class="g">Certifications</span></h2>
+      <p class="sec-sub">9 verified credentials spanning Generative AI, LLMs, NLP, Prompt Engineering, and Data Science.</p>
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div class="cert-tabs reveal">
+      <button class="cert-tab active" onclick="filterCerts('all', this)">ALL (9)</button>
+      <button class="cert-tab" onclick="filterCerts('genai', this)">GENAI &amp; LLMS (4)</button>
+      <button class="cert-tab" onclick="filterCerts('datascience', this)">DATA SCIENCE &amp; NLP (3)</button>
+      <button class="cert-tab" onclick="filterCerts('foundations', this)">FOUNDATIONS (2)</button>
+    </div>
+
+    <!-- Certification Grid -->
+    <div class="cert-grid reveal" id="certGrid">
+      
+      <!-- Card 1: DataCamp OpenAI -->
+      <div class="cert-card" data-cat="genai">
+        <div>
+          <div class="cert-card-top">
+            <div class="cert-issuer-badge">🟢 DataCamp</div>
+            <span class="cert-cat-pill cat-genai">GenAI &amp; LLMs</span>
+          </div>
+          <h3 class="cert-title">Working with the OpenAI API</h3>
+          <div class="cert-meta">
+            <span>📅 Jun 04, 2026</span>
+            <span>⏱️ 3 Hours</span>
+          </div>
+          <div class="cert-skills">
+            <span class="cert-skill-tag">OpenAI API</span>
+            <span class="cert-skill-tag">LLM Integration</span>
+            <span class="cert-skill-tag">Python</span>
+            <span class="cert-skill-tag">Prompting</span>
+          </div>
+        </div>
+        <div class="cert-footer">
+          <span style="font-family:var(--mono);font-size:10px;color:var(--green)">✓ VERIFIED</span>
+          <button class="cert-id-badge" onclick="copyCertId('#47,804,564', 'DataCamp OpenAI')">📋 ID: #47,804,564</button>
+        </div>
+      </div>
+
+      <!-- Card 2: Microsoft & LinkedIn -->
+      <div class="cert-card" data-cat="genai">
+        <div>
+          <div class="cert-card-top">
+            <div class="cert-issuer-badge">💼 Microsoft &amp; LinkedIn</div>
+            <span class="cert-cat-pill cat-genai">GenAI &amp; LLMs</span>
+          </div>
+          <h3 class="cert-title">Career Essentials in Generative AI</h3>
+          <div class="cert-meta">
+            <span>📅 Aug 07, 2024</span>
+            <span>⏱️ 5.7 Hours</span>
+          </div>
+          <div class="cert-skills">
+            <span class="cert-skill-tag">Generative AI</span>
+            <span class="cert-skill-tag">AI Ethics</span>
+            <span class="cert-skill-tag">LLM Systems</span>
+          </div>
+        </div>
+        <div class="cert-footer">
+          <span style="font-family:var(--mono);font-size:10px;color:var(--green)">✓ VERIFIED</span>
+          <button class="cert-id-badge" onclick="copyCertId('b74788c496eeca9e517fb888bf717c8dcdac02e8011e81f0322e3afa6460c2c0', 'Microsoft GenAI')">📋 ID: b74788c4...</button>
+        </div>
+      </div>
+
+      <!-- Card 3: Simplilearn Prompt Engineering -->
+      <div class="cert-card" data-cat="genai">
+        <div>
+          <div class="cert-card-top">
+            <div class="cert-issuer-badge">🤖 Simplilearn SkillUp</div>
+            <span class="cert-cat-pill cat-genai">GenAI &amp; LLMs</span>
+          </div>
+          <h3 class="cert-title">Introduction to Prompt Engineering</h3>
+          <div class="cert-meta">
+            <span>📅 Feb 06, 2026</span>
+            <span>🎓 Online Course</span>
+          </div>
+          <div class="cert-skills">
+            <span class="cert-skill-tag">Prompt Design</span>
+            <span class="cert-skill-tag">Context Window</span>
+            <span class="cert-skill-tag">Few-Shot Prompting</span>
+          </div>
+        </div>
+        <div class="cert-footer">
+          <span style="font-family:var(--mono);font-size:10px;color:var(--green)">✓ VERIFIED</span>
+          <button class="cert-id-badge" onclick="copyCertId('9810874', 'Simplilearn Prompt Eng')">📋 Code: 9810874</button>
+        </div>
+      </div>
+
+      <!-- Card 4: Tavily Web Search API -->
+      <div class="cert-card" data-cat="genai">
+        <div>
+          <div class="cert-card-top">
+            <div class="cert-issuer-badge">🌐 Tavily</div>
+            <span class="cert-cat-pill cat-genai">GenAI &amp; LLMs</span>
+          </div>
+          <h3 class="cert-title">Web Search API Certification</h3>
+          <div class="cert-meta">
+            <span>📅 Verified Course</span>
+            <span>⚡ Search RAG</span>
+          </div>
+          <div class="cert-skills">
+            <span class="cert-skill-tag">Real-Time Search</span>
+            <span class="cert-skill-tag">RAG Grounding</span>
+            <span class="cert-skill-tag">Tavily API</span>
+          </div>
+        </div>
+        <div class="cert-footer">
+          <span style="font-family:var(--mono);font-size:10px;color:var(--green)">✓ VERIFIED</span>
+          <button class="cert-id-badge" onclick="copyCertId('Tavily-WebSearch-API', 'Tavily API')">📋 Tavily Verified</button>
+        </div>
+      </div>
+
+      <!-- Card 5: Infosys Natural Language Processing -->
+      <div class="cert-card" data-cat="datascience">
+        <div>
+          <div class="cert-card-top">
+            <div class="cert-issuer-badge">💬 Infosys Springboard</div>
+            <span class="cert-cat-pill cat-datascience">Data Science &amp; NLP</span>
+          </div>
+          <h3 class="cert-title">Introduction to Natural Language Processing</h3>
+          <div class="cert-meta">
+            <span>📅 Jun 08, 2025</span>
+            <span>📚 Infosys ETA</span>
+          </div>
+          <div class="cert-skills">
+            <span class="cert-skill-tag">NLP Fundamentals</span>
+            <span class="cert-skill-tag">Text Processing</span>
+            <span class="cert-skill-tag">Tokenization</span>
+          </div>
+        </div>
+        <div class="cert-footer">
+          <span style="font-family:var(--mono);font-size:10px;color:var(--green)">✓ VERIFIED</span>
+          <button class="cert-id-badge" onclick="copyCertId('verify.onwingspan.com', 'Infosys NLP')">🌐 verify.onwingspan.com</button>
+        </div>
+      </div>
+
+      <!-- Card 6: Infosys Data Science -->
+      <div class="cert-card" data-cat="datascience">
+        <div>
+          <div class="cert-card-top">
+            <div class="cert-issuer-badge">📘 Infosys Springboard</div>
+            <span class="cert-cat-pill cat-datascience">Data Science &amp; NLP</span>
+          </div>
+          <h3 class="cert-title">Introduction to Data Science</h3>
+          <div class="cert-meta">
+            <span>📅 Jun 06, 2025</span>
+            <span>📊 Infosys ETA</span>
+          </div>
+          <div class="cert-skills">
+            <span class="cert-skill-tag">Data Science</span>
+            <span class="cert-skill-tag">Analytics</span>
+            <span class="cert-skill-tag">Python</span>
+          </div>
+        </div>
+        <div class="cert-footer">
+          <span style="font-family:var(--mono);font-size:10px;color:var(--green)">✓ VERIFIED</span>
+          <button class="cert-id-badge" onclick="copyCertId('verify.onwingspan.com', 'Infosys Data Science')">🌐 verify.onwingspan.com</button>
+        </div>
+      </div>
+
+      <!-- Card 7: TATA & Forage -->
+      <div class="cert-card" data-cat="datascience">
+        <div>
+          <div class="cert-card-top">
+            <div class="cert-issuer-badge">📊 TATA / Forage</div>
+            <span class="cert-cat-pill cat-datascience">Data Science &amp; NLP</span>
+          </div>
+          <h3 class="cert-title">Data Visualisation: Empowering Business</h3>
+          <div class="cert-meta">
+            <span>📅 Aug 18, 2025</span>
+            <span>🎯 Practical Simulation</span>
+          </div>
+          <div class="cert-skills">
+            <span class="cert-skill-tag">Business Insights</span>
+            <span class="cert-skill-tag">Visual Analytics</span>
+            <span class="cert-skill-tag">Executive Reporting</span>
+          </div>
+        </div>
+        <div class="cert-footer">
+          <span style="font-family:var(--mono);font-size:10px;color:var(--green)">✓ VERIFIED</span>
+          <button class="cert-id-badge" onclick="copyCertId('x3dBAJWK4PfeP6MNF', 'TATA Forage')">📋 Code: x3dBAJWK...</button>
+        </div>
+      </div>
+
+      <!-- Card 8: Intel & Digital India - Appreciate -->
+      <div class="cert-card" data-cat="foundations">
+        <div>
+          <div class="cert-card-top">
+            <div class="cert-issuer-badge">🔷 Intel &amp; CBSE</div>
+            <span class="cert-cat-pill cat-foundations">Foundations</span>
+          </div>
+          <h3 class="cert-title">AI For All — AI Appreciate Stage</h3>
+          <div class="cert-meta">
+            <span>📅 Jul 06, 2025</span>
+            <span>🏛️ Digital India Initiative</span>
+          </div>
+          <div class="cert-skills">
+            <span class="cert-skill-tag">AI Concepts</span>
+            <span class="cert-skill-tag">Machine Learning</span>
+            <span class="cert-skill-tag">AI Ethics</span>
+          </div>
+        </div>
+        <div class="cert-footer">
+          <span style="font-family:var(--mono);font-size:10px;color:var(--green)">✓ VERIFIED</span>
+          <button class="cert-id-badge" onclick="copyCertId('Intel-CBSE-AI-Appreciate-2025', 'Intel AI Appreciate')">📋 Intel Verified</button>
+        </div>
+      </div>
+
+      <!-- Card 9: Intel & Digital India - Aware -->
+      <div class="cert-card" data-cat="foundations">
+        <div>
+          <div class="cert-card-top">
+            <div class="cert-issuer-badge">🔷 Intel &amp; CBSE</div>
+            <span class="cert-cat-pill cat-foundations">Foundations</span>
+          </div>
+          <h3 class="cert-title">AI For All — AI Aware Stage</h3>
+          <div class="cert-meta">
+            <span>📅 Jul 06, 2025</span>
+            <span>🏛️ Digital India Initiative</span>
+          </div>
+          <div class="cert-skills">
+            <span class="cert-skill-tag">AI Literacy</span>
+            <span class="cert-skill-tag">Social Impact</span>
+            <span class="cert-skill-tag">Digital India</span>
+          </div>
+        </div>
+        <div class="cert-footer">
+          <span style="font-family:var(--mono);font-size:10px;color:var(--green)">✓ VERIFIED</span>
+          <button class="cert-id-badge" onclick="copyCertId('Intel-CBSE-AI-Aware-2025', 'Intel AI Aware')">📋 Intel Verified</button>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1858,6 +2124,33 @@ function filterProjects(cat, btn){
     }
   });
   details.forEach(d=>d.classList.remove('open'));
+}
+
+// ── CERTIFICATIONS FILTER & COPY ─────────────
+function filterCerts(cat, btn) {
+  document.querySelectorAll('.cert-tab').forEach(t => t.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  const cards = document.querySelectorAll('.cert-card');
+  cards.forEach(card => {
+    if (cat === 'all' || card.dataset.cat === cat) {
+      card.style.display = 'flex';
+      card.style.animation = 'up 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+function copyCertId(id, name) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(id).then(() => {
+      showToast(`Copied ${name} Code: ${id}`);
+    }).catch(() => {
+      showToast(`Credential: ${id}`);
+    });
+  } else {
+    showToast(`Credential: ${id}`);
+  }
 }
 
 // ── RAG HYPERPARAMETER SIMULATOR ─────────────
