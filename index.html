@@ -66,16 +66,33 @@ nav{position:fixed;top:0;left:0;right:0;z-index:2000;padding:18px 48px;display:f
 .nav-pill-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s infinite}
 
 /* ── HERO ── */
-#hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:100px 48px 60px;isolation:isolate}
+#hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:120px 48px 60px;isolation:isolate}
 #heroCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
-/* HERO PROFILE DISPLAY */
-.hero-container{position:relative;z-index:2;max-width:1200px;width:100%;display:grid;grid-template-columns:1fr 340px;gap:40px;align-items:center}
+.hero-container{position:relative;z-index:2;max-width:1200px;width:100%;display:grid;grid-template-columns:1fr 380px;gap:48px;align-items:center}
+.hero-wrap{position:relative;z-index:2;width:100%;padding:0;text-align:left}
+.hero-badge{display:inline-flex;align-items:center;gap:10px;padding:7px 16px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.22);border-radius:6px;font-family:var(--mono);font-size:11px;color:var(--amber);letter-spacing:1.5px;margin-bottom:28px;opacity:0;animation:up .7s .3s forwards;max-width:100%}
+.hero-name{font-family:var(--display);font-size:clamp(36px,4.5vw,72px);font-weight:800;line-height:1.05;letter-spacing:clamp(-2px,-0.04em,-1px);opacity:0;animation:up .8s .6s forwards;word-break:normal;overflow-wrap:normal;max-width:100%}
+.hero-name .line1{display:block;color:var(--text);white-space:nowrap}
+.hero-name .line2{display:block;background:linear-gradient(100deg,var(--amber) 0%,var(--teal) 60%,var(--indigo) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap}
+.hero-sub{font-size:clamp(15px,1.5vw,18px);color:var(--text2);margin:24px 0 36px;max-width:520px;line-height:1.75;font-weight:300;opacity:0;animation:up .7s .9s forwards}
+#typed-text{color:var(--amber);font-weight:500}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:up .7s 1.1s forwards}
+.btn-primary{padding:13px 28px;background:var(--amber);color:#0c0e13;border:none;border-radius:6px;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:10px;white-space:nowrap}
+.btn-primary:hover{background:var(--amber3);transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,158,11,.35)}
+.btn-ghost{padding:13px 28px;background:transparent;color:var(--text);border:1px solid var(--border);border-radius:6px;font-family:var(--mono);font-size:13px;cursor:pointer;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:10px;white-space:nowrap}
+.btn-ghost:hover{border-color:var(--text2);transform:translateY(-2px)}
+.hero-metrics{display:flex;gap:32px;margin-top:48px;opacity:0;animation:up .7s 1.3s forwards;flex-wrap:wrap}
+.hero-metric{border-left:2px solid var(--amber);padding-left:16px}
+.hero-metric-num{font-family:var(--display);font-size:28px;font-weight:800;color:var(--text);line-height:1}
+.hero-metric-label{font-size:11px;color:var(--text3);font-family:var(--mono);letter-spacing:1px;margin-top:5px}
+
+/* HERO PORTRAIT DISPLAY */
 .hero-profile-container{position:relative;display:flex;justify-content:center;align-items:center;opacity:0;animation:up .9s .5s forwards}
-.hero-profile-blend-wrap{position:relative;width:100%;max-width:340px;aspect-ratio:4/5;border-radius:24px;overflow:hidden;border:1px solid var(--borderA);box-shadow:0 20px 50px rgba(0,0,0,.8),0 0 40px rgba(245,158,11,.2);background:var(--card);transition:all .4s ease}
-.hero-profile-blend-wrap:hover{transform:translateY(-6px);box-shadow:0 30px 60px rgba(0,0,0,.9),0 0 50px rgba(45,212,191,.3);border-color:var(--teal)}
+.hero-profile-blend-wrap{position:relative;width:100%;max-width:360px;aspect-ratio:4/5;border-radius:24px;overflow:hidden;border:1px solid var(--borderA);box-shadow:0 24px 60px rgba(0,0,0,.8),0 0 45px rgba(245,158,11,.2);background:var(--card);transition:all .4s ease}
+.hero-profile-blend-wrap:hover{transform:translateY(-6px) rotate(1deg);box-shadow:0 30px 70px rgba(0,0,0,.9),0 0 55px rgba(45,212,191,.3);border-color:var(--teal)}
 .hero-profile-glow{position:absolute;inset:-20px;border-radius:50%;background:radial-gradient(circle at center,rgba(245,158,11,.25) 0%,rgba(45,212,191,.15) 50%,transparent 70%);filter:blur(24px);z-index:0;pointer-events:none}
 .hero-profile-img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .5s ease;display:block}
-.hero-profile-blend-wrap:hover .hero-profile-img{transform:scale(1.05)}
+.hero-profile-blend-wrap:hover .hero-profile-img{transform:scale(1.04)}
 .hero-profile-blend-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(12,14,19,.7) 0%,transparent 35%);z-index:2;pointer-events:none}
 
 /* Floating Badges Overlay */
@@ -491,7 +508,7 @@ footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
           <span style="width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s infinite"></span>
           AI ENGINEER
         </div>
-        <img src="assets/profile.jpg" alt="Aadhidharmar T. - AI Engineer" class="hero-profile-img">
+        <img src="assets/aadhi_studio.jpg" alt="Aadhidharmar T. - AI Engineer" class="hero-profile-img">
         <div class="hero-chip-bottom">
           ⚡ RAG &amp; AGENTIC AI
         </div>
