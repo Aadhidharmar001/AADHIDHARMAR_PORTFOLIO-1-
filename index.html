@@ -66,11 +66,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:2000;padding:18px 48px;display:f
 .nav-pill-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s infinite}
 
 /* ── HERO ── */
-#hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:0;isolation:isolate}
+#hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:100px 48px 60px;isolation:isolate}
 #heroCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
-.hero-wrap{position:relative;z-index:2;max-width:860px;width:100%;padding:80px 48px 40px;text-align:left}
+.hero-container{position:relative;z-index:2;max-width:1200px;width:100%;display:grid;grid-template-columns:1.2fr 0.8fr;gap:48px;align-items:center}
+.hero-wrap{position:relative;z-index:2;width:100%;padding:0;text-align:left}
 .hero-badge{display:inline-flex;align-items:center;gap:10px;padding:7px 16px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.22);border-radius:6px;font-family:var(--mono);font-size:11px;color:var(--amber);letter-spacing:1.5px;margin-bottom:28px;opacity:0;animation:up .7s .3s forwards;max-width:100%}
-.hero-name{font-family:var(--display);font-size:clamp(38px,6vw,88px);font-weight:800;line-height:1.0;letter-spacing:clamp(-2px,-0.04em,-1px);opacity:0;animation:up .8s .6s forwards;word-break:normal;overflow-wrap:normal;max-width:100%}
+.hero-name{font-family:var(--display);font-size:clamp(36px,5vw,76px);font-weight:800;line-height:1.05;letter-spacing:clamp(-2px,-0.04em,-1px);opacity:0;animation:up .8s .6s forwards;word-break:normal;overflow-wrap:normal;max-width:100%}
 .hero-name .line1{display:block;color:var(--text);white-space:nowrap}
 .hero-name .line2{display:block;background:linear-gradient(100deg,var(--amber) 0%,var(--teal) 60%,var(--indigo) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap}
 .hero-sub{font-size:clamp(15px,1.6vw,19px);color:var(--text2);margin:24px 0 36px;max-width:520px;line-height:1.75;font-weight:300;opacity:0;animation:up .7s .9s forwards}
@@ -80,10 +81,24 @@ nav{position:fixed;top:0;left:0;right:0;z-index:2000;padding:18px 48px;display:f
 .btn-primary:hover{background:var(--amber3);transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,158,11,.35)}
 .btn-ghost{padding:13px 28px;background:transparent;color:var(--text);border:1px solid var(--border);border-radius:6px;font-family:var(--mono);font-size:13px;cursor:pointer;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:10px;white-space:nowrap}
 .btn-ghost:hover{border-color:var(--text2);transform:translateY(-2px)}
-.hero-metrics{display:flex;gap:36px;margin-top:56px;opacity:0;animation:up .7s 1.3s forwards;flex-wrap:wrap}
-.hero-metric{border-left:2px solid var(--amber);padding-left:18px}
-.hero-metric-num{font-family:var(--display);font-size:30px;font-weight:800;color:var(--text);line-height:1}
+.hero-metrics{display:flex;gap:32px;margin-top:48px;opacity:0;animation:up .7s 1.3s forwards;flex-wrap:wrap}
+.hero-metric{border-left:2px solid var(--amber);padding-left:16px}
+.hero-metric-num{font-family:var(--display);font-size:28px;font-weight:800;color:var(--text);line-height:1}
 .hero-metric-label{font-size:11px;color:var(--text3);font-family:var(--mono);letter-spacing:1px;margin-top:5px}
+
+/* HERO PROFILE SEAMLESS BLEND */
+.hero-profile-container{position:relative;display:flex;justify-content:center;align-items:center;opacity:0;animation:up .9s .5s forwards}
+.hero-profile-blend-wrap{position:relative;width:100%;max-width:420px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
+.hero-profile-glow{position:absolute;inset:-30px;border-radius:50%;background:radial-gradient(circle at center,rgba(245,158,11,.22) 0%,rgba(45,212,191,.12) 40%,transparent 70%);filter:blur(30px);z-index:1;pointer-events:none;animation:pulseGlow 6s ease-in-out infinite}
+@keyframes pulseGlow{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+.hero-profile-img{position:relative;z-index:2;width:100%;height:100%;object-fit:cover;object-position:center 30%;mask-image:radial-gradient(circle at 50% 45%,rgba(0,0,0,1) 40%,rgba(0,0,0,0) 78%);-webkit-mask-image:radial-gradient(circle at 50% 45%,rgba(0,0,0,1) 40%,rgba(0,0,0,0) 78%);transition:transform .5s ease;filter:contrast(1.05) brightness(1.02)}
+.hero-profile-blend-wrap:hover .hero-profile-img{transform:scale(1.04)}
+
+/* Floating Badges Overlay */
+.hero-chip-top{position:absolute;top:10px;right:10px;background:rgba(12,14,19,.85);backdrop-filter:blur(12px);border:1px solid var(--borderA);padding:8px 16px;border-radius:30px;font-family:var(--mono);font-size:11px;color:var(--amber);box-shadow:0 10px 30px rgba(0,0,0,.6);display:flex;align-items:center;gap:8px;z-index:3;animation:float 4s ease-in-out infinite}
+.hero-chip-bottom{position:absolute;bottom:10px;left:10px;background:rgba(12,14,19,.85);backdrop-filter:blur(12px);border:1px solid var(--borderA);padding:8px 16px;border-radius:30px;font-family:var(--mono);font-size:11px;color:var(--teal);box-shadow:0 10px 30px rgba(0,0,0,.6);display:flex;align-items:center;gap:8px;z-index:3;animation:float 4s ease-in-out 2s infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
 .hero-scroll{position:absolute;bottom:28px;left:48px;display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:2px;opacity:0;animation:fadeIn 1s 2.2s forwards;z-index:2}
 .hero-scroll-line{width:36px;height:1px;background:linear-gradient(90deg,var(--amber),transparent)}
 
@@ -391,6 +406,12 @@ footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
   nav{padding:16px 20px}
   .nav-links{display:none}
   section{padding:80px 20px 60px}
+  .hero-container{grid-template-columns:1fr;gap:36px;text-align:center}
+  .hero-wrap{text-align:center}
+  .hero-sub{margin-left:auto;margin-right:auto}
+  .hero-actions{justify-content:center}
+  .hero-metrics{justify-content:center;gap:20px}
+  .hero-profile-card{max-width:300px;margin:0 auto}
   .nr-hero,.contact-grid,.building-grid,.proj-detail-grid{grid-template-columns:1fr}
   .cred-grid,.cert-grid{grid-template-columns:1fr 1fr}
   .metrics-grid{grid-template-columns:repeat(2,1fr)}
@@ -399,7 +420,6 @@ footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
   .github-grid{grid-template-columns:repeat(2,1fr)}
   .nova-panel{width:min(340px,calc(100vw - 40px));right:-16px}
   footer{flex-direction:column;gap:8px;text-align:center}
-  .hero-metrics{gap:20px}
 }
 @media(max-width:600px){
   .cred-grid,.cert-grid{grid-template-columns:1fr}
@@ -443,40 +463,58 @@ footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
 <!-- ═══════════ HERO ═══════════ -->
 <section id="hero">
   <canvas id="heroCanvas"></canvas>
-  <div class="hero-wrap">
-    <div class="hero-badge">
-      <span style="width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s infinite;display:inline-block"></span>
-      AVAILABLE FOR AI ENGINEERING ROLES
+  <div class="hero-container">
+    <div class="hero-wrap">
+      <div class="hero-badge">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s infinite;display:inline-block"></span>
+        AVAILABLE FOR AI ENGINEERING ROLES
+      </div>
+      <h1 class="hero-name">
+        <span class="line1">Aadhidharmar T.</span>
+        <span class="line2">AI Product Builder.</span>
+      </h1>
+      <p class="hero-sub">I don't just study AI — I <span id="typed-text">ship production systems.</span><br>RAG pipelines. Agentic workflows. Deployed products.</p>
+      <div class="hero-actions">
+        <a href="#neuralrag" class="btn-primary">View NeuralRAG →</a>
+        <a href="mailto:dharmaraadhi@gmail.com?subject=Requesting%20Resume%20-%20Aadhidharmar%20T" class="btn-ghost">📄 Resume (PDF)</a>
+        <a href="mailto:dharmaraadhi@gmail.com" class="btn-ghost">🤝 Hire Me</a>
+      </div>
+      <div class="hero-metrics">
+        <div class="hero-metric">
+          <div class="hero-metric-num">5+</div>
+          <div class="hero-metric-label">SYSTEMS BUILT</div>
+        </div>
+        <div class="hero-metric">
+          <div class="hero-metric-num">15th</div>
+          <div class="hero-metric-label">VIT HACKATHON</div>
+        </div>
+        <div class="hero-metric">
+          <div class="hero-metric-num">RAG</div>
+          <div class="hero-metric-label">SPECIALIST</div>
+        </div>
+        <div class="hero-metric">
+          <div class="hero-metric-num">2026</div>
+          <div class="hero-metric-label">GRADUATING</div>
+        </div>
+      </div>
     </div>
-    <h1 class="hero-name">
-      <span class="line1">Aadhidharmar T.</span>
-      <span class="line2">AI Product Builder.</span>
-    </h1>
-    <p class="hero-sub">I don't just study AI — I <span id="typed-text">ship production systems.</span><br>RAG pipelines. Agentic workflows. Deployed products.</p>
-    <div class="hero-actions">
-      <a href="#neuralrag" class="btn-primary">View NeuralRAG →</a>
-      <a href="mailto:dharmaraadhi@gmail.com?subject=Requesting%20Resume%20-%20Aadhidharmar%20T" class="btn-ghost">📄 Resume (PDF)</a>
-      <a href="mailto:dharmaraadhi@gmail.com" class="btn-ghost">🤝 Hire Me</a>
-    </div>
-    <div class="hero-metrics">
-      <div class="hero-metric">
-        <div class="hero-metric-num">5+</div>
-        <div class="hero-metric-label">SYSTEMS BUILT</div>
-      </div>
-      <div class="hero-metric">
-        <div class="hero-metric-num">15th</div>
-        <div class="hero-metric-label">VIT HACKATHON</div>
-      </div>
-      <div class="hero-metric">
-        <div class="hero-metric-num">RAG</div>
-        <div class="hero-metric-label">SPECIALIST</div>
-      </div>
-      <div class="hero-metric">
-        <div class="hero-metric-num">2026</div>
-        <div class="hero-metric-label">GRADUATING</div>
+
+    <!-- HERO PROFILE SEAMLESS BLEND -->
+    <div class="hero-profile-container">
+      <div class="hero-profile-blend-wrap">
+        <div class="hero-profile-glow"></div>
+        <div class="hero-chip-top">
+          <span style="width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s infinite"></span>
+          AI ENGINEER
+        </div>
+        <img src="assets/profile.jpg" alt="Aadhidharmar T. - AI Engineer" class="hero-profile-img">
+        <div class="hero-chip-bottom">
+          ⚡ RAG &amp; AGENTIC AI
+        </div>
       </div>
     </div>
   </div>
+
   <div class="hero-scroll">
     <div class="hero-scroll-line"></div>
     SCROLL TO EXPLORE
