@@ -255,6 +255,21 @@ section{padding:120px 48px;position:relative;overflow:hidden}
 .cert-id-badge{font-family:var(--mono);font-size:10px;color:var(--teal);background:rgba(45,212,191,.08);padding:4px 10px;border-radius:4px;border:1px solid rgba(45,212,191,.2);cursor:pointer;transition:all .2s ease;display:inline-flex;align-items:center;gap:4px}
 .cert-id-badge:hover{background:rgba(45,212,191,.18);border-color:var(--teal)}
 
+/* Certificate Image & Modal Lightbox */
+.cert-img-wrap{position:relative;width:100%;height:150px;border-radius:8px;overflow:hidden;margin-bottom:14px;background:rgba(0,0,0,.4);border:1px solid var(--border2);cursor:pointer}
+.cert-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .4s ease,filter .4s ease}
+.cert-img-overlay{position:absolute;inset:0;background:rgba(12,14,19,.75);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s ease;font-family:var(--mono);font-size:11px;color:var(--amber);letter-spacing:1px;font-weight:600}
+.cert-img-wrap:hover img{transform:scale(1.06);filter:brightness(0.9)}
+.cert-img-wrap:hover .cert-img-overlay{opacity:1}
+
+.cert-modal-overlay{position:fixed;inset:0;z-index:99999;background:rgba(5,6,9,.88);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:20px;opacity:0;transition:opacity .3s ease}
+.cert-modal-overlay.open{display:flex;opacity:1}
+.cert-modal-content{background:var(--card);border:1px solid var(--borderA);border-radius:16px;max-width:800px;width:100%;max-height:90vh;overflow-y:auto;position:relative;padding:24px;box-shadow:0 24px 60px rgba(0,0,0,.8);animation:up .35s ease}
+.cert-modal-close{position:absolute;top:16px;right:20px;background:none;border:none;color:var(--text2);font-size:28px;cursor:pointer;line-height:1;transition:color .2s}
+.cert-modal-close:hover{color:var(--amber)}
+.cert-modal-body{display:flex;flex-direction:column;gap:16px}
+.cert-modal-img{width:100%;max-height:480px;object-fit:contain;border-radius:10px;background:#000;border:1px solid var(--border2)}
+
 /* ── ABOUT / TIMELINE ── */
 #about{background:var(--bg2)}
 .timeline{position:relative;max-width:760px}
@@ -1093,6 +1108,10 @@ footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
       <!-- Card 1: DataCamp OpenAI -->
       <div class="cert-card" data-cat="genai">
         <div>
+          <div class="cert-img-wrap" onclick="openCertModal('assets/certificates/datacamp_openai.png', 'Working with the OpenAI API', 'DataCamp', 'Jun 04, 2026', '#47,804,564')">
+            <img src="assets/certificates/datacamp_openai.png" alt="Working with the OpenAI API" loading="lazy">
+            <div class="cert-img-overlay">👁️ VIEW CERTIFICATE</div>
+          </div>
           <div class="cert-card-top">
             <div class="cert-issuer-badge">🟢 DataCamp</div>
             <span class="cert-cat-pill cat-genai">GenAI &amp; LLMs</span>
@@ -1118,6 +1137,10 @@ footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
       <!-- Card 2: Microsoft & LinkedIn -->
       <div class="cert-card" data-cat="genai">
         <div>
+          <div class="cert-img-wrap" onclick="openCertModal('assets/certificates/microsoft_generative_ai.jpg', 'Career Essentials in Generative AI', 'Microsoft & LinkedIn', 'Aug 07, 2024', 'b74788c496eeca9e517fb888bf717c8dcdac02e8011e81f0322e3afa6460c2c0')">
+            <img src="assets/certificates/microsoft_generative_ai.jpg" alt="Career Essentials in Generative AI" loading="lazy">
+            <div class="cert-img-overlay">👁️ VIEW CERTIFICATE</div>
+          </div>
           <div class="cert-card-top">
             <div class="cert-issuer-badge">💼 Microsoft &amp; LinkedIn</div>
             <span class="cert-cat-pill cat-genai">GenAI &amp; LLMs</span>
@@ -1142,6 +1165,10 @@ footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
       <!-- Card 3: Simplilearn Prompt Engineering -->
       <div class="cert-card" data-cat="genai">
         <div>
+          <div class="cert-img-wrap" onclick="openCertModal('assets/certificates/simplilearn_prompt_engineering.png', 'Introduction to Prompt Engineering', 'Simplilearn SkillUp', 'Feb 06, 2026', '9810874')">
+            <img src="assets/certificates/simplilearn_prompt_engineering.png" alt="Introduction to Prompt Engineering" loading="lazy">
+            <div class="cert-img-overlay">👁️ VIEW CERTIFICATE</div>
+          </div>
           <div class="cert-card-top">
             <div class="cert-issuer-badge">🤖 Simplilearn SkillUp</div>
             <span class="cert-cat-pill cat-genai">GenAI &amp; LLMs</span>
@@ -1166,6 +1193,10 @@ footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
       <!-- Card 4: Tavily Web Search API -->
       <div class="cert-card" data-cat="genai">
         <div>
+          <div class="cert-img-wrap" onclick="openCertModal('assets/certificates/tavily_web_search.png', 'Web Search API Certification', 'Tavily', 'Verified Course', 'Tavily-WebSearch-API')">
+            <img src="assets/certificates/tavily_web_search.png" alt="Web Search API Certification" loading="lazy">
+            <div class="cert-img-overlay">👁️ VIEW CERTIFICATE</div>
+          </div>
           <div class="cert-card-top">
             <div class="cert-issuer-badge">🌐 Tavily</div>
             <span class="cert-cat-pill cat-genai">GenAI &amp; LLMs</span>
@@ -1190,6 +1221,10 @@ footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
       <!-- Card 5: Infosys Natural Language Processing -->
       <div class="cert-card" data-cat="datascience">
         <div>
+          <div class="cert-img-wrap" onclick="openCertModal('assets/certificates/infosys_nlp.jpg', 'Introduction to Natural Language Processing', 'Infosys Springboard', 'Jun 08, 2025', 'verify.onwingspan.com')">
+            <img src="assets/certificates/infosys_nlp.jpg" alt="Introduction to Natural Language Processing" loading="lazy">
+            <div class="cert-img-overlay">👁️ VIEW CERTIFICATE</div>
+          </div>
           <div class="cert-card-top">
             <div class="cert-issuer-badge">💬 Infosys Springboard</div>
             <span class="cert-cat-pill cat-datascience">Data Science &amp; NLP</span>
@@ -1214,6 +1249,10 @@ footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
       <!-- Card 6: Infosys Data Science -->
       <div class="cert-card" data-cat="datascience">
         <div>
+          <div class="cert-img-wrap" onclick="openCertModal('assets/certificates/infosys_data_science.jpg', 'Introduction to Data Science', 'Infosys Springboard', 'Jun 06, 2025', 'verify.onwingspan.com')">
+            <img src="assets/certificates/infosys_data_science.jpg" alt="Introduction to Data Science" loading="lazy">
+            <div class="cert-img-overlay">👁️ VIEW CERTIFICATE</div>
+          </div>
           <div class="cert-card-top">
             <div class="cert-issuer-badge">📘 Infosys Springboard</div>
             <span class="cert-cat-pill cat-datascience">Data Science &amp; NLP</span>
@@ -1238,6 +1277,10 @@ footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
       <!-- Card 7: TATA & Forage -->
       <div class="cert-card" data-cat="datascience">
         <div>
+          <div class="cert-img-wrap" onclick="openCertModal('assets/certificates/tata_data_visualisation.png', 'Data Visualisation: Empowering Business', 'TATA / Forage', 'Aug 18, 2025', 'x3dBAJWK4PfeP6MNF')">
+            <img src="assets/certificates/tata_data_visualisation.png" alt="Data Visualisation: Empowering Business" loading="lazy">
+            <div class="cert-img-overlay">👁️ VIEW CERTIFICATE</div>
+          </div>
           <div class="cert-card-top">
             <div class="cert-issuer-badge">📊 TATA / Forage</div>
             <span class="cert-cat-pill cat-datascience">Data Science &amp; NLP</span>
@@ -1262,6 +1305,10 @@ footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
       <!-- Card 8: Intel & Digital India - Appreciate -->
       <div class="cert-card" data-cat="foundations">
         <div>
+          <div class="cert-img-wrap" onclick="openCertModal('assets/certificates/intel_ai_appreciate.jpg', 'AI For All — AI Appreciate Stage', 'Intel & Digital India (CBSE)', 'Jul 06, 2025', 'Intel-CBSE-AI-Appreciate-2025')">
+            <img src="assets/certificates/intel_ai_appreciate.jpg" alt="AI For All — AI Appreciate Stage" loading="lazy">
+            <div class="cert-img-overlay">👁️ VIEW CERTIFICATE</div>
+          </div>
           <div class="cert-card-top">
             <div class="cert-issuer-badge">🔷 Intel &amp; CBSE</div>
             <span class="cert-cat-pill cat-foundations">Foundations</span>
@@ -1286,6 +1333,10 @@ footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
       <!-- Card 9: Intel & Digital India - Aware -->
       <div class="cert-card" data-cat="foundations">
         <div>
+          <div class="cert-img-wrap" onclick="openCertModal('assets/certificates/intel_ai_aware.jpg', 'AI For All — AI Aware Stage', 'Intel & Digital India (CBSE)', 'Jul 06, 2025', 'Intel-CBSE-AI-Aware-2025')">
+            <img src="assets/certificates/intel_ai_aware.jpg" alt="AI For All — AI Aware Stage" loading="lazy">
+            <div class="cert-img-overlay">👁️ VIEW CERTIFICATE</div>
+          </div>
           <div class="cert-card-top">
             <div class="cert-issuer-badge">🔷 Intel &amp; CBSE</div>
             <span class="cert-cat-pill cat-foundations">Foundations</span>
@@ -1310,6 +1361,24 @@ footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
     </div>
   </div>
 </section>
+
+<!-- CERTIFICATE LIGHTBOX MODAL -->
+<div id="certModal" class="cert-modal-overlay" onclick="closeCertModal(event)">
+  <div class="cert-modal-content" onclick="event.stopPropagation()">
+    <button class="cert-modal-close" onclick="closeCertModal()">&times;</button>
+    <div class="cert-modal-body">
+      <img id="certModalImg" src="" alt="Certificate Preview" class="cert-modal-img">
+      <div class="cert-modal-info">
+        <div id="certModalBadge" class="cert-issuer-badge"></div>
+        <h3 id="certModalTitle" class="cert-title" style="margin-top:12px;font-size:20px"></h3>
+        <p id="certModalMeta" class="cert-meta" style="margin-top:8px"></p>
+        <div id="certModalFooter" style="margin-top:16px;display:flex;gap:12px;align-items:center">
+          <button id="certModalCopyBtn" class="cert-id-badge"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- ═══════════ ABOUT ═══════════ -->
 <section id="about">
@@ -2151,6 +2220,24 @@ function copyCertId(id, name) {
   } else {
     showToast(`Credential: ${id}`);
   }
+}
+
+function openCertModal(imgUrl, title, issuer, meta, code) {
+  document.getElementById('certModalImg').src = imgUrl;
+  document.getElementById('certModalTitle').textContent = title;
+  document.getElementById('certModalBadge').textContent = issuer;
+  document.getElementById('certModalMeta').textContent = `📅 Issued: ${meta}`;
+  const copyBtn = document.getElementById('certModalCopyBtn');
+  copyBtn.textContent = `📋 Copy Credential Code (${code})`;
+  copyBtn.onclick = () => copyCertId(code, issuer);
+  const modal = document.getElementById('certModal');
+  modal.classList.add('open');
+}
+
+function closeCertModal(e) {
+  if (e && e.target !== e.currentTarget && !e.target.classList.contains('cert-modal-close')) return;
+  const modal = document.getElementById('certModal');
+  modal.classList.remove('open');
 }
 
 // ── RAG HYPERPARAMETER SIMULATOR ─────────────
