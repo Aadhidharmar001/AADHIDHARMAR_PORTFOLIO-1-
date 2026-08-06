@@ -95,12 +95,24 @@ nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);width:calc(100% 
 .hero-metric-num{font-family:var(--display);font-size:28px;font-weight:800;color:var(--text);line-height:1}
 .hero-metric-label{font-size:11px;color:var(--text3);font-family:var(--mono);letter-spacing:1px;margin-top:5px}
 
-/* HERO PORTRAIT DISPLAY */
+/* UNIFIED BADGE SYSTEM */
+.badge,.proj-tag,.cert-skill-tag{display:inline-flex;align-items:center;gap:6px;height:24px;padding:4px 10px;border-radius:4px;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.5px;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--text2);transition:all .2s ease;white-space:nowrap}
+.proj-tag.live{background:rgba(45,212,191,.1);border-color:rgba(45,212,191,.3);color:var(--teal)}
+.proj-tag:hover{border-color:var(--amber);color:var(--amber);transform:translateY(-1px)}
+
+/* ENGINEERING PRINCIPLES */
+.principle-card{background:rgba(19,22,29,.6);backdrop-filter:blur(16px);border:1px solid var(--borderA);border-radius:12px;padding:24px;transition:all .3s cubic-bezier(0.16,1,0.3,1)}
+.principle-card:hover{transform:translateY(-4px);border-color:var(--amber);box-shadow:0 12px 30px rgba(0,0,0,.6),0 0 20px rgba(245,158,11,.15)}
+.principle-icon{font-size:24px;margin-bottom:12px}
+.principle-title{font-family:var(--display);font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px}
+.principle-desc{font-size:13px;color:var(--text2);line-height:1.6}
+
+/* HERO PORTRAIT DISPLAY — SEAMLESS ENVIRONMENTAL BLEND */
 .hero-profile-container{position:relative;display:flex;justify-content:center;align-items:center;opacity:0;animation:up .9s .5s forwards}
-.hero-profile-blend-wrap{position:relative;width:100%;max-width:360px;aspect-ratio:4/5;border-radius:24px;overflow:hidden;border:1px solid var(--borderA);box-shadow:0 24px 60px rgba(0,0,0,.8),0 0 45px rgba(245,158,11,.2);background:var(--card);transition:all .4s ease}
-.hero-profile-blend-wrap:hover{transform:translateY(-6px) rotate(1deg);box-shadow:0 30px 70px rgba(0,0,0,.9),0 0 55px rgba(45,212,191,.3);border-color:var(--teal)}
-.hero-profile-glow{position:absolute;inset:-20px;border-radius:50%;background:radial-gradient(circle at center,rgba(245,158,11,.25) 0%,rgba(45,212,191,.15) 50%,transparent 70%);filter:blur(24px);z-index:0;pointer-events:none}
-.hero-profile-img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .5s ease;display:block}
+.hero-profile-blend-wrap{position:relative;width:100%;max-width:360px;aspect-ratio:4/5;border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,.08);box-shadow:0 20px 50px rgba(0,0,0,.7),0 0 35px rgba(245,158,11,.15);background:rgba(19,22,29,.5);backdrop-filter:blur(16px);transition:all .4s cubic-bezier(0.16,1,0.3,1)}
+.hero-profile-blend-wrap:hover{transform:translateY(-6px) rotate(1deg);box-shadow:0 30px 70px rgba(0,0,0,.9),0 0 50px rgba(45,212,191,.25);border-color:var(--teal)}
+.hero-profile-glow{position:absolute;inset:-20px;border-radius:50%;background:radial-gradient(circle at center,rgba(245,158,11,.2) 0%,rgba(45,212,191,.12) 50%,transparent 75%);filter:blur(24px);z-index:0;pointer-events:none}
+.hero-profile-img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .5s ease;display:block;mask-image:linear-gradient(to bottom,rgba(0,0,0,1) 55%,rgba(0,0,0,0) 98%);-webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,1) 55%,rgba(0,0,0,0) 98%)}
 .hero-profile-blend-wrap:hover .hero-profile-img{transform:scale(1.04)}
 .hero-profile-blend-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(12,14,19,.7) 0%,transparent 35%);z-index:2;pointer-events:none}
 
@@ -1560,9 +1572,66 @@ footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
   <div class="skill-tip" id="skillTip"></div>
 </section>
 
+<!-- ═══════════ ENGINEERING PRINCIPLES ═══════════ -->
+<section id="principles">
+  <div class="container">
+    <div class="reveal">
+      <div class="sec-tag">PHILOSOPHY</div>
+      <h2 class="sec-title">Engineering <span class="g">Principles</span></h2>
+      <p class="sec-sub">How I design, build, and deploy production AI systems.</p>
+    </div>
+    <div class="principles-grid reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:40px">
+      <div class="principle-card">
+        <div class="principle-icon">⚡</div>
+        <h3 class="principle-title">Build Production-First AI</h3>
+        <p class="principle-desc">Focus on reliable deployment, low latency, and deterministic guardrails rather than static Jupyter demos.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">👁️</div>
+        <h3 class="principle-title">Design for Observability</h3>
+        <p class="principle-desc">Log every tool execution, token count, state transition, and vector score for full auditability.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">🎯</div>
+        <h3 class="principle-title">Grounded Over Hallucinations</h3>
+        <p class="principle-desc">Enforce strict document provenance, source citation, and confidence scoring for verifiable answers.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">🛡️</div>
+        <h3 class="principle-title">Secure AI Before Deployment</h3>
+        <p class="principle-desc">Implement proxy gateways, sliding-window rate limiters, and payload verification to prevent agent loops.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">👤</div>
+        <h3 class="principle-title">Human-in-the-Loop</h3>
+        <p class="principle-desc">Automate low-risk queries while requiring explicit human authorization for high-sensitivity actions.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">⚙️</div>
+        <h3 class="principle-title">Reliability Over Complexity</h3>
+        <p class="principle-desc">Prefer clean state machines and modular APIs over over-engineered multi-layer abstractions.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">☁️</div>
+        <h3 class="principle-title">Cloud-Native Infrastructure</h3>
+        <p class="principle-desc">Containerize microservices with Docker and deploy to elastic cloud setups (AWS ECS, Render).</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">🧩</div>
+        <h3 class="principle-title">Clean &amp; Maintainable Code</h3>
+        <p class="principle-desc">Structure clean schemas, strict type definitions, and modular REST endpoints built to scale.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ═══════════ CONTACT ═══════════ -->
 <section id="contact">
   <div class="container">
+    <div class="contact-transition reveal" style="text-align:center;margin-bottom:48px">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--teal);letter-spacing:2px;margin-bottom:8px">// READY TO COLLABORATE?</div>
+      <p style="font-family:var(--display);font-size:24px;font-weight:700;color:var(--text)">Interested in building secure, production-ready AI systems together?</p>
+    </div>
     <div class="reveal">
       <div class="sec-tag">TRANSMISSION</div>
       <h2 class="sec-title">Open a <span class="g">Channel</span></h2>
@@ -1571,7 +1640,7 @@ footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
       <div class="reveal">
         <div style="display:inline-flex;align-items:center;gap:8px;padding:5px 14px;background:rgba(45,212,191,0.1);border:1px solid rgba(45,212,191,0.25);border-radius:4px;font-family:var(--mono);font-size:10px;color:var(--teal);letter-spacing:1.5px;margin-bottom:16px">● AVAILABLE FOR AI ENGINEER ROLES</div>
         <h3 style="font-family:var(--display);font-size:32px;font-weight:800;margin-bottom:16px;line-height:1.2">Let's build production <span class="g">AI together.</span></h3>
-        <p style="color:var(--text2);font-size:15px;line-height:1.8;margin-bottom:28px">Available for AI Engineering roles, GenAI product development, and Agentic RAG architecture. If you're building something ambitious with production AI — let's connect.</p>
+        <p style="color:var(--text2);font-size:15px;line-height:1.8;margin-bottom:28px">I'm actively looking for AI Engineer opportunities where I can build secure, scalable, production-ready AI systems and contribute to products used by real users.</p>
         <div class="contact-links">
           <a href="assets/Aadhi_Dharmar_AI_Engineer_Resume.pdf" download="Aadhi_Dharmar_AI_Engineer_Resume.pdf" target="_blank" class="contact-link" style="border-color:var(--amber);background:rgba(245,158,11,0.06)">
             <div class="contact-link-icon">📄</div>
@@ -1622,7 +1691,7 @@ footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
     <a href="https://github.com/Aadhidharmar001" target="_blank" style="color:var(--text3);font-family:var(--mono);font-size:11px;text-decoration:none" onmouseenter="this.style.color='var(--amber)'" onmouseleave="this.style.color=''">GitHub</a>
     <a href="https://www.linkedin.com/in/aadhi-dharmar-a35679293" target="_blank" style="color:var(--text3);font-family:var(--mono);font-size:11px;text-decoration:none" onmouseenter="this.style.color='var(--amber)'" onmouseleave="this.style.color=''">LinkedIn</a>
   </div>
-  <p><span id="livetime"></span> &nbsp;·&nbsp; Live at <a href="https://aadhidharmar-portfolio-1.vercel.app/" target="_blank" style="color:var(--amber);text-decoration:none">aadhidharmar-portfolio-1.vercel.app</a></p>
+  <p><span id="livetime"></span> &nbsp;·&nbsp; <span style="color:var(--text3);font-family:var(--mono);font-size:11px">Last Updated • August 2026</span> &nbsp;·&nbsp; Live at <a href="https://aadhidharmar-portfolio-1.vercel.app/" target="_blank" style="color:var(--amber);text-decoration:none">aadhidharmar-portfolio-1.vercel.app</a></p>
 </footer>
 
 <!-- NOVA -->
