@@ -26,7 +26,7 @@
 
 I'm **Aadhi Dharmar**, an **AI Product Builder** passionate about building **production-ready intelligent systems** using RAG architectures, autonomous agent swarms, and AI security proxies. I focus on creating models that understand **speech, text, images, and human emotions** — backed by real cloud deployments.
 
-- 🎓 **Education**: B.Tech AI & Data Science — **Sri Shakthi Institute of Engineering and Technology** (CGPA: 7.23, Graduating 2026).
+- 🎓 **Education**: B.Tech AI & Data Science — **Sri Shakthi Institute of Engineering and Technology** (CGPA: 7.23, Graduating 2027).
 - 🏆 **Hackathon Proven**: **15th place** out of hundreds of teams at the **VIT 24-Hour Hackathon**.
 - 💼 **Experience**: **ML Model Developer Intern — Career Ladder** (Built end-to-end ML pipelines & deployment workflows).
 

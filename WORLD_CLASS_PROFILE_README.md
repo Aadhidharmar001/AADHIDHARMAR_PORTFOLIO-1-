@@ -6,7 +6,7 @@
   </a>
 
   <p align="center">
-    <b>B.Tech AI & Data Science (2026) · Sri Shakthi Institute of Engineering & Technology</b><br>
+    <b>B.Tech AI & Data Science (2027) · Sri Shakthi Institute of Engineering & Technology</b><br>
     <i>Specializing in Stateful Agentic RAG, AI Web Security, & Multi-Agent Swarm Topologies</i>
   </p>
 
@@ -145,7 +145,7 @@
 
 - 🥇 **VIT 24-Hour Hackathon Finalist**: Ranked **15th place** out of hundreds of engineering teams. Built an end-to-end AI Medical Diagnostic Chatbot in 24 hours under high pressure.
 - ⚡ **RAG & AI Security Specialist**: Architected NeuralRAG and GuardWAF from zero, taking both to live production cloud deployments.
-- 🎓 **Academic Rigor**: B.Tech AI & Data Science student at Sri Shakthi Institute of Engineering and Technology (Graduating 2026, CGPA 7.23).
+- 🎓 **Academic Rigor**: B.Tech AI & Data Science student at Sri Shakthi Institute of Engineering and Technology (Graduating 2027, CGPA 7.23).
 
 ---
 

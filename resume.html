@@ -8,7 +8,7 @@
 
     @page {
       size: A4 portrait;
-      margin: 0.35in 0.4in;
+      margin: 0.38in 0.45in;
     }
 
     * {
@@ -21,7 +21,7 @@
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       color: #0f172a;
       background-color: #ffffff;
-      line-height: 1.34;
+      line-height: 1.36;
       font-size: 9.0pt;
       -webkit-font-smoothing: antialiased;
     }
@@ -34,13 +34,13 @@
     /* Header */
     .header {
       text-align: center;
-      margin-bottom: 8.5px;
+      margin-bottom: 10px;
       border-bottom: 1.5px solid #0f172a;
-      padding-bottom: 4.5px;
+      padding-bottom: 5px;
     }
 
     .name {
-      font-size: 19pt;
+      font-size: 19.5pt;
       font-weight: 700;
       letter-spacing: -0.3px;
       color: #0f172a;
@@ -49,17 +49,17 @@
     }
 
     .subtitle {
-      font-size: 9.3pt;
+      font-size: 9.5pt;
       font-weight: 600;
       color: #1d4ed8;
-      margin-top: 2px;
+      margin-top: 3px;
       letter-spacing: 0.2px;
     }
 
     .contact-info {
-      font-size: 8.3pt;
+      font-size: 8.4pt;
       color: #475569;
-      margin-top: 3.5px;
+      margin-top: 4px;
       display: flex;
       justify-content: center;
       gap: 10px;
@@ -74,34 +74,34 @@
 
     /* Section Header */
     .section {
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .section-title {
-      font-size: 9.5pt;
+      font-size: 9.6pt;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       color: #0f172a;
       border-bottom: 1px solid #94a3b8;
-      padding-bottom: 1px;
-      margin-bottom: 4px;
+      padding-bottom: 2px;
+      margin-bottom: 4.5px;
     }
 
     /* Summary */
     .summary-text {
-      font-size: 8.8pt;
+      font-size: 8.85pt;
       color: #334155;
       text-align: justify;
-      line-height: 1.34;
+      line-height: 1.36;
     }
 
     /* Skills */
     .skills-grid {
       display: flex;
       flex-direction: column;
-      gap: 2.2px;
-      font-size: 8.8pt;
+      gap: 3px;
+      font-size: 8.85pt;
     }
 
     .skill-category {
@@ -115,14 +115,18 @@
 
     /* Projects */
     .project-item {
-      margin-bottom: 5.5px;
+      margin-bottom: 9.5px;
+    }
+
+    .project-item:last-child {
+      margin-bottom: 0px;
     }
 
     .project-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 1px;
+      margin-bottom: 1.5px;
     }
 
     .project-title-group {
@@ -133,7 +137,7 @@
     }
 
     .project-title {
-      font-size: 9.3pt;
+      font-size: 9.35pt;
       font-weight: 700;
       color: #0f172a;
     }
@@ -154,7 +158,7 @@
       font-weight: 500;
       color: #1d4ed8;
       font-style: italic;
-      margin-bottom: 1px;
+      margin-bottom: 2.5px;
     }
 
     .project-date {
@@ -167,15 +171,15 @@
     ul.bullet-list {
       list-style-type: disc;
       padding-left: 14px;
-      margin-top: 1px;
+      margin-top: 1.5px;
     }
 
     ul.bullet-list li {
-      font-size: 8.6pt;
+      font-size: 8.65pt;
       color: #334155;
-      margin-bottom: 1.6px;
+      margin-bottom: 2.3px;
       text-align: justify;
-      line-height: 1.31;
+      line-height: 1.34;
     }
 
     ul.bullet-list li strong {
@@ -196,7 +200,7 @@
     }
 
     .edu-school {
-      font-size: 8.5pt;
+      font-size: 8.55pt;
       color: #475569;
     }
 
@@ -208,9 +212,9 @@
     }
 
     .coursework {
-      font-size: 8.3pt;
+      font-size: 8.35pt;
       color: #475569;
-      margin-top: 1.5px;
+      margin-top: 2px;
     }
 
     .coursework strong {
@@ -221,9 +225,9 @@
     .cert-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1.5px 12px;
+      gap: 2.5px 12px;
       padding-left: 14px;
-      font-size: 8.4pt;
+      font-size: 8.5pt;
       color: #334155;
     }
 
@@ -237,9 +241,9 @@
     }
 
     .achievement-list li {
-      font-size: 8.55pt;
+      font-size: 8.65pt;
       color: #334155;
-      line-height: 1.3;
+      line-height: 1.34;
     }
 
     @media print {
@@ -277,7 +281,7 @@
     <div class="section">
       <div class="section-title">Professional Summary</div>
       <p class="summary-text">
-        Final-year B.Tech AI & Data Science student building production-quality agentic AI workflows, action guardrail gateways, and stateful RAG systems. Proficient in LangGraph orchestration, FastAPI backend microservices, vector databases, and containerized AWS cloud infrastructure (ECS Fargate, PostgreSQL, Docker). Built production-ready reverse proxies and YAML security policy engines to govern autonomous AI agent tool execution.
+        Final-year B.Tech AI & Data Science student building and deploying agentic AI workflows, stateful RAG systems, and AI security gateways. Hands-on experience orchestrating multi-step LLM reasoning graphs and backend microservices using LangGraph, FastAPI, and ChromaDB, with containerized cloud deployment on AWS ECS Fargate and Docker.
       </p>
     </div>
 
@@ -286,16 +290,13 @@
       <div class="section-title">Technical Skills</div>
       <div class="skills-grid">
         <div class="skill-category">
-          <strong>Languages & Backend:</strong> Python, SQL, FastAPI, PostgreSQL, SQLAlchemy, REST APIs, Server-Sent Events (SSE)
+          <strong>Languages & Core Backend:</strong> Python, SQL, FastAPI, PostgreSQL, SQLAlchemy, REST APIs, Server-Sent Events (SSE)
         </div>
         <div class="skill-category">
-          <strong>GenAI & Agentic Systems:</strong> LangGraph, LangChain, RAG Systems, ChromaDB, OpenAI API, Groq API, PyTorch, HuggingFace, NLP
+          <strong>AI / GenAI & Agentic Systems:</strong> LangGraph, LangChain, RAG Systems, AI Agents, AI Agent Security, ChromaDB, OpenAI API, Groq API, PyTorch, HuggingFace, NLP
         </div>
         <div class="skill-category">
-          <strong>Cloud, DevOps & Tools:</strong> AWS (ECS Fargate, CloudWatch), Docker, pytest, Git/GitHub, Streamlit
-        </div>
-        <div class="skill-category">
-          <strong>Security & Governance:</strong> AI Agent Security & WAF, Action Guardrails, YAML Security Policies, Rate Limiting, SQL Injection Detection, HITL
+          <strong>Cloud, DevOps & Tools:</strong> AWS (ECS Fargate, CloudWatch), Docker, Policy-as-Code (YAML), pytest, Git/GitHub, Streamlit
         </div>
       </div>
     </div>
@@ -316,13 +317,12 @@
           </div>
           <span class="project-date">2026</span>
         </div>
-        <div class="project-tech">FastAPI &bull; AWS ECS Fargate &bull; Docker &bull; PostgreSQL &bull; SQLAlchemy &bull; CloudWatch &bull; Grok/OpenAI API</div>
+        <div class="project-tech">FastAPI &bull; AWS ECS Fargate &bull; Docker &bull; PostgreSQL &bull; Groq / OpenAI API</div>
         <ul class="bullet-list">
-          <li><strong>Architected</strong> a production-ready AI Agent Web Application Firewall (WAF) reverse proxy intercepting, governing, and auditing tool/API calls before execution to prevent unauthorized or out-of-scope LLM agent actions.</li>
-          <li><strong>Engineered</strong> a sliding-window rate-limiting algorithm to block runaway agent loops and stateful sequence validation middleware to enforce secure multi-step execution workflows.</li>
-          <li><strong>Implemented</strong> session-aware data scope verification, parameter validation, and SQL injection detection filters using a configurable YAML-driven security policy engine.</li>
-          <li><strong>Designed</strong> a Human-in-the-Loop (HITL) approval workflow featuring automated risk scoring for sensitive operations, paired with real-time audit logging and an SSE monitoring dashboard.</li>
-          <li><strong>Containerized</strong> microservices using Docker and deployed to <strong>AWS ECS Fargate</strong> with PostgreSQL audit trail persistence and Amazon CloudWatch operational logging.</li>
+          <li><strong>Architected</strong> an AI Agent Security Gateway (WAF reverse proxy) intercepting, governing, and auditing LLM tool/API calls before execution to prevent unauthorized, malicious, or runaway agent actions.</li>
+          <li><strong>Engineered</strong> sliding-window rate limiting to block runaway agent loops, stateful sequence validation for multi-step execution workflows, and session-aware data-scope verification.</li>
+          <li><strong>Implemented</strong> parameter validation, SQL injection detection, and configurable Policy-as-Code (YAML) security rules paired with a Human-in-the-Loop (HITL) approval workflow featuring automated risk scoring.</li>
+          <li><strong>Containerized</strong> microservices using Docker and deployed to <strong>AWS ECS Fargate</strong> with PostgreSQL audit trail persistence, CloudWatch monitoring, and an SSE live dashboard.</li>
         </ul>
       </div>
 
@@ -338,11 +338,11 @@
           </div>
           <span class="project-date">2025 – 2026</span>
         </div>
-        <div class="project-tech">LangGraph &bull; ChromaDB &bull; OpenAI / Groq API &bull; HuggingFace &bull; Streamlit &bull; Python</div>
+        <div class="project-tech">LangGraph &bull; ChromaDB &bull; OpenAI / Groq API &bull; Streamlit &bull; Python</div>
         <ul class="bullet-list">
-          <li><strong>Architected</strong> an agentic RAG system using <strong>LangGraph</strong> stateful graphs for multi-step reasoning, document chunking, and ChromaDB vector retrieval to ground LLM responses in verifiable source documents.</li>
-          <li><strong>Developed</strong> a domain-filtered web search engine with JSON state persistence and source-transparency provenance labels, enabling complete auditability for every generated answer.</li>
-          <li><strong>Engineered</strong> a query-routing agent for summary-intent classification and refactored the Streamlit frontend into a modular, production-ready architecture, optimizing response latency through efficient retrieval.</li>
+          <li><strong>Architected</strong> a stateful agentic RAG system using <strong>LangGraph</strong> for multi-step reasoning, intent-based query routing, and ChromaDB vector retrieval to ground LLM responses in verifiable source documents.</li>
+          <li><strong>Implemented</strong> a domain-filtered web search tool with JSON state persistence and source-transparency provenance labels, enabling full auditability for every generated answer.</li>
+          <li><strong>Refactored</strong> the Streamlit frontend into a modular, workspace-extensible architecture to support customizable retrieval environments and low-latency interaction.</li>
         </ul>
       </div>
 
@@ -358,12 +358,20 @@
           </div>
           <span class="project-date">2025</span>
         </div>
-        <div class="project-tech">Python &bull; FastAPI &bull; Vector Embeddings &bull; Semantic Search &bull; Render</div>
+        <div class="project-tech">Python &bull; FastAPI &bull; Vector Embeddings &bull; Render</div>
         <ul class="bullet-list">
           <li><strong>Developed</strong> a semantic search engine leveraging vector embeddings and similarity ranking to surface contextually relevant results beyond exact keyword matching.</li>
-          <li><strong>Engineered</strong> a lightweight FastAPI REST microservice and deployed the production backend to Render, improving responsiveness using vector search and optimized endpoints.</li>
+          <li><strong>Engineered</strong> a FastAPI REST API and deployed the service to Render, utilizing vector index search and optimized endpoints for rapid query responses.</li>
         </ul>
       </div>
+    </div>
+
+    <!-- ACHIEVEMENTS -->
+    <div class="section">
+      <div class="section-title">Achievements</div>
+      <ul class="achievement-list">
+        <li><strong>Secured 15th Place Nationally</strong> at VIT Hackathon (AI/ML Track) out of 100+ competing teams by engineering an AI Medical Diagnostic Chatbot achieving 86% accuracy within 24 hours.</li>
+      </ul>
     </div>
 
     <!-- EDUCATION -->
@@ -385,19 +393,9 @@
     <div class="section">
       <div class="section-title">Certifications</div>
       <ul class="cert-grid">
+        <li><strong>Career Essentials in Generative AI</strong> — Microsoft & LinkedIn (Aug 2024)</li>
         <li><strong>Prompt Engineering</strong> — Simplilearn SkillUp (Feb 2026)</li>
         <li><strong>Introduction to Data Science & NLP</strong> — Infosys Springboard (Jun 2025)</li>
-        <li><strong>Data Visualization</strong> — Tata Forage (Aug 2025)</li>
-        <li><strong>Career Essentials in Generative AI</strong> — Microsoft & LinkedIn (Aug 2024)</li>
-        <li><strong>AI for All (AI Aware & Appreciate)</strong> — Intel & Govt. of India (Jul 2025)</li>
-      </ul>
-    </div>
-
-    <!-- ACHIEVEMENTS -->
-    <div class="section">
-      <div class="section-title">Achievements</div>
-      <ul class="achievement-list">
-        <li><strong>Secured 15th Place Nationally</strong> at VIT Hackathon (AI/ML Track) out of 100+ competing teams by engineering an AI Medical Diagnostic Chatbot achieving 86% accuracy within 24 hours.</li>
       </ul>
     </div>
 
