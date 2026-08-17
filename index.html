@@ -106,12 +106,28 @@ section, footer, nav, .marquee-wrap {position:relative;z-index:1}
 .proj-tag.live{background:rgba(45,212,191,.1);border-color:rgba(45,212,191,.3);color:var(--teal)}
 .proj-tag:hover{border-color:var(--amber);color:var(--amber);transform:translateY(-1px)}
 
-/* ENGINEERING PRINCIPLES */
-.principle-card{background:rgba(19,22,29,.6);backdrop-filter:blur(16px);border:1px solid var(--borderA);border-radius:12px;padding:24px;transition:all .3s cubic-bezier(0.16,1,0.3,1)}
-.principle-card:hover{transform:translateY(-4px);border-color:var(--amber);box-shadow:0 12px 30px rgba(0,0,0,.6),0 0 20px rgba(245,158,11,.15)}
-.principle-icon{font-size:24px;margin-bottom:12px}
-.principle-title{font-family:var(--display);font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px}
-.principle-desc{font-size:13px;color:var(--text2);line-height:1.6}
+/* CENTERED SECTION HEADERS */
+.sec-center{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:48px}
+.sec-center .sec-tag{justify-content:center}
+.sec-center .sec-tag::after{content:'';width:24px;height:1px;background:var(--amber);flex-shrink:0}
+.sec-center .sec-title{text-align:center}
+.sec-center .sec-sub{text-align:center;margin-left:auto;margin-right:auto;max-width:680px;margin-bottom:0}
+
+/* ENGINEERING PRINCIPLES SHOWCASE */
+.principles-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:40px}
+.principle-card{background:rgba(19,22,29,.75);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(241,245,249,.08);border-radius:16px;padding:28px;transition:all .35s cubic-bezier(0.16,1,0.3,1)!important;position:relative;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.principle-card::before{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(350px circle at var(--mouse-x,50%) var(--mouse-y,50%),rgba(245,158,11,.18),rgba(45,212,191,.08) 50%,transparent 80%);opacity:0;transition:opacity .3s ease;pointer-events:none;z-index:0}
+.principle-card:hover::before{opacity:1}
+.principle-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--amber),var(--teal),transparent);transform:scaleX(0);transition:transform .4s ease}
+.principle-card:hover::after{transform:scaleX(1)}
+.principle-card:hover{transform:translateY(-6px) scale(1.02)!important;border-color:rgba(245,158,11,.5)!important;box-shadow:0 18px 45px -5px rgba(0,0,0,.8),0 0 30px rgba(245,158,11,.3),inset 0 0 20px rgba(45,212,191,.12)!important}
+.principle-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;position:relative;z-index:1}
+.principle-icon-pod{width:48px;height:48px;border-radius:12px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);display:flex;align-items:center;justify-content:center;font-size:22px;transition:all .3s ease}
+.principle-card:hover .principle-icon-pod{background:rgba(245,158,11,.2);border-color:var(--amber);box-shadow:0 0 20px rgba(245,158,11,.45);transform:scale(1.1) rotate(4deg)}
+.principle-tag{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:1.5px}
+.principle-title{font-family:var(--display);font-size:18px;font-weight:800;color:var(--text);margin-bottom:10px;letter-spacing:-.3px;line-height:1.3;position:relative;z-index:1;transition:color .3s ease,text-shadow .3s ease}
+.principle-card:hover .principle-title{color:#fff;text-shadow:0 0 15px rgba(245,158,11,.7)}
+.principle-desc{font-size:13px;color:var(--text2);line-height:1.65;position:relative;z-index:1}
 
 /* HERO PORTRAIT DISPLAY — SEAMLESS ENVIRONMENTAL BLEND */
 .hero-profile-container{position:relative;display:flex;justify-content:center;align-items:center;opacity:0;animation:up .9s .5s forwards}
@@ -1314,7 +1330,7 @@ footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
 <!-- ═══════════ CERTIFICATIONS ═══════════ -->
 <section id="certifications">
   <div class="container">
-    <div class="reveal" style="text-align:center">
+    <div class="reveal sec-center">
       <div class="sec-tag">VERIFIED CREDENTIALS</div>
       <h2 class="sec-title">Industry <span class="g">Certifications</span></h2>
       <p class="sec-sub">9 verified credentials spanning Generative AI, LLMs, NLP, Prompt Engineering, and Data Science.</p>
@@ -1732,49 +1748,73 @@ footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
 <!-- ═══════════ ENGINEERING PRINCIPLES ═══════════ -->
 <section id="principles">
   <div class="container">
-    <div class="reveal">
+    <div class="reveal sec-center">
       <div class="sec-tag">PHILOSOPHY</div>
       <h2 class="sec-title">Engineering <span class="g">Principles</span></h2>
       <p class="sec-sub">How I design, build, and deploy production AI systems.</p>
     </div>
-    <div class="principles-grid reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:40px">
+    <div class="principles-grid reveal">
       <div class="principle-card">
-        <div class="principle-icon">⚡</div>
+        <div class="principle-card-header">
+          <div class="principle-icon-pod">⚡</div>
+          <span class="principle-tag">PRINCIPLE // 01</span>
+        </div>
         <h3 class="principle-title">Build Production-First AI</h3>
         <p class="principle-desc">Focus on reliable deployment, low latency, and deterministic guardrails rather than static Jupyter demos.</p>
       </div>
       <div class="principle-card">
-        <div class="principle-icon">👁️</div>
+        <div class="principle-card-header">
+          <div class="principle-icon-pod" style="background:rgba(45,212,191,.08);border-color:rgba(45,212,191,.25)">👁️</div>
+          <span class="principle-tag">PRINCIPLE // 02</span>
+        </div>
         <h3 class="principle-title">Design for Observability</h3>
         <p class="principle-desc">Log every tool execution, token count, state transition, and vector score for full auditability.</p>
       </div>
       <div class="principle-card">
-        <div class="principle-icon">🎯</div>
+        <div class="principle-card-header">
+          <div class="principle-icon-pod" style="background:rgba(129,140,248,.08);border-color:rgba(129,140,248,.25)">🎯</div>
+          <span class="principle-tag">PRINCIPLE // 03</span>
+        </div>
         <h3 class="principle-title">Grounded Over Hallucinations</h3>
         <p class="principle-desc">Enforce strict document provenance, source citation, and confidence scoring for verifiable answers.</p>
       </div>
       <div class="principle-card">
-        <div class="principle-icon">🛡️</div>
+        <div class="principle-card-header">
+          <div class="principle-icon-pod" style="background:rgba(251,113,133,.08);border-color:rgba(251,113,133,.25)">🛡️</div>
+          <span class="principle-tag">PRINCIPLE // 04</span>
+        </div>
         <h3 class="principle-title">Secure AI Before Deployment</h3>
         <p class="principle-desc">Implement proxy gateways, sliding-window rate limiters, and payload verification to prevent agent loops.</p>
       </div>
       <div class="principle-card">
-        <div class="principle-icon">👤</div>
+        <div class="principle-card-header">
+          <div class="principle-icon-pod" style="background:rgba(52,211,153,.08);border-color:rgba(52,211,153,.25)">👤</div>
+          <span class="principle-tag">PRINCIPLE // 05</span>
+        </div>
         <h3 class="principle-title">Human-in-the-Loop</h3>
         <p class="principle-desc">Automate low-risk queries while requiring explicit human authorization for high-sensitivity actions.</p>
       </div>
       <div class="principle-card">
-        <div class="principle-icon">⚙️</div>
+        <div class="principle-card-header">
+          <div class="principle-icon-pod">⚙️</div>
+          <span class="principle-tag">PRINCIPLE // 06</span>
+        </div>
         <h3 class="principle-title">Reliability Over Complexity</h3>
         <p class="principle-desc">Prefer clean state machines and modular APIs over over-engineered multi-layer abstractions.</p>
       </div>
       <div class="principle-card">
-        <div class="principle-icon">☁️</div>
+        <div class="principle-card-header">
+          <div class="principle-icon-pod" style="background:rgba(45,212,191,.08);border-color:rgba(45,212,191,.25)">☁️</div>
+          <span class="principle-tag">PRINCIPLE // 07</span>
+        </div>
         <h3 class="principle-title">Cloud-Native Infrastructure</h3>
         <p class="principle-desc">Containerize microservices with Docker and deploy to elastic cloud setups (AWS ECS, Render).</p>
       </div>
       <div class="principle-card">
-        <div class="principle-icon">🧩</div>
+        <div class="principle-card-header">
+          <div class="principle-icon-pod" style="background:rgba(129,140,248,.08);border-color:rgba(129,140,248,.25)">🧩</div>
+          <span class="principle-tag">PRINCIPLE // 08</span>
+        </div>
         <h3 class="principle-title">Clean &amp; Maintainable Code</h3>
         <p class="principle-desc">Structure clean schemas, strict type definitions, and modular REST endpoints built to scale.</p>
       </div>
@@ -1865,9 +1905,11 @@ footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
     </div>
     <div class="nova-chips">
       <span class="nova-chip" onclick="askNova('Tell me about NeuralRAG')">NeuralRAG</span>
-      <span class="nova-chip" onclick="askNova('What are his skills?')">Skills</span>
-      <span class="nova-chip" onclick="askNova('Why should I hire him?')">Why hire?</span>
-      <span class="nova-chip" onclick="askNova('What is he building now?')">Building now</span>
+      <span class="nova-chip" onclick="askNova('GuardWAF AWS')">GuardWAF AWS</span>
+      <span class="nova-chip" onclick="askNova('Architecture')">Architecture</span>
+      <span class="nova-chip" onclick="askNova('Why hire him?')">Why Hire?</span>
+      <span class="nova-chip" onclick="askNova('Download Resume')">Resume (PDF)</span>
+      <span class="nova-chip" onclick="askNova('Contact Info')">Contact</span>
     </div>
     <div class="nova-inp-row">
       <input class="nova-inp" id="novaInp" placeholder="Ask anything..." onkeydown="if(event.key==='Enter')sendNova()">
@@ -1889,8 +1931,8 @@ footer p{color:var(--text3);font-family:var(--mono);font-size:11px}
       <span style="margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--text3)">ESC to close</span>
     </div>
     <div class="term-body" id="termBody">
-      <div class="tl to">Aadhidharmar AI Portfolio — Terminal v2.1</div>
-      <div class="tl" style="color:var(--text3)">Commands: whoami | show achievements | launch neuralrag | hire | skills | clear | exit</div>
+      <div class="tl to">Aadhidharmar AI Portfolio — Terminal v3.0 Supercharged</div>
+      <div class="tl" style="color:var(--text3)">Commands: whoami | architecture | launch guardwaf | launch neuralrag | certs | cat resume | matrix | help</div>
       <div class="tl" style="color:var(--text3);margin-bottom:12px">─────────────────────────────────────────</div>
     </div>
     <div style="padding:0 24px 16px;display:flex;gap:8px;align-items:center;font-family:var(--mono)">
@@ -2254,32 +2296,58 @@ const legendEl=document.getElementById('skill-legend');
   legendEl.appendChild(d);
 });
 
-// ── NOVA ─────────────────────────────────────
+// ── NOVA AI CHATBOT SYSTEM ─────────────────────────────────────
 const novaKB={
-  neuralrag:`NeuralRAG is Aadhidharmar's flagship system:\n\n🌐 **Live App**: https://neuralrag.streamlit.app/\n🔗 **LangGraph** — 4-node agentic graph (router → retrieve → rerank → generate)\n📚 **ChromaDB** — 1536-dim embeddings, top-5 cosine retrieval\n🤖 **GPT-4o** — grounded generation with source attribution\n⚡ **<800ms** end-to-end latency\n\nDeployed live on Streamlit Cloud!`,
-  guardwaf:`🛡️ **GuardWAF — AI Web Application Firewall**:\n\n🌐 **Live AWS Proxy**: http://43.205.239.119:8000/static/index.html\n⚡ **Real-Time Reverse Proxy** — sub-millisecond HTTP payload inspection\n🧠 **ML Anomaly Engine** — flags zero-day exploits & OWASP Top 10 (SQLi, XSS, RCE)\n📊 **Risk Engine** — automated IP throttling & real-time telemetry dashboard\n🔧 **Tech**: AWS EC2, Python, FastAPI, PyTorch, Scikit-Learn`,
-  skills:`Core stack:\n\n🧠 **AI/ML**: Python, TensorFlow, PyTorch, Scikit-Learn\n🔗 **GenAI**: LangChain, LangGraph, OpenAI API\n📚 **RAG & Security**: ChromaDB, Vector Search, BERT, GuardWAF AI Security\n🚀 **Deploy**: AWS EC2, Streamlit, Flask, FastAPI, GitHub, Render`,
-  hire:`Why hire Aadhidharmar:\n\n⚡ **Builder not student** — 6 real systems (NeuralRAG deployed live, GuardWAF live on AWS, etc.)\n🧠 **RAG & AI Security specialist** — rare junior-level depth\n🏆 **Hackathon tested** — 15th at VIT in 24 hours\n📈 **Currently building** — Multi-Agent Autonomous Swarms & LoRA Fine-Tuning\n🎯 **Graduating 2027** — available now for internships/roles`,
-  building:`Right now building:\n\n🤖 **Autonomous Multi-Agent Swarms** — LangGraph supervisor patterns\n🔄 **Self-correcting reflection loops** — automatic query re-evaluations\n📊 **RAGAS evaluation & LoRA** — automated precision scoring & custom weights\n🛡️ **GuardWAF AWS Telemetry** — real-time threat map & rate limiting`,
-  hackathon:`VIT 24-Hour Hackathon:\n\n🏆 **15th place** out of hundreds of teams\n⏱️ **24 hours**, no sleep\n💡 **AI Medical Chatbot** — built from zero\n🚀 **Stack**: LangChain + OpenAI + Streamlit\n\nThe pressure was real. The delivery was real.`,
-  contact:`Reach Aadhidharmar:\n\n📧 dharmaraadhi@gmail.com\n📱 +91 6380072080\n⚡ github.com/Aadhidharmar001\n💼 linkedin.com/in/aadhi-dharmar-a35679293`,
+  neuralrag:`NeuralRAG is Aadhidharmar's flagship agentic system:\n\n🌐 **Live App**: https://neuralrag.streamlit.app/\n🔗 **LangGraph Router** — 4-node state machine (router → retrieve → rerank → generate)\n📚 **ChromaDB Vector DB** — 1536-dim embeddings with cosine similarity\n🤖 **GPT-4o Reasoning** — grounded context generation with source citations\n⚡ **<800ms Latency** — end-to-end performance\n\nDeployed live on Streamlit Cloud!`,
+  guardwaf:`🛡️ **GuardWAF — Enterprise AI Agent Guardrail Gateway**:\n\n🌐 **Live AWS Proxy**: http://43.205.239.119:8000/static/index.html\n⚡ **Sub-Millisecond Reverse Proxy** — real-time HTTP payload inspection\n🧠 **ML Anomaly Engine** — flags OWASP Top 10 exploits & malicious parameters\n📊 **Risk Engine & HITL** — automated rate limiting + Human-in-the-Loop approval dashboard\n🔧 **Tech**: AWS ECS Fargate, Docker, Python, FastAPI, PostgreSQL, PyTorch`,
+  architecture:`🏗️ **System Architecture Overview**:\n\n1. **NeuralRAG Flow**: Query → LangGraph Router → ChromaDB Vector Retrieval → Cosine Reranker → GPT-4o Generation.\n2. **GuardWAF Gateway Flow**: LLM Agent Tool Request → Reverse Proxy Inspector → Sliding-Window Rate Limiter → YAML Policy Validation → PostgreSQL Audit Log → Execution Authorization.\n3. **Deployments**: AWS ECS Fargate, Streamlit Cloud, Render.`,
+  skills:`Core Technical Stack:\n\n🧠 **AI/ML**: Python, PyTorch, TensorFlow, Scikit-Learn, LibROSA, BERT\n🔗 **GenAI & Agents**: LangGraph, LangChain, OpenAI GPT-4o, Groq API\n📚 **Vector Search & RAG**: ChromaDB, Cosine Retrieval, RAGAS Eval\n🛡️ **AI Security**: GuardWAF, Reverse Proxies, OWASP Top 10, HITL Workflows\n🚀 **Cloud & DevOps**: AWS ECS Fargate, Docker, FastAPI, Flask, Render, Streamlit, PostgreSQL`,
+  hire:`Why Hire Aadhidharmar:\n\n⚡ **Production Builder** — 5 shipped systems (NeuralRAG deployed live, GuardWAF live on AWS)\n🧠 **RAG & AI Security Specialist** — rare depth in stateful graphs & proxy security\n🏆 **Hackathon Proven** — 15th place out of hundreds of teams at VIT Hackathon\n📈 **Active Focus** — Autonomous Multi-Agent Swarms & LoRA Fine-Tuning\n🎯 **Graduating 2027** — Available for AI Engineering roles`,
+  building:`Currently Building:\n\n🤖 **Autonomous Multi-Agent Swarms** — LangGraph supervisor patterns\n🔄 **Self-Correcting Reflection Loops** — automated query re-evaluation graphs\n📊 **RAGAS Automated Evaluation** — precision & recall scoring pipelines\n🛡️ **GuardWAF AWS Telemetry** — real-time threat map & SSE rate limiting`,
+  hackathon:`VIT 24-Hour Hackathon Victory:\n\n🏆 **15th place** out of hundreds of competing engineering teams\n⏱️ **24 hours**, zero sleep\n💡 **AI Medical Chatbot** — symptom triage & specialist referral built from scratch\n🚀 **Stack**: LangChain + OpenAI + Streamlit`,
+  education:`🎓 **Education & Academic Background**:\n\n• **Degree**: B.Tech in Artificial Intelligence & Data Science\n• **Institution**: Sri Shakthi Institute of Engineering and Technology\n• **CGPA**: 7.23\n• **Graduation**: Expected 2027`,
+  certifications:`📜 **9 Verified Industry Certifications**:\n\n1. Working with OpenAI API — DataCamp (2026)\n2. Prompt Engineering — Simplilearn SkillUp (2026)\n3. Intro to Data Science & NLP — Infosys Springboard (2025)\n4. Career Essentials in Generative AI — Microsoft & LinkedIn (2024)\n...and 5 more verified credentials in GenAI, ML, and Data Science!`,
+  contact:`Reach Aadhidharmar Directly:\n\n📧 dharmaraadhi@gmail.com\n📱 +91 6380072080\n⚡ github.com/Aadhidharmar001\n💼 linkedin.com/in/aadhi-dharmar-a35679293`,
+  resume:`📄 **Resume Access**:\n\nYou can download the complete PDF resume directly by clicking below or typing **/resume**!\n\n👉 [Download Resume PDF](assets/Aadhi_Dharmar_AI_Engineer_Resume.pdf)`
 };
+
 function getNovaResp(q){
   const ql=q.toLowerCase();
+  if(ql.startsWith('/terminal')) { openTerm(); return "Opening interactive CLI Terminal overlay... 💻"; }
+  if(ql.startsWith('/resume') || ql.includes('download resume')) { 
+    window.open('assets/Aadhi_Dharmar_AI_Engineer_Resume.pdf', '_blank'); 
+    return "Downloading Aadhidharmar's Resume PDF! 📄"; 
+  }
+  if(ql.startsWith('/theme') || ql.includes('theme')) {
+    if(ql.includes('teal')) setTheme('teal');
+    else if(ql.includes('violet')) setTheme('violet');
+    else setTheme('amber');
+    return "Updated UI Color Palette! 🎨";
+  }
+  if(ql.startsWith('/projects') || ql.includes('project')) {
+    document.getElementById('projects')?.scrollIntoView({behavior:'smooth'});
+  }
+  
   if(ql.includes('guardwaf')||ql.includes('waf')||ql.includes('security')||ql.includes('firewall'))return novaKB.guardwaf;
   if(ql.includes('neuralrag')||ql.includes('rag')||ql.includes('langgraph'))return novaKB.neuralrag;
+  if(ql.includes('arch')||ql.includes('design')||ql.includes('flow')||ql.includes('graph'))return novaKB.architecture;
   if(ql.includes('skill')||ql.includes('tech')||ql.includes('stack'))return novaKB.skills;
   if(ql.includes('hire')||ql.includes('why')||ql.includes('recruit'))return novaKB.hire;
   if(ql.includes('build')||ql.includes('now')||ql.includes('current'))return novaKB.building;
   if(ql.includes('hack')||ql.includes('vit'))return novaKB.hackathon;
-  if(ql.includes('contact')||ql.includes('email'))return novaKB.contact;
-  if(ql.includes('hello')||ql.includes('hi'))return"Hey! 👋 I'm NOVA. Ask me about NeuralRAG, GuardWAF, his skills, why you should hire him, or what he's building right now.";
-  return`Great question! Aadhidharmar specializes in RAG, Agentic AI, and AI Security. He built NeuralRAG and GuardWAF. Try asking "Tell me about GuardWAF" or "Why hire him?" 💡`;
+  if(ql.includes('edu')||ql.includes('college')||ql.includes('gpa')||ql.includes('degree'))return novaKB.education;
+  if(ql.includes('cert')||ql.includes('credential'))return novaKB.certifications;
+  if(ql.includes('resume')||ql.includes('cv')||ql.includes('pdf'))return novaKB.resume;
+  if(ql.includes('contact')||ql.includes('email')||ql.includes('phone')||ql.includes('reach'))return novaKB.contact;
+  if(ql.includes('hello')||ql.includes('hi')||ql.includes('hey'))return"Hey! 👋 I'm NOVA — Aadhidharmar's personal AI agent. Ask me about NeuralRAG, GuardWAF AWS proxy, system architecture, why to hire him, or type **/terminal** to open CLI!";
+  
+  return`Great question! Aadhidharmar specializes in RAG, Agentic AI, and AI Security. He architected NeuralRAG (Streamlit live) and GuardWAF (AWS ECS live). Try asking "Tell me about GuardWAF", "Architecture", or "Why hire him?" 💡`;
 }
+
 function toggleNova(){document.getElementById('novaPanel').classList.toggle('open')}
 function addNMsg(text,role){
   const d=document.createElement('div');d.className=`nova-msg ${role}`;
-  d.innerHTML=text.replace(/\*\*(.*?)\*\*/g,'<strong style="color:var(--amber)">$1</strong>').replace(/\n/g,'<br>');
+  d.innerHTML=text.replace(/\*\*(.*?)\*\*/g,'<strong style="color:var(--amber)">$1</strong>').replace(/\[(.*?)\]\((.*?)\)/g,'<a href="$2" target="_blank" style="color:var(--teal);text-decoration:underline">$1</a>').replace(/\n/g,'<br>');
   const m=document.getElementById('novaMsgs');m.appendChild(d);m.scrollTop=99999;
 }
 function showTyping(){
@@ -2292,35 +2360,263 @@ function sendNova(){
   const inp=document.getElementById('novaInp');const q=inp.value.trim();if(!q)return;
   addNMsg(q,'user');inp.value='';
   const t=showTyping();
-  setTimeout(()=>{t.remove();addNMsg(getNovaResp(q),'bot')},600+Math.random()*400);
+  setTimeout(()=>{t.remove();addNMsg(getNovaResp(q),'bot')},500+Math.random()*300);
 }
-function askNova(q){addNMsg(q,'user');const t=showTyping();setTimeout(()=>{t.remove();addNMsg(getNovaResp(q),'bot')},600+Math.random()*300)}
+function askNova(q){addNMsg(q,'user');const t=showTyping();setTimeout(()=>{t.remove();addNMsg(getNovaResp(q),'bot')},500+Math.random()*250)}
 
-// ── TERMINAL ─────────────────────────────────
+
+// ── UPGRADED CLI TERMINAL ─────────────────────────────────
+let cmdHistory=[];
+let cmdIdx=-1;
+
 function openTerm(){document.getElementById('term-overlay').classList.add('open');setTimeout(()=>document.getElementById('term-in').focus(),80)}
 function closeTerm(){document.getElementById('term-overlay').classList.remove('open')}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeTerm();if(e.ctrlKey&&e.key==='`')openTerm()});
+
 const tcmds={
-  whoami:()=>[{c:'to',t:'┌──────────────────────────────────────────────┐'},{c:'to',t:'│  NAME:   Aadhidharmar T                      │'},{c:'to',t:'│  ROLE:   AI Product Builder · RAG Specialist  │'},{c:'to',t:'│  EDU:    B.Tech AI & DS — Sri Shakthi Inst.  │'},{c:'to',t:'│  CGPA:   7.23                                 │'},{c:'to',t:'│  STATUS: Seeking AI Engineering roles         │'},{c:'to',t:'│  EMAIL:  dharmaraadhi@gmail.com               │'},{c:'to',t:'└──────────────────────────────────────────────┘'}],
-  'show achievements':()=>[{c:'ti',t:'🏆 ACHIEVEMENT LOG'},{c:'to',t:''},{c:'to',t:'[✓] GuardWAF — AI Agent Gateway (Live AWS ECS Fargate: 43.205.239.119:8000)'},{c:'to',t:'[✓] NeuralRAG — LangGraph + RAG (Live at neuralrag.streamlit.app)'},{c:'to',t:'[✓] VIT 24hr Hackathon — 15th place / AI Medical Chatbot'},{c:'to',t:'[✓] Intelligent Search Engine — live on Render'},{c:'to',t:'[✓] Speech Emotion Recognition — CNN + BERT multimodal'},{c:'to',t:''},{c:'ti',t:'Skills: GuardWAF · AWS ECS Fargate · LangGraph · RAG · ChromaDB · FastAPI · PostgreSQL'}],
-  'launch guardwaf':()=>[{c:'to',t:'[BOOT] GuardWAF Security Proxy v1.2'},{c:'to',t:'[OK]   Deep Packet Inspector (HTTP/S) ........ ✓'},{c:'to',t:'[OK]   PyTorch ML Anomaly Model .............. ✓'},{c:'to',t:'[OK]   OWASP Top 10 Mitigation Engine ........ ✓'},{c:'to',t:'[OK]   Sub-ms Reverse Proxy Listener ......... ✓'},{c:'to',t:'[OK]   Automated Rate Limiting & IP Banning ... ✓'},{c:'to',t:''},{c:'ti',t:'🛡️ GuardWAF ONLINE. AI threat protection active on AWS.'},{c:'to',t:'   Live AWS: http://43.205.239.119:8000/static/index.html'}],
-  'launch neuralrag':()=>[{c:'to',t:'[BOOT] NeuralRAG v1.0'},{c:'to',t:'[OK]   LangGraph state machine .............. ✓'},{c:'to',t:'[OK]   ChromaDB vector store ................ ✓'},{c:'to',t:'[OK]   OpenAI GPT-4o engine ................. ✓'},{c:'to',t:'[OK]   Router agent initialized .............. ✓'},{c:'to',t:'[OK]   Memory module ......................... ✓'},{c:'to',t:''},{c:'ti',t:'✅ NeuralRAG ONLINE. <800ms latency. Top-5 retrieval.'},{c:'to',t:'   Live App: https://neuralrag.streamlit.app/'}],
-  hire:()=>[{c:'ti',t:'══════════════════════════════════════════════'},{c:'ti',t:'      THE CASE FOR HIRING AADHIDHARMAR'},{c:'ti',t:'══════════════════════════════════════════════'},{c:'to',t:''},{c:'to',t:'✦ Builds REAL systems — NeuralRAG & GuardWAF are architected, not tutorial-copied'},{c:'to',t:'✦ RAG & AI Security specialist — rare depth at junior level'},{c:'to',t:'✦ Ships under pressure — 15th at VIT 24hr hackathon'},{c:'to',t:'✦ Stack: LangGraph + GuardWAF + LangChain + OpenAI + ChromaDB + FastAPI'},{c:'to',t:'✦ Actively learning: RAGAS, LoRA, multi-agent patterns'},{c:'to',t:''},{c:'ti',t:'📧 dharmaraadhi@gmail.com  |  📱 +91 6380072080'}],
-  skills:()=>[{c:'to',t:'CORE STACK:'},{c:'to',t:'  AI/ML:   Python · TensorFlow · PyTorch · Scikit-Learn'},{c:'to',t:'  Security:GuardWAF WAF · Reverse Proxy · OWASP Top 10 · Threat Scoring'},{c:'to',t:'  GenAI:   LangChain · LangGraph · OpenAI API'},{c:'to',t:'  RAG:     ChromaDB · Vector Search · BERT · NLP'},{c:'to',t:'  Deploy:  FastAPI · Streamlit · Flask · GitHub · Render'},{c:'to',t:'  Data:    SQL · Pandas · NumPy · Feature Engineering'}],
-  help:()=>[{c:'to',t:'Available commands:'},{c:'to',t:'  whoami              — Identity'},{c:'to',t:'  show achievements   — All projects & wins'},{c:'to',t:'  launch guardwaf     — Boot GuardWAF AI Security Proxy'},{c:'to',t:'  launch neuralrag    — Boot NeuralRAG'},{c:'to',t:'  hire                — The case for hiring'},{c:'to',t:'  skills              — Full tech stack'},{c:'to',t:'  clear               — Clear terminal'},{c:'to',t:'  exit                — Close'}],
+  whoami:()=>[
+    {c:'to',t:'┌──────────────────────────────────────────────────────────┐'},
+    {c:'to',t:'│  NAME:     Aadhidharmar T                                │'},
+    {c:'to',t:'│  ROLE:     AI Product Builder · RAG Specialist            │'},
+    {c:'to',t:'│  SPECIAL:  Stateful Agent Graphs & AI WAF Security Proxies │'},
+    {c:'to',t:'│  EDU:      B.Tech AI & DS — Sri Shakthi Inst. (CGPA 7.23)│'},
+    {c:'to',t:'│  GRADUATION: 2027                                        │'},
+    {c:'to',t:'│  STATUS:   Available for AI Engineering Roles            │'},
+    {c:'to',t:'│  CONTACT:  dharmaraadhi@gmail.com                        │'},
+    {c:'to',t:'└──────────────────────────────────────────────────────────┘'}
+  ],
+  'show achievements':()=>[
+    {c:'ti',t:'🏆 VERIFIED RECEIPTS & DEPLOYMENTS LOG'},
+    {c:'to',t:''},
+    {c:'to',t:'[1] GuardWAF — Enterprise AI Security Gateway (AWS ECS Fargate Live: http://43.205.239.119:8000/static/index.html)'},
+    {c:'to',t:'[2] NeuralRAG — Stateful Agentic RAG System (Streamlit Live: https://neuralrag.streamlit.app/)'},
+    {c:'to',t:'[3] Intelligent Search Engine — Grounded AI Search (Render Live: https://search-grounded-ai-assistant.onrender.com/)'},
+    {c:'to',t:'[4] Speech Emotion Recognition — Dual-Stream Audio CNN + BERT Deep Learning'},
+    {c:'to',t:'[5] VIT 24hr Hackathon — 15th Place Winner / AI Medical Diagnostic Chatbot'},
+    {c:'to',t:''},
+    {c:'ti',t:'Stack: LangGraph · GuardWAF · AWS ECS · ChromaDB · FastAPI · PyTorch · Docker'}
+  ],
+  'launch guardwaf':()=>{
+    setTimeout(()=>window.open('http://43.205.239.119:8000/static/index.html','_blank'),800);
+    return [
+      {c:'to',t:'[BOOT] Initializing GuardWAF AWS ECS Security Proxy v1.2...'},
+      {c:'to',t:'[OK]   Deep Packet Inspector (HTTP/S payload parser) ...... ✓'},
+      {c:'to',t:'[OK]   PyTorch ML Anomaly Model Engine .................... ✓'},
+      {c:'to',t:'[OK]   OWASP Top 10 Exploits Mitigation Engine ............ ✓'},
+      {c:'to',t:'[OK]   Sub-ms Reverse Proxy Listener (FastAPI + ECS) ...... ✓'},
+      {c:'to',t:'[OK]   Sliding-Window Rate Limiter & HITL Dashboard ....... ✓'},
+      {c:'to',t:''},
+      {c:'ti',t:'🛡️ GUARDWAF ONLINE. Redirecting to AWS ECS Live Proxy...'},
+      {c:'to',t:'   URL: http://43.205.239.119:8000/static/index.html'}
+    ];
+  },
+  'launch neuralrag':()=>{
+    setTimeout(()=>window.open('https://neuralrag.streamlit.app/','_blank'),800);
+    return [
+      {c:'to',t:'[BOOT] Initializing NeuralRAG LangGraph Engine v1.0...'},
+      {c:'to',t:'[OK]   LangGraph 4-Node State Graph Machine .............. ✓'},
+      {c:'to',t:'[OK]   ChromaDB 1536-dim Vector Store Engine ............. ✓'},
+      {c:'to',t:'[OK]   OpenAI GPT-4o Reasoning Synthesis Node ............ ✓'},
+      {c:'to',t:'[OK]   Context Grounding & Source Citation Module ......... ✓'},
+      {c:'to',t:''},
+      {c:'ti',t:'✅ NEURALRAG ONLINE. <800ms Latency. Launching Streamlit Cloud App...'},
+      {c:'to',t:'   URL: https://neuralrag.streamlit.app/'}
+    ];
+  },
+  architecture:()=>[
+    {c:'ti',t:'⚡ NEURALRAG AGENT GRAPH ARCHITECTURE:'},
+    {c:'to',t:'[Query] ──> (LangGraph Router) ──> [ChromaDB Vector Store]'},
+    {c:'to',t:'                                         │'},
+    {c:'to',t:'[Response] <── (GPT-4o Synthesis) <── (Cosine Reranker)'},
+    {c:'to',t:''},
+    {c:'ti',t:'🛡️ GUARDWAF SECURITY PROXY ARCHITECTURE:'},
+    {c:'to',t:'[LLM Agent] ──> (GuardWAF WAF Proxy) ──> [YAML Policy Inspector]'},
+    {c:'to',t:'                                                │'},
+    {c:'to',t:'[Target API] <── (Sliding Rate Limiter) <── (PostgreSQL Audit Log)'}
+  ],
+  hire:()=>[
+    {c:'ti',t:'════════════════════════════════════════════════════════════════'},
+    {c:'ti',t:'               WHY HIRE AADHIDHARMAR T.'},
+    {c:'ti',t:'════════════════════════════════════════════════════════════════'},
+    {c:'to',t:''},
+    {c:'to',t:'✦ SHIPS REAL SYSTEMS — NeuralRAG (Streamlit) & GuardWAF (AWS ECS) are deployed live'},
+    {c:'to',t:'✦ RAG & AI SECURITY SPECIALIST — Rare depth in stateful graphs & WAF proxies'},
+    {c:'to',t:'✦ SHIPS UNDER PRESSURE — 15th place out of 100s of teams at VIT 24hr Hackathon'},
+    {c:'to',t:'✦ STACK MASTERY — LangGraph + GuardWAF + FastAPI + ChromaDB + AWS ECS Fargate + PyTorch'},
+    {c:'to',t:'✦ ACADEMIC RIGOR — B.Tech AI & DS Student (CGPA 7.23, Graduating 2027)'},
+    {c:'to',t:''},
+    {c:'ti',t:'📧 dharmaraadhi@gmail.com  |  📱 +91 6380072080'}
+  ],
+  skills:()=>[
+    {c:'ti',t:'CORE TECHNICAL STACK:'},
+    {c:'to',t:'  AI/ML:      Python · PyTorch · TensorFlow · Scikit-Learn · LibROSA · BERT'},
+    {c:'to',t:'  GenAI:      LangGraph · LangChain · OpenAI GPT-4o · Groq API'},
+    {c:'to',t:'  RAG & DB:   ChromaDB · Vector Search · Cosine Reranking · RAGAS Eval'},
+    {c:'to',t:'  AI Security:GuardWAF WAF Proxy · Rate Limiting · HITL Approvals · OWASP Top 10'},
+    {c:'to',t:'  Cloud/DevOps:AWS ECS Fargate · Docker · FastAPI · Flask · Streamlit · Render · PostgreSQL'}
+  ],
+  certs:()=>[
+    {c:'ti',t:'📜 9 VERIFIED INDUSTRY CERTIFICATIONS:'},
+    {c:'to',t:'  [1] Working with OpenAI API — DataCamp (Jun 2026)'},
+    {c:'to',t:'  [2] Prompt Engineering — Simplilearn SkillUp (Feb 2026)'},
+    {c:'to',t:'  [3] Intro to Data Science & NLP — Infosys Springboard (Jun 2025)'},
+    {c:'to',t:'  [4] Career Essentials in Generative AI — Microsoft & LinkedIn (Aug 2024)'},
+    {c:'to',t:'  ...and 5 more verified credentials in ML, NLP, and Data Science!'}
+  ],
+  'cat resume':()=>[
+    {c:'ti',t:'📄 RESUME PREVIEW — AADHIDHARMAR T.'},
+    {c:'to',t:'------------------------------------------------------------'},
+    {c:'to',t:'SUMMARY: B.Tech AI & DS student (CGPA 7.23, Graduating 2027)'},
+    {c:'to',t:'FOCUS:   Agentic RAG Workflows, AI Security Gateways, GenAI'},
+    {c:'to',t:'PROJECTS:NeuralRAG (Live Streamlit) | GuardWAF (Live AWS ECS)'},
+    {c:'to',t:'WIN:     15th Place @ VIT 24-Hour National Hackathon'},
+    {c:'to',t:'EMAIL:   dharmaraadhi@gmail.com | +91 6380072080'},
+    {c:'to',t:'------------------------------------------------------------'},
+    {c:'ti',t:'Type "download resume" to fetch the official PDF file.'}
+  ],
+  'download resume':()=>{
+    window.open('assets/Aadhi_Dharmar_AI_Engineer_Resume.pdf','_blank');
+    return [{c:'ti',t:'📄 DOWNLOADING RESUME PDF... (Aadhi_Dharmar_AI_Engineer_Resume.pdf)'}];
+  },
+  resume:()=>{
+    window.open('assets/Aadhi_Dharmar_AI_Engineer_Resume.pdf','_blank');
+    return [{c:'ti',t:'📄 DOWNLOADING RESUME PDF... (Aadhi_Dharmar_AI_Engineer_Resume.pdf)'}];
+  },
+  ping:()=>[
+    {c:'to',t:'PING aws-ecs-guardwaf.proxy (43.205.239.119): 56 data bytes'},
+    {c:'to',t:'64 bytes from 43.205.239.119: icmp_seq=1 ttl=54 time=0.42 ms'},
+    {c:'to',t:'64 bytes from neuralrag.streamlit.app: icmp_seq=2 ttl=56 time=0.78 ms'},
+    {c:'ti',t:'--- Latency Test: All cloud gateways responding < 1ms ✓ ---'}
+  ],
+  matrix:()=>{
+    const body=document.getElementById('termBody');
+    body.innerHTML='';
+    const chars='01010101AADHIDHARMAR_AI_RAG_GUARDWAF_LANGGRAPH_NEURALRAG';
+    for(let i=0;i<12;i++){
+      setTimeout(()=>{
+        let line='';
+        for(let j=0;j<45;j++) line += chars[Math.floor(Math.random()*chars.length)];
+        const d=document.createElement('div');d.className='tl';d.style.color='#2dd4bf';d.textContent=line;
+        body.appendChild(d);body.scrollTop=99999;
+      },i*120);
+    }
+    return [];
+  },
+  sudo:()=>[{c:'te',t:'[SECURITY ALERT] Permission denied: Senior AI Engineer clearance required. Ask NOVA for authorization.'}],
+  contact:()=>[
+    {c:'ti',t:'🤝 CONTACT INFORMATION:'},
+    {c:'to',t:'  Email:    dharmaraadhi@gmail.com'},
+    {c:'to',t:'  Phone:    +91 6380072080'},
+    {c:'to',t:'  GitHub:   github.com/Aadhidharmar001'},
+    {c:'to',t:'  LinkedIn: linkedin.com/in/aadhi-dharmar-a35679293'}
+  ],
+  date:()=>[{c:'ti',t:`Current IST Time: ${new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'})}`}],
+  history:()=>cmdHistory.map(c=>({c:'to',t:`  ${c}`})),
+  help:()=>[
+    {c:'ti',t:'AVAILABLE TERMINAL COMMANDS:'},
+    {c:'to',t:''},
+    {c:'ti',t:'SYSTEM & IDENTITY:'},
+    {c:'to',t:'  whoami              — Identity & credentials'},
+    {c:'to',t:'  show achievements   — Deployed systems & hackathon wins'},
+    {c:'to',t:'  skills              — Full AI/ML & DevOps tech stack'},
+    {c:'to',t:'  certs               — 9 verified industry certifications'},
+    {c:'to',t:'  architecture        — NeuralRAG & GuardWAF system diagrams'},
+    {c:'to',t:''},
+    {c:'ti',t:'LAUNCHERS & CLOUD:'},
+    {c:'to',t:'  launch guardwaf     — Boot & open GuardWAF AWS ECS Proxy'},
+    {c:'to',t:'  launch neuralrag    — Boot & open NeuralRAG Streamlit App'},
+    {c:'to',t:'  ping                — Test sub-ms cloud latency'},
+    {c:'to',t:''},
+    {c:'ti',t:'RECRUITMENT & UTILS:'},
+    {c:'to',t:'  hire                — The case for hiring Aadhidharmar'},
+    {c:'to',t:'  cat resume          — Preview resume inside terminal'},
+    {c:'to',t:'  download resume     — Download PDF resume'},
+    {c:'to',t:'  contact             — Contact email & links'},
+    {c:'to',t:'  matrix              — Toggle cyber matrix rain'},
+    {c:'to',t:'  theme <amber|teal>  — Switch site color theme'},
+    {c:'to',t:'  clear               — Clear screen'},
+    {c:'to',t:'  exit                — Close terminal'}
+  ],
   clear:()=>'CLEAR',
   exit:()=>{closeTerm();return[]},
 };
 function handleTerm(e){
+  const inp=document.getElementById('term-in');
+  
+  // Up / Down arrow command history navigation
+  if(e.key==='ArrowUp'){
+    if(cmdHistory.length>0){
+      cmdIdx=Math.min(cmdIdx+1, cmdHistory.length-1);
+      inp.value=cmdHistory[cmdHistory.length-1-cmdIdx]||'';
+    }
+    e.preventDefault();
+    return;
+  }
+  if(e.key==='ArrowDown'){
+    if(cmdIdx>0){
+      cmdIdx--;
+      inp.value=cmdHistory[cmdHistory.length-1-cmdIdx]||'';
+    }else{
+      cmdIdx=-1;
+      inp.value='';
+    }
+    e.preventDefault();
+    return;
+  }
+  
+  // Tab Auto-Completion
+  if(e.key==='Tab'){
+    e.preventDefault();
+    const val=inp.value.trim().toLowerCase();
+    if(!val)return;
+    const matches=Object.keys(tcmds).filter(c=>c.startsWith(val));
+    if(matches.length===1){
+      inp.value=matches[0];
+    }else if(matches.length>1){
+      const body=document.getElementById('termBody');
+      const d=document.createElement('div');d.className='tl';d.style.color='var(--text3)';
+      d.textContent=`Suggestions: ${matches.join('  |  ')}`;
+      body.appendChild(d);body.scrollTop=99999;
+    }
+    return;
+  }
+
   if(e.key!=='Enter')return;
-  const inp=document.getElementById('term-in');const cmd=inp.value.trim().toLowerCase();inp.value='';
+  const rawCmd=inp.value.trim();
+  const cmd=rawCmd.toLowerCase();
+  inp.value='';cmdIdx=-1;
+  
+  if(!cmd)return;
+  cmdHistory.push(rawCmd);
+  
   const body=document.getElementById('termBody');
   const pl=document.createElement('div');pl.className='tl';
-  pl.innerHTML=`<span class="tp">aadhidharmar@ai:~$</span> ${cmd}`;body.appendChild(pl);
-  if(!cmd)return;
+  pl.innerHTML=`<span class="tp">aadhidharmar@ai:~$</span> ${rawCmd}`;body.appendChild(pl);
+  
+  if(cmd.startsWith('theme ')){
+    const themeName=cmd.replace('theme ','').trim();
+    if(window.setTheme) setTheme(themeName);
+    const d=document.createElement('div');d.className='tl ti';
+    d.textContent=`Palette updated to ${themeName}! 🎨`;
+    body.appendChild(d);body.scrollTop=99999;
+    return;
+  }
+  
   const h=tcmds[cmd];
-  if(h){const r=h();if(r==='CLEAR'){body.innerHTML='';return}if(Array.isArray(r))r.forEach(l=>{const d=document.createElement('div');d.className=`tl ${l.c}`;d.textContent=l.t;body.appendChild(d)})}
-  else{const d=document.createElement('div');d.className='tl te';d.textContent=`command not found: ${cmd}. Type 'help' for list.`;body.appendChild(d)}
+  if(h){
+    const r=h();
+    if(r==='CLEAR'){body.innerHTML='';return}
+    if(Array.isArray(r))r.forEach(l=>{
+      const d=document.createElement('div');
+      d.className=`tl ${l.c||'to'}`;
+      d.textContent=l.t;
+      body.appendChild(d);
+    });
+  }else{
+    const d=document.createElement('div');d.className='tl te';
+    d.textContent=`command not found: '${cmd}'. Type 'help' for list of commands.`;
+    body.appendChild(d);
+  }
   body.scrollTop=99999;
 }
 
