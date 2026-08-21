@@ -98,7 +98,7 @@ body {
   will-change: transform, opacity;
 }
 
-/* CUSTOM CURSOR */
+/* CUSTOM CURSOR WITH CONTEXTUAL BADGE */
 #cur {
   position: fixed;
   width: 8px;
@@ -121,7 +121,21 @@ body {
   z-index: 99998;
   transform: translate(-50%, -50%);
   will-change: transform, width, height, border-color;
-  transition: width 0.2s cubic-bezier(0.16,1,0.3,1), height 0.2s cubic-bezier(0.16,1,0.3,1), border-color 0.2s;
+  transition: width 0.25s cubic-bezier(0.16,1,0.3,1), height 0.25s cubic-bezier(0.16,1,0.3,1), border-color 0.25s, background-color 0.25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#cur-badge {
+  font-family: var(--mono);
+  font-size: 8px;
+  font-weight: 700;
+  color: #0c0e13;
+  opacity: 0;
+  letter-spacing: 0.5px;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  user-select: none;
 }
 @media (hover: none) and (pointer: coarse) {
   #cur, #cur-r { display: none !important; }
@@ -192,7 +206,7 @@ nav.scrolled {
 }
 .nav-links {
   display: flex;
-  gap: 28px;
+  gap: 24px;
   list-style: none;
   position: relative;
 }
@@ -297,6 +311,17 @@ nav.scrolled {
   width: 100%;
   padding: 0;
   text-align: left;
+}
+.hero-boot-log {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--teal);
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .hero-badge {
   display: inline-flex;
@@ -503,7 +528,6 @@ nav.scrolled {
   transform: scale(1.03);
 }
 
-/* Floating Badges Overlay */
 .hero-chip-top {
   position: absolute;
   top: 14px;
@@ -560,7 +584,95 @@ nav.scrolled {
   background: linear-gradient(90deg, var(--amber), transparent);
 }
 
-/* ── SHARED SECTION STYLING ── */
+/* ── TECH MARQUEE ── */
+.marquee-wrap {
+  overflow: hidden;
+  padding: 14px 0;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  z-index: 1;
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+  gap: 0;
+}
+.m-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 28px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+.m-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--amber);
+  opacity: 0.6;
+}
+
+/* ── DIRECTIONAL HORIZONTAL PINNED SECTIONS (NEURALRAG & GUARDWAF) ── */
+.pinned-section-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg);
+}
+.horizontal-track {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: max-content;
+  will-change: transform;
+}
+.h-panel {
+  width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 48px 40px;
+  box-sizing: border-box;
+  position: relative;
+}
+.h-panel-inner {
+  max-width: 1160px;
+  width: 100%;
+}
+
+/* Directional Visual Cues */
+.directional-cue {
+  position: absolute;
+  top: 90px;
+  right: 48px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--teal);
+  background: rgba(45, 212, 191, 0.08);
+  border: 1px solid rgba(45, 212, 191, 0.25);
+  padding: 6px 16px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+  pointer-events: none;
+  animation: pulse-cue 2.5s infinite;
+}
+@keyframes pulse-cue { 0%, 100% { opacity: 0.8; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-2px); } }
+
+/* Shared Section Elements */
 section {
   padding: 120px 48px;
   position: relative;
@@ -607,13 +719,13 @@ section {
 }
 .sec-sub {
   color: var(--text2);
-  font-size: 17px;
+  font-size: 16px;
   max-width: 580px;
   line-height: 1.7;
-  margin-bottom: 60px;
+  margin-bottom: 36px;
 }
 
-/* UNIFIED BADGE SYSTEM */
+/* Badges */
 .badge, .proj-tag, .cert-skill-tag, .learning-chip, .proj-highlight-chip {
   display: inline-flex;
   align-items: center;
@@ -635,150 +747,60 @@ section {
   border-color: rgba(45, 212, 191, 0.3);
   color: var(--teal);
 }
-.proj-tag:hover, .badge:hover {
-  border-color: var(--amber);
-  color: var(--amber);
-  transform: translateY(-1px);
-}
 
-/* ── TECH MARQUEE ── */
-.marquee-wrap {
-  overflow: hidden;
-  padding: 14px 0;
-  background: var(--bg2);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  position: relative;
-  z-index: 1;
-}
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: marquee 35s linear infinite;
-  gap: 0;
-}
-.m-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 0 28px;
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--text3);
-  letter-spacing: 1px;
-  white-space: nowrap;
-}
-.m-dot {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--amber);
-  opacity: 0.6;
-}
-
-/* ── NEURALRAG SHOWCASE ── */
-#neuralrag {
-  background: rgba(17, 19, 24, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-}
-.nr-hero {
+/* Performance Metrics Grid */
+.metrics-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 72px;
-  align-items: center;
-  margin-bottom: 80px;
-}
-.nr-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 5px 14px;
-  background: rgba(45, 212, 191, 0.1);
-  border: 1px solid rgba(45, 212, 191, 0.25);
-  border-radius: 4px;
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--teal);
-  letter-spacing: 2px;
-  margin-bottom: 20px;
-}
-.nr-title {
-  font-family: var(--display);
-  font-size: clamp(32px, 4.5vw, 60px);
-  font-weight: 800;
-  letter-spacing: -1.5px;
-  line-height: 1.05;
-  margin-bottom: 20px;
-}
-.nr-title .g2 {
-  background: linear-gradient(100deg, var(--teal), var(--indigo));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.nr-desc {
-  color: var(--text2);
-  font-size: 16px;
-  line-height: 1.8;
-  margin-bottom: 32px;
-}
-.nr-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   margin-bottom: 32px;
+  margin-top: 12px;
 }
-.nr-stat {
+.metric-card {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 16px;
-  text-align: center;
-  transition: all 0.3s ease;
+  border-radius: 12px;
+  padding: 22px 18px;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
-.nr-stat:hover {
-  border-color: rgba(45, 212, 191, 0.4);
-  transform: translateY(-3px);
-  box-shadow: var(--gT);
+.metric-card:hover {
+  border-color: rgba(45, 212, 191, 0.45);
+  transform: translateY(-4px);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(45, 212, 191, 0.18);
 }
-.nr-stat-num {
+.metric-val {
   font-family: var(--display);
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 800;
   color: var(--teal);
+  margin-bottom: 6px;
+  line-height: 1.1;
 }
-.nr-stat-label {
-  font-size: 11px;
+.metric-name {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.metric-trend {
+  font-family: var(--mono);
+  font-size: 10px;
   color: var(--text3);
-  font-family: var(--mono);
-  margin-top: 4px;
-  letter-spacing: 0.5px;
-}
-.nr-links {
-  display: flex;
-  gap: 12px;
-}
-.btn-teal {
-  padding: 12px 24px;
-  background: rgba(45, 212, 191, 0.12);
-  border: 1px solid rgba(45, 212, 191, 0.3);
-  border-radius: 6px;
-  color: var(--teal);
-  font-family: var(--mono);
-  font-size: 12px;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.btn-teal:hover {
-  background: rgba(45, 212, 191, 0.25);
-  box-shadow: 0 0 20px rgba(45, 212, 191, 0.3);
+  line-height: 1.4;
 }
 
-/* Architecture flow & visualizer */
+/* NeuralRAG Components */
+.nr-hero-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
 .arch-flow {
   background: var(--card);
   border: 1px solid var(--border);
@@ -792,111 +814,52 @@ section {
   box-shadow: var(--gT);
 }
 .arch-header {
-  padding: 16px 24px;
+  padding: 14px 20px;
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   gap: 10px;
   font-family: var(--mono);
-  font-size: 12px;
-  color: var(--text3);
-}
-.arch-dots {
-  display: flex;
-  gap: 6px;
-}
-.arch-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-.arch-body {
-  padding: 24px;
-}
-
-/* ── PERFORMANCE METRICS GRID (FIXED & POLISHED) ── */
-.metrics-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-  margin-bottom: 48px;
-  margin-top: 12px;
-}
-.metric-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 24px 20px;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-}
-.metric-card:hover {
-  border-color: rgba(45, 212, 191, 0.45);
-  transform: translateY(-4px);
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(45, 212, 191, 0.18);
-}
-.metric-val {
-  font-family: var(--display);
-  font-size: 28px;
-  font-weight: 800;
-  color: var(--teal);
-  margin-bottom: 8px;
-  line-height: 1.1;
-}
-.metric-name {
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--text);
-  letter-spacing: 1px;
-  margin-bottom: 6px;
-}
-.metric-trend {
-  font-family: var(--mono);
   font-size: 11px;
   color: var(--text3);
-  line-height: 1.4;
 }
+.arch-dots { display: flex; gap: 6px; }
+.arch-dot { width: 10px; height: 10px; border-radius: 50%; }
+.arch-body { padding: 20px; }
 
-/* Interactive query flow */
+/* Interactive Query Pipeline */
 .qflow-wrap {
   background: var(--card2);
   border: 1px solid var(--border);
   border-radius: 16px;
-  padding: 32px;
-  margin-top: 16px;
+  padding: 28px;
 }
 .qflow-title {
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text3);
   letter-spacing: 2px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 .qflow-input-row {
   display: flex;
   gap: 12px;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 .qflow-input {
   flex: 1;
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 14px 16px;
+  padding: 12px 16px;
   color: var(--text);
   font-family: var(--body);
-  font-size: 14px;
+  font-size: 13px;
   outline: none;
-  transition: border-color 0.2s;
 }
-.qflow-input:focus {
-  border-color: var(--amber);
-}
+.qflow-input:focus { border-color: var(--amber); }
 .qflow-run {
-  padding: 14px 24px;
+  padding: 12px 22px;
   background: var(--amber);
   color: #0c0e13;
   border: none;
@@ -906,111 +869,122 @@ section {
   font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
-  transition: all 0.2s;
-}
-.qflow-run:hover {
-  background: var(--amber3);
-  box-shadow: 0 0 20px rgba(245,158,11,0.4);
 }
 .qflow-steps {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  position: relative;
+  gap: 10px;
 }
 .qflow-step {
-  padding: 20px;
+  padding: 16px;
   border: 1px solid var(--border);
   border-radius: 10px;
-  position: relative;
-  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
   background: var(--card);
+  transition: all 0.3s;
 }
 .qflow-step.active {
   border-color: var(--amber);
   box-shadow: var(--gA);
   background: rgba(245, 158, 11, 0.08);
-  transform: translateY(-2px);
 }
 .qflow-step.done {
   border-color: var(--teal);
   background: rgba(45, 212, 191, 0.06);
 }
-.qflow-step-num {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--text3);
-  letter-spacing: 1px;
-  margin-bottom: 10px;
-}
-.qflow-step-icon {
-  font-size: 22px;
-  margin-bottom: 10px;
-}
-.qflow-step-name {
-  font-family: var(--display);
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 6px;
-}
-.qflow-step-status {
-  font-size: 11px;
-  color: var(--text3);
-  font-family: var(--mono);
-  min-height: 32px;
-  line-height: 1.5;
-}
+.qflow-step-num { font-family: var(--mono); font-size: 9px; color: var(--text3); letter-spacing: 1px; margin-bottom: 6px; }
+.qflow-step-icon { font-size: 18px; margin-bottom: 6px; }
+.qflow-step-name { font-family: var(--display); font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.qflow-step-status { font-size: 10px; color: var(--text3); font-family: var(--mono); min-height: 28px; line-height: 1.4; }
 .qflow-step-status.running { color: var(--amber); }
 .qflow-step-status.done { color: var(--teal); }
-.qflow-arrow {
-  position: absolute;
-  right: -8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 9px;
-  color: var(--text3);
-  z-index: 1;
-}
+
 .qflow-output {
-  margin-top: 24px;
-  padding: 20px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 14px;
-  color: var(--text2);
-  line-height: 1.7;
   display: none;
+  background: var(--card);
+  border: 1px solid rgba(45, 212, 191, 0.35);
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 16px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
 }
 .source-chip {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 3px 10px;
+  gap: 5px;
+  padding: 3px 8px;
   background: rgba(45, 212, 191, 0.08);
-  border: 1px solid rgba(45, 212, 191, 0.2);
+  border: 1px solid rgba(45, 212, 191, 0.25);
   border-radius: 4px;
-  font-size: 10px;
   font-family: var(--mono);
+  font-size: 10px;
   color: var(--teal);
-  margin: 4px 4px 0 0;
+  margin: 6px 6px 0 0;
 }
 
-/* ── GUARDWAF ARCHITECTURE VISUALIZER & SIMULATOR ── */
+/* Live Telemetry Terminal Window */
+.telemetry-box {
+  background: #0d1117;
+  border: 1px solid rgba(45, 212, 191, 0.3);
+  border-radius: 10px;
+  padding: 16px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text2);
+  height: 160px;
+  overflow-y: auto;
+  margin-top: 16px;
+  line-height: 1.6;
+}
+.telemetry-box .log-time { color: var(--text3); margin-right: 8px; }
+.telemetry-box .log-act { color: var(--teal); }
+
+/* ── TRANSITION BRIDGE (NEURALRAG -> GUARDWAF) ── */
+.transition-bridge-sec {
+  padding: 60px 48px;
+  background: linear-gradient(180deg, var(--bg) 0%, rgba(19, 22, 29, 0.95) 50%, var(--bg) 100%);
+  position: relative;
+  text-align: center;
+}
+.bridge-flow-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+.bridge-node {
+  padding: 12px 24px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.bridge-node.highlight {
+  border-color: var(--teal);
+  color: var(--teal);
+  box-shadow: 0 0 25px rgba(45, 212, 191, 0.25);
+}
+.bridge-arrow {
+  color: var(--amber);
+  font-size: 18px;
+  animation: pulse-cue 1.5s infinite;
+}
+
+/* ── GUARDWAF REVERSE DIRECTIONAL SECTION ── */
 .gwaf-visualizer-wrap {
-  margin-top: 48px;
   background: var(--card);
   border: 1px solid rgba(45, 212, 191, 0.25);
   border-radius: 16px;
-  padding: 32px;
+  padding: 28px;
   box-shadow: 0 16px 40px rgba(0,0,0,0.5);
   position: relative;
   overflow: hidden;
@@ -1019,7 +993,7 @@ section {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 10px;
-  margin: 28px 0;
+  margin: 24px 0;
   position: relative;
 }
 .gwaf-node {
@@ -1081,10 +1055,8 @@ section {
   border: 1px solid var(--border);
 }
 
-/* ── PROJECTS SECTION ── */
-#projects {
-  background: transparent;
-}
+/* ── PROJECTS SECTION (DEPTH PERSPECTIVE) ── */
+#projects { background: transparent; }
 .proj-filters {
   display: flex;
   gap: 12px;
@@ -1212,11 +1184,6 @@ section {
   color: var(--text);
   margin-bottom: 8px;
   letter-spacing: -0.5px;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
-}
-.proj-row:hover .proj-name {
-  color: #fff;
-  text-shadow: 0 0 15px rgba(245, 158, 11, 0.7), 0 0 30px rgba(45, 212, 191, 0.4);
 }
 .proj-desc {
   font-size: 14px;
@@ -1224,11 +1191,7 @@ section {
   line-height: 1.6;
   margin-bottom: 12px;
 }
-.proj-tech-highlights {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
+.proj-tech-highlights { display: flex; gap: 8px; flex-wrap: wrap; }
 .proj-right {
   display: flex;
   flex-direction: column;
@@ -1258,7 +1221,6 @@ section {
   box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
 }
 
-/* Expanded project detail drawer */
 .proj-detail {
   display: none;
   padding: 32px;
@@ -1271,15 +1233,8 @@ section {
   margin-bottom: 20px;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
 }
-.proj-detail.open {
-  display: block;
-}
-.proj-detail-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  padding-top: 12px;
-}
+.proj-detail.open { display: block; }
+.proj-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; padding-top: 12px; }
 .proj-feat-list { list-style: none; }
 .proj-feat-list li {
   padding: 8px 0;
@@ -1298,11 +1253,7 @@ section {
   margin-top: 2px;
   flex-shrink: 0;
 }
-.proj-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
-}
+.proj-actions { display: flex; gap: 10px; margin-top: 20px; }
 .btn-sm {
   padding: 8px 18px;
   border-radius: 6px;
@@ -1320,16 +1271,8 @@ section {
 .btn-sm-g:hover { border-color: var(--text2); color: var(--text); }
 
 /* ── CURRENTLY BUILDING ── */
-#building {
-  background: rgba(17, 19, 24, 0.85);
-  backdrop-filter: blur(16px);
-}
-.building-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  margin-bottom: 48px;
-}
+#building { background: rgba(17, 19, 24, 0.85); backdrop-filter: blur(16px); }
+.building-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 48px; }
 .build-card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -1337,822 +1280,163 @@ section {
   padding: 28px;
   transition: all 0.3s;
 }
-.build-card:hover {
-  border-color: var(--borderA);
-  box-shadow: var(--gA);
-  transform: translateY(-3px);
-}
-.build-card-tag {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--amber);
-  letter-spacing: 2px;
-  margin-bottom: 12px;
-}
-.build-card-title {
-  font-family: var(--display);
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-.build-card-desc {
-  font-size: 13px;
-  color: var(--text2);
-  line-height: 1.7;
-  margin-bottom: 16px;
-}
-.build-progress {
-  height: 4px;
-  background: var(--bg3);
-  border-radius: 2px;
-  margin-bottom: 6px;
-  overflow: hidden;
-}
-.build-progress-bar {
-  height: 100%;
-  border-radius: 2px;
-  background: linear-gradient(90deg, var(--amber), var(--teal));
-  width: 0%;
-  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.build-progress-label {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--text3);
-  display: flex;
-  justify-content: space-between;
-}
-.roadmap {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 32px;
-}
-.roadmap-title {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--text3);
-  letter-spacing: 2px;
-  margin-bottom: 24px;
-}
-.roadmap-item {
-  display: flex;
-  gap: 20px;
-  padding: 16px 0;
-  border-bottom: 1px solid var(--border2);
-}
+.build-card:hover { border-color: var(--borderA); box-shadow: var(--gA); transform: translateY(-3px); }
+.build-card-tag { font-family: var(--mono); font-size: 10px; color: var(--amber); letter-spacing: 2px; margin-bottom: 12px; }
+.build-card-title { font-family: var(--display); font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+.build-card-desc { font-size: 13px; color: var(--text2); line-height: 1.7; margin-bottom: 16px; }
+.build-progress { height: 4px; background: var(--bg3); border-radius: 2px; margin-bottom: 6px; overflow: hidden; }
+.build-progress-bar { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--amber), var(--teal)); width: 0%; transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+.build-progress-label { font-family: var(--mono); font-size: 10px; color: var(--text3); display: flex; justify-content: space-between; }
+.roadmap { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 32px; }
+.roadmap-title { font-family: var(--mono); font-size: 11px; color: var(--text3); letter-spacing: 2px; margin-bottom: 24px; }
+.roadmap-item { display: flex; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--border2); }
 .roadmap-item:last-child { border-bottom: none; }
-.roadmap-status {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  margin-top: 5px;
-}
+.roadmap-status { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
 .rs-done { background: var(--green); box-shadow: 0 0 8px var(--green); }
 .rs-active { background: var(--amber); box-shadow: 0 0 10px var(--amber); animation: blink 1.5s infinite; }
 .rs-soon { background: var(--border); border: 1px solid var(--text3); }
 .roadmap-info { flex: 1; }
 .roadmap-label { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
 .roadmap-sub { font-size: 12px; color: var(--text3); font-family: var(--mono); }
-.learning-strip {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 48px;
-}
-.learning-chip {
-  padding: 8px 16px;
-  background: rgba(129, 140, 248, 0.08);
-  border: 1px solid rgba(129, 140, 248, 0.2);
-  border-radius: 6px;
-  font-size: 12px;
-  font-family: var(--mono);
-  color: var(--indigo);
-}
+.learning-strip { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 48px; }
 
 /* ── CREDIBILITY & PROOF OF WORK ── */
-#cred {
-  background: transparent;
-}
-.cred-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-bottom: 48px;
-}
-.cred-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 28px;
-  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
-}
-.cred-card:hover {
-  border-color: var(--borderA);
-  transform: translateY(-4px);
-  box-shadow: 0 14px 40px rgba(0,0,0,0.6);
-}
+#cred { background: transparent; }
+.cred-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 48px; }
+.cred-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 28px; transition: all 0.35s cubic-bezier(0.16,1,0.3,1); }
+.cred-card:hover { border-color: var(--borderA); transform: translateY(-4px); box-shadow: 0 14px 40px rgba(0,0,0,0.6); }
 .cred-card-icon { font-size: 28px; margin-bottom: 16px; }
 .cred-card-title { font-family: var(--display); font-size: 18px; font-weight: 700; margin-bottom: 6px; }
 .cred-card-sub { font-size: 13px; color: var(--text2); line-height: 1.6; }
-.cred-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 12px;
-  background: rgba(245, 158, 11, 0.08);
-  border: 1px solid rgba(245, 158, 11, 0.2);
-  border-radius: 4px;
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--amber);
-  margin-top: 12px;
-}
-.github-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 32px;
-}
+.cred-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 4px; font-family: var(--mono); font-size: 10px; color: var(--amber); margin-top: 12px; }
+.github-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 32px; }
 .gh-stat { text-align: center; }
 .gh-val { font-family: var(--display); font-size: 28px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
 .gh-label { font-size: 11px; color: var(--text3); font-family: var(--mono); letter-spacing: 0.5px; }
 
 /* ── CERTIFICATIONS ── */
-#certifications {
-  background: rgba(17, 19, 24, 0.85);
-  backdrop-filter: blur(16px);
-  padding: 100px 0 80px;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-.sec-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  margin-bottom: 48px;
-}
+#certifications { background: rgba(17, 19, 24, 0.85); backdrop-filter: blur(16px); padding: 100px 0 80px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.sec-center { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 48px; }
 .sec-center .sec-tag { justify-content: center; }
 .sec-center .sec-tag::after { content: ''; width: 24px; height: 1px; background: var(--amber); flex-shrink: 0; }
 .sec-center .sec-title { text-align: center; }
 .sec-center .sec-sub { text-align: center; margin-left: auto; margin-right: auto; max-width: 680px; margin-bottom: 0; }
 
-.cert-tabs {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 28px;
-  margin-bottom: 40px;
-}
-.cert-tab {
-  background: var(--card);
-  border: 1px solid var(--border);
-  color: var(--text2);
-  padding: 8px 18px;
-  border-radius: 20px;
-  font-family: var(--mono);
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-.cert-tab:hover, .cert-tab.active {
-  background: rgba(245, 158, 11, 0.12);
-  border-color: var(--amber);
-  color: var(--amber);
-  box-shadow: 0 0 16px rgba(245, 158, 11, 0.2);
-}
-.cert-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-.cert-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 26px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-  overflow: hidden;
-}
-.cert-card:hover {
-  transform: translateY(-5px);
-  border-color: var(--borderA);
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5), 0 0 25px rgba(245, 158, 11, 0.15);
-}
-.cert-card-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-.cert-issuer-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text);
-  background: rgba(255, 255, 255, 0.04);
-  padding: 4px 10px;
-  border-radius: 6px;
-  border: 1px solid var(--border2);
-}
-.cert-cat-pill {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  padding: 3px 8px;
-  border-radius: 4px;
-}
+.cert-tabs { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 28px; margin-bottom: 40px; }
+.cert-tab { background: var(--card); border: 1px solid var(--border); color: var(--text2); padding: 8px 18px; border-radius: 20px; font-family: var(--mono); font-size: 12px; cursor: pointer; transition: all 0.25s ease; }
+.cert-tab:hover, .cert-tab.active { background: rgba(245, 158, 11, 0.12); border-color: var(--amber); color: var(--amber); box-shadow: 0 0 16px rgba(245, 158, 11, 0.2); }
+.cert-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.cert-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 26px; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden; }
+.cert-card:hover { transform: translateY(-5px); border-color: var(--borderA); box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5), 0 0 25px rgba(245, 158, 11, 0.15); }
+.cert-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.cert-issuer-badge { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--text); background: rgba(255, 255, 255, 0.04); padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border2); }
+.cert-cat-pill { font-family: var(--mono); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; }
 .cat-genai { background: rgba(245, 158, 11, 0.1); color: var(--amber); border: 1px solid rgba(245, 158, 11, 0.25); }
 .cat-datascience { background: rgba(45, 212, 191, 0.1); color: var(--teal); border: 1px solid rgba(45, 212, 191, 0.25); }
 .cat-foundations { background: rgba(129, 140, 248, 0.1); color: var(--indigo); border: 1px solid rgba(129, 140, 248, 0.25); }
-.cert-title {
-  font-family: var(--display);
-  font-size: 17px;
-  font-weight: 700;
-  line-height: 1.4;
-  margin-bottom: 8px;
-  color: var(--text);
-}
-.cert-meta {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--text3);
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.cert-skills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 20px;
-}
-.cert-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 14px;
-  border-top: 1px solid var(--border2);
-}
-.cert-id-badge {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--teal);
-  background: rgba(45, 212, 191, 0.08);
-  padding: 4px 10px;
-  border-radius: 4px;
-  border: 1px solid rgba(45, 212, 191, 0.2);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-.cert-id-badge:hover {
-  background: rgba(45, 212, 191, 0.18);
-  border-color: var(--teal);
-}
-.cert-img-wrap {
-  position: relative;
-  width: 100%;
-  height: 150px;
-  border-radius: 8px;
-  overflow: hidden;
-  margin-bottom: 14px;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid var(--border2);
-  cursor: pointer;
-}
-.cert-img-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transition: transform 0.4s ease, filter 0.4s ease;
-}
-.cert-img-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(12, 14, 19, 0.75);
-  backdrop-filter: blur(3px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--amber);
-  letter-spacing: 1px;
-  font-weight: 600;
-}
+.cert-title { font-family: var(--display); font-size: 17px; font-weight: 700; line-height: 1.4; margin-bottom: 8px; color: var(--text); }
+.cert-meta { font-family: var(--mono); font-size: 11px; color: var(--text3); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+.cert-skills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+.cert-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid var(--border2); }
+.cert-id-badge { font-family: var(--mono); font-size: 10px; color: var(--teal); background: rgba(45, 212, 191, 0.08); padding: 4px 10px; border-radius: 4px; border: 1px solid rgba(45, 212, 191, 0.2); cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 4px; }
+.cert-id-badge:hover { background: rgba(45, 212, 191, 0.18); border-color: var(--teal); }
+.cert-img-wrap { position: relative; width: 100%; height: 150px; border-radius: 8px; overflow: hidden; margin-bottom: 14px; background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border2); cursor: pointer; }
+.cert-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform 0.4s ease; }
+.cert-img-overlay { position: absolute; inset: 0; background: rgba(12, 14, 19, 0.75); backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; font-family: var(--mono); font-size: 11px; color: var(--amber); letter-spacing: 1px; font-weight: 600; }
 .cert-img-wrap:hover img { transform: scale(1.06); }
 .cert-img-wrap:hover .cert-img-overlay { opacity: 1; }
 
-/* ── CERTIFICATE MODAL LIGHTBOX STYLES ── */
-.cert-modal-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  background: rgba(5, 6, 9, 0.88);
-  backdrop-filter: blur(12px);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
+.cert-modal-overlay { position: fixed; inset: 0; z-index: 99999; background: rgba(5, 6, 9, 0.88); backdrop-filter: blur(12px); display: none; align-items: center; justify-content: center; padding: 20px; opacity: 0; transition: opacity 0.3s ease; }
 .cert-modal-overlay.open { display: flex; opacity: 1; }
-.cert-modal-content {
-  background: var(--card);
-  border: 1px solid var(--borderA);
-  border-radius: 16px;
-  max-width: 800px;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  position: relative;
-  padding: 24px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(245, 158, 11, 0.2);
-}
-.cert-modal-close {
-  position: absolute;
-  top: 16px;
-  right: 20px;
-  background: none;
-  border: none;
-  color: var(--text2);
-  font-size: 28px;
-  cursor: pointer;
-  line-height: 1;
-  transition: color 0.2s;
-}
+.cert-modal-content { background: var(--card); border: 1px solid var(--borderA); border-radius: 16px; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; padding: 24px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(245, 158, 11, 0.2); }
+.cert-modal-close { position: absolute; top: 16px; right: 20px; background: none; border: none; color: var(--text2); font-size: 28px; cursor: pointer; line-height: 1; transition: color 0.2s; }
 .cert-modal-close:hover { color: var(--amber); }
 .cert-modal-body { display: flex; flex-direction: column; gap: 16px; }
-.cert-modal-img {
-  width: 100%;
-  max-height: 480px;
-  object-fit: contain;
-  border-radius: 10px;
-  background: #000;
-  border: 1px solid var(--border2);
-}
+.cert-modal-img { width: 100%; max-height: 480px; object-fit: contain; border-radius: 10px; background: #000; border: 1px solid var(--border2); }
 
-/* ── ABOUT / SCROLL-LINKED TIMELINE ── */
-#about {
-  background: rgba(17, 19, 24, 0.85);
-  backdrop-filter: blur(16px);
-}
-.timeline {
-  position: relative;
-  max-width: 800px;
-  margin-left: 20px;
-}
-.timeline-track-svg {
-  position: absolute;
-  left: 24px;
-  top: 24px;
-  bottom: 24px;
-  width: 2px;
-  height: calc(100% - 48px);
-  pointer-events: none;
-}
-.tl-item {
-  display: flex;
-  gap: 32px;
-  margin-bottom: 48px;
-  position: relative;
-  transition: transform 0.3s ease;
-}
+/* ── ABOUT / TIMELINE ── */
+#about { background: rgba(17, 19, 24, 0.85); backdrop-filter: blur(16px); }
+.timeline { position: relative; max-width: 800px; margin-left: 20px; }
+.timeline-track-svg { position: absolute; left: 24px; top: 24px; bottom: 24px; width: 2px; height: calc(100% - 48px); pointer-events: none; }
+.tl-item { display: flex; gap: 32px; margin-bottom: 48px; position: relative; transition: transform 0.3s ease; }
 .tl-item:hover { transform: translateX(6px); }
-.tl-dot {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: var(--card);
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  flex-shrink: 0;
-  z-index: 1;
-  transition: all 0.3s;
-}
-.tl-item:hover .tl-dot {
-  border-color: var(--amber);
-  box-shadow: var(--gA);
-  transform: scale(1.1);
-}
+.tl-dot { width: 48px; height: 48px; border-radius: 50%; background: var(--card); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; z-index: 1; transition: all 0.3s; }
+.tl-item:hover .tl-dot { border-color: var(--amber); box-shadow: var(--gA); transform: scale(1.1); }
 .tl-content { flex: 1; padding-top: 6px; }
-.tl-year {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--amber);
-  letter-spacing: 2px;
-  margin-bottom: 8px;
-}
-.tl-title {
-  font-family: var(--display);
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-.tl-desc {
-  font-size: 14px;
-  color: var(--text2);
-  line-height: 1.7;
-  margin-bottom: 12px;
-}
+.tl-year { font-family: var(--mono); font-size: 10px; color: var(--amber); letter-spacing: 2px; margin-bottom: 8px; }
+.tl-title { font-family: var(--display); font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+.tl-desc { font-size: 14px; color: var(--text2); line-height: 1.7; margin-bottom: 12px; }
 .tl-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-.tag {
-  padding: 3px 10px;
-  background: rgba(245, 158, 11, 0.06);
-  border: 1px solid rgba(245, 158, 11, 0.15);
-  border-radius: 4px;
-  font-size: 10px;
-  font-family: var(--mono);
-  color: var(--text3);
-}
+.tag { padding: 3px 10px; background: rgba(245, 158, 11, 0.06); border: 1px solid rgba(245, 158, 11, 0.15); border-radius: 4px; font-size: 10px; font-family: var(--mono); color: var(--text3); }
 
 /* ── SKILLS & BRAIN CANVAS ── */
-#skills {
-  background: rgba(22, 25, 32, 0.85);
-  backdrop-filter: blur(16px);
-}
-#brainCanvas {
-  width: 100%;
-  height: 580px;
-  border-radius: 16px;
-  background: rgba(13, 16, 23, 0.7);
-  border: 1px solid var(--border);
-  cursor: crosshair;
-}
-.skill-tip {
-  position: fixed;
-  background: var(--card);
-  border: 1px solid var(--borderA);
-  border-radius: 10px;
-  padding: 16px;
-  max-width: 220px;
-  z-index: 1000;
-  pointer-events: none;
-  box-shadow: var(--gA);
-  opacity: 0;
-  transition: opacity 0.2s;
-}
+#skills { background: rgba(22, 25, 32, 0.85); backdrop-filter: blur(16px); }
+#brainCanvas { width: 100%; height: 580px; border-radius: 16px; background: rgba(13, 16, 23, 0.7); border: 1px solid var(--border); cursor: crosshair; }
+.skill-tip { position: fixed; background: var(--card); border: 1px solid var(--borderA); border-radius: 10px; padding: 16px; max-width: 220px; z-index: 1000; pointer-events: none; box-shadow: var(--gA); opacity: 0; transition: opacity 0.2s; }
 .skill-tip h4 { color: var(--amber); font-family: var(--mono); font-size: 13px; margin-bottom: 6px; }
 .skill-tip p { color: var(--text2); font-size: 12px; line-height: 1.5; }
 .skill-tip .tip-used { color: var(--teal); font-size: 11px; font-family: var(--mono); margin-top: 8px; }
 
 /* ── ENGINEERING PRINCIPLES ── */
 #principles { background: transparent; }
-.principles-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 22px;
-  margin-top: 40px;
-}
-.principle-card {
-  background: rgba(19, 22, 29, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(241, 245, 249, 0.08);
-  border-radius: 16px;
-  padding: 28px;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-}
-.principle-card:hover {
-  transform: translateY(-6px) scale(1.02);
-  border-color: rgba(245, 158, 11, 0.5);
-  box-shadow: 0 18px 45px -5px rgba(0, 0, 0, 0.8), 0 0 30px rgba(245, 158, 11, 0.3), inset 0 0 20px rgba(45, 212, 191, 0.12);
-}
-.principle-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 18px;
-}
-.principle-icon-pod {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background: rgba(245, 158, 11, 0.08);
-  border: 1px solid rgba(245, 158, 11, 0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  transition: all 0.3s ease;
-}
-.principle-card:hover .principle-icon-pod {
-  background: rgba(245, 158, 11, 0.2);
-  border-color: var(--amber);
-  box-shadow: 0 0 20px rgba(245, 158, 11, 0.45);
-  transform: scale(1.1) rotate(4deg);
-}
+.principles-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; margin-top: 40px; }
+.principle-card { background: rgba(19, 22, 29, 0.75); backdrop-filter: blur(16px); border: 1px solid rgba(241, 245, 249, 0.08); border-radius: 16px; padding: 28px; transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); }
+.principle-card:hover { transform: translateY(-6px) scale(1.02); border-color: rgba(245, 158, 11, 0.5); box-shadow: 0 18px 45px -5px rgba(0, 0, 0, 0.8), 0 0 30px rgba(245, 158, 11, 0.3); }
+.principle-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+.principle-icon-pod { width: 48px; height: 48px; border-radius: 12px; background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.25); display: flex; align-items: center; justify-content: center; font-size: 22px; transition: all 0.3s ease; }
+.principle-card:hover .principle-icon-pod { background: rgba(245, 158, 11, 0.2); border-color: var(--amber); transform: scale(1.1) rotate(4deg); }
 .principle-tag { font-family: var(--mono); font-size: 9px; color: var(--text3); letter-spacing: 1.5px; }
-.principle-title {
-  font-family: var(--display);
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--text);
-  margin-bottom: 10px;
-  letter-spacing: -0.3px;
-  line-height: 1.3;
-}
+.principle-title { font-family: var(--display); font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 10px; letter-spacing: -0.3px; line-height: 1.3; }
 .principle-desc { font-size: 13px; color: var(--text2); line-height: 1.65; }
 
 /* ── CONTACT ── */
-#contact {
-  background: rgba(17, 19, 24, 0.85);
-  backdrop-filter: blur(16px);
-}
-.contact-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
-  align-items: start;
-}
-.contact-form {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 40px;
-  box-shadow: 0 16px 40px rgba(0,0,0,0.4);
-}
+#contact { background: rgba(17, 19, 24, 0.85); backdrop-filter: blur(16px); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.contact-form { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; box-shadow: 0 16px 40px rgba(0,0,0,0.4); }
 .form-group { margin-bottom: 20px; }
-.form-group label {
-  display: block;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 2px;
-  color: var(--amber);
-  margin-bottom: 8px;
-}
-.form-group input, .form-group textarea {
-  width: 100%;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 12px 16px;
-  color: var(--text);
-  font-size: 14px;
-  font-family: var(--body);
-  transition: border-color 0.2s;
-  outline: none;
-  resize: vertical;
-}
+.form-group label { display: block; font-family: var(--mono); font-size: 10px; letter-spacing: 2px; color: var(--amber); margin-bottom: 8px; }
+.form-group input, .form-group textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; color: var(--text); font-size: 14px; font-family: var(--body); outline: none; }
 .form-group input:focus, .form-group textarea:focus { border-color: var(--amber); }
-.form-group textarea { min-height: 120px; }
-.submit-btn {
-  width: 100%;
-  padding: 14px;
-  background: var(--amber);
-  border: none;
-  border-radius: 8px;
-  color: #0c0e13;
-  font-family: var(--mono);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-.submit-btn:hover {
-  background: var(--amber3);
-  box-shadow: 0 8px 30px rgba(245, 158, 11, 0.35);
-}
-.contact-links {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 32px;
-}
-.contact-link {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 16px 20px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  text-decoration: none;
-  color: var(--text);
-  transition: all 0.3s;
-}
-.contact-link:hover {
-  border-color: var(--borderA);
-  transform: translateX(4px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-}
-.contact-link-icon {
-  width: 38px;
-  height: 38px;
-  border-radius: 8px;
-  background: rgba(245, 158, 11, 0.08);
-  border: 1px solid rgba(245, 158, 11, 0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  flex-shrink: 0;
-}
+.form-group textarea { min-height: 120px; resize: vertical; }
+.submit-btn { width: 100%; padding: 14px; background: var(--amber); border: none; border-radius: 8px; color: #0c0e13; font-family: var(--mono); font-size: 13px; font-weight: 700; letter-spacing: 1px; cursor: pointer; transition: all 0.3s; }
+.submit-btn:hover { background: var(--amber3); box-shadow: 0 8px 30px rgba(245, 158, 11, 0.35); }
+.contact-links { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+.contact-link { display: flex; align-items: center; gap: 16px; padding: 16px 20px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--text); transition: all 0.3s; }
+.contact-link:hover { border-color: var(--borderA); transform: translateX(4px); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+.contact-link-icon { width: 38px; height: 38px; border-radius: 8px; background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.15); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
 .contact-link-label { font-size: 11px; color: var(--text3); font-family: var(--mono); letter-spacing: 1px; }
 .contact-link-val { font-size: 14px; color: var(--text); margin-top: 2px; }
 
 /* ── FOOTER ── */
-footer {
-  background: var(--bg);
-  border-top: 1px solid var(--border);
-  padding: 32px 48px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
-  position: relative;
-  z-index: 1;
-}
+footer { background: var(--bg); border-top: 1px solid var(--border); padding: 32px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; position: relative; z-index: 1; }
 footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
 
 /* ── NOVA & TERMINAL ── */
-#nova-fab {
-  position: fixed;
-  bottom: 32px;
-  right: 32px;
-  z-index: 900;
-}
-.nova-btn {
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  background: var(--amber);
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  box-shadow: 0 6px 24px rgba(245, 158, 11, 0.4);
-  transition: all 0.3s;
-  animation: novaglow 3s ease-in-out infinite;
-}
-.nova-btn:hover {
-  transform: scale(1.08);
-  box-shadow: 0 8px 36px rgba(245, 158, 11, 0.6);
-}
-.nova-panel {
-  position: absolute;
-  bottom: 76px;
-  right: 0;
-  width: 360px;
-  background: var(--card);
-  border: 1px solid var(--borderA);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-  display: none;
-  backdrop-filter: blur(20px);
-}
+#nova-fab { position: fixed; bottom: 32px; right: 32px; z-index: 900; }
+.nova-btn { width: 58px; height: 58px; border-radius: 50%; background: var(--amber); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 22px; box-shadow: 0 6px 24px rgba(245, 158, 11, 0.4); animation: novaglow 3s ease-in-out infinite; }
+.nova-btn:hover { transform: scale(1.08); }
+.nova-panel { position: absolute; bottom: 76px; right: 0; width: 360px; background: var(--card); border: 1px solid var(--borderA); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6); display: none; backdrop-filter: blur(20px); }
 .nova-panel.open { display: flex; flex-direction: column; }
-.nova-hdr {
-  background: rgba(245, 158, 11, 0.06);
-  border-bottom: 1px solid var(--border);
-  padding: 14px 18px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.nova-av {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--amber), var(--teal));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-}
+.nova-hdr { background: rgba(245, 158, 11, 0.06); border-bottom: 1px solid var(--border); padding: 14px 18px; display: flex; align-items: center; gap: 12px; }
+.nova-av { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, var(--amber), var(--teal)); display: flex; align-items: center; justify-content: center; font-size: 14px; }
 .nova-name { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--amber); }
 .nova-status { font-size: 10px; color: var(--green); font-family: var(--mono); }
 .nova-close { margin-left: auto; background: none; border: none; color: var(--text3); cursor: pointer; font-size: 16px; padding: 4px; }
-.nova-msgs {
-  height: 300px;
-  overflow-y: auto;
-  padding: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.nova-msgs::-webkit-scrollbar { width: 2px; }
-.nova-msg {
-  max-width: 88%;
-  padding: 11px 14px;
-  border-radius: 10px;
-  font-size: 13px;
-  line-height: 1.5;
-}
+.nova-msgs { height: 300px; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.nova-msg { max-width: 88%; padding: 11px 14px; border-radius: 10px; font-size: 13px; line-height: 1.5; }
 .nova-msg.bot { background: rgba(245, 158, 11, 0.06); border: 1px solid rgba(245, 158, 11, 0.12); color: var(--text); align-self: flex-start; }
 .nova-msg.user { background: rgba(45, 212, 191, 0.08); border: 1px solid rgba(45, 212, 191, 0.2); color: var(--text); align-self: flex-end; }
 .nova-chips { padding: 8px 14px; display: flex; flex-wrap: wrap; gap: 5px; border-top: 1px solid var(--border2); }
-.nova-chip {
-  padding: 4px 10px;
-  background: rgba(245, 158, 11, 0.07);
-  border: 1px solid rgba(245, 158, 11, 0.18);
-  border-radius: 10px;
-  font-size: 10px;
-  color: var(--text2);
-  cursor: pointer;
-  transition: all 0.2s;
-  font-family: var(--mono);
-}
-.nova-chip:hover { border-color: var(--amber); color: var(--amber); }
+.nova-chip { padding: 4px 10px; background: rgba(245, 158, 11, 0.07); border: 1px solid rgba(245, 158, 11, 0.18); border-radius: 10px; font-size: 10px; color: var(--text2); cursor: pointer; font-family: var(--mono); }
 .nova-inp-row { display: flex; gap: 8px; padding: 10px 14px; border-top: 1px solid var(--border); }
-.nova-inp {
-  flex: 1;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 9px 14px;
-  color: var(--text);
-  font-size: 13px;
-  outline: none;
-  font-family: var(--body);
-}
-.nova-inp:focus { border-color: var(--amber); }
-.nova-send {
-  background: var(--amber);
-  border: none;
-  border-radius: 8px;
-  width: 34px;
-  height: 34px;
-  cursor: pointer;
-  color: #0c0e13;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: all 0.2s;
-}
-.nova-send:hover { background: var(--amber3); }
+.nova-inp { flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 9px 14px; color: var(--text); font-size: 13px; outline: none; font-family: var(--body); }
+.nova-send { background: var(--amber); border: none; border-radius: 8px; width: 34px; height: 34px; cursor: pointer; color: #0c0e13; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
-#term-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.92);
-  z-index: 9999;
-  display: none;
-  align-items: center;
-  justify-content: center;
-}
+#term-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.92); z-index: 9999; display: none; align-items: center; justify-content: center; }
 #term-overlay.open { display: flex; }
-.term-win {
-  width: min(820px, 92vw);
-  background: #0d1117;
-  border: 1px solid var(--amber);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 0 80px rgba(245, 158, 11, 0.2);
-}
-.term-bar {
-  background: rgba(245, 158, 11, 0.05);
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border-bottom: 1px solid rgba(245, 158, 11, 0.12);
-}
-.term-body {
-  padding: 24px;
-  font-family: var(--mono);
-  font-size: 13px;
-  min-height: 380px;
-  max-height: 65vh;
-  overflow-y: auto;
-}
+.term-win { width: min(820px, 92vw); background: #0d1117; border: 1px solid var(--amber); border-radius: 12px; overflow: hidden; box-shadow: 0 0 80px rgba(245, 158, 11, 0.2); }
+.term-bar { background: rgba(245, 158, 11, 0.05); padding: 12px 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(245, 158, 11, 0.12); }
+.term-body { padding: 24px; font-family: var(--mono); font-size: 13px; min-height: 380px; max-height: 65vh; overflow-y: auto; }
 .tl { margin-bottom: 3px; line-height: 1.6; }
 .tp { color: var(--amber); }
 .to { color: var(--teal); }
@@ -2160,56 +1444,18 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
 .ti { color: var(--indigo); }
 #term-in { background: transparent; border: none; outline: none; color: var(--text); font-family: var(--mono); font-size: 13px; flex: 1; caret-color: var(--amber); }
 
-/* TOAST */
-.toast {
-  position: fixed;
-  bottom: 110px;
-  right: 32px;
-  background: var(--card);
-  border: 1px solid var(--borderA);
-  border-radius: 8px;
-  padding: 12px 20px;
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--amber);
-  z-index: 9000;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: all 0.3s;
-  pointer-events: none;
-}
+.toast { position: fixed; bottom: 110px; right: 32px; background: var(--card); border: 1px solid var(--borderA); border-radius: 8px; padding: 12px 20px; font-family: var(--mono); font-size: 12px; color: var(--amber); z-index: 9000; opacity: 0; transform: translateY(8px); transition: all 0.3s; pointer-events: none; }
 .toast.on { opacity: 1; transform: none; }
 
-/* THEME PICKER */
-.theme-picker {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-  background: rgba(241, 245, 249, 0.04);
-  padding: 4px 8px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-}
-.theme-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: none;
-  cursor: pointer;
-  opacity: 0.6;
-  transition: all 0.2s;
-}
+.theme-picker { display: flex; gap: 6px; align-items: center; background: rgba(241, 245, 249, 0.04); padding: 4px 8px; border-radius: 20px; border: 1px solid var(--border); }
+.theme-dot { width: 12px; height: 12px; border-radius: 50%; border: none; cursor: pointer; opacity: 0.6; transition: all 0.2s; }
 .theme-dot.active, .theme-dot:hover { opacity: 1; transform: scale(1.25); }
 
-/* KEYFRAMES */
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-@keyframes novaglow {
-  0%, 100% { box-shadow: 0 6px 24px rgba(245, 158, 11, 0.4); }
-  50% { box-shadow: 0 6px 40px rgba(245, 158, 11, 0.7), 0 0 0 10px rgba(245, 158, 11, 0.08); }
-}
+@keyframes novaglow { 0%, 100% { box-shadow: 0 6px 24px rgba(245, 158, 11, 0.4); } 50% { box-shadow: 0 6px 40px rgba(245, 158, 11, 0.7); } }
 
-/* RESPONSIVENESS */
+/* RESPONSIVENESS & MOBILE FALLBACK */
 @media (max-width: 900px) {
   nav { padding: 12px 18px; width: calc(100% - 24px); }
   .nav-links { display: none; }
@@ -2220,17 +1466,21 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
   .hero-actions { justify-content: center; }
   .hero-metrics { justify-content: center; gap: 16px; }
   .hero-profile-blend-wrap { max-width: 300px; margin: 0 auto; }
-  .nr-hero, .contact-grid, .building-grid, .proj-detail-grid { grid-template-columns: 1fr; }
+  .nr-hero-row, .contact-grid, .building-grid, .proj-detail-grid { grid-template-columns: 1fr; }
   .cred-grid, .cert-grid, .principles-grid, .metrics-grid { grid-template-columns: 1fr 1fr; }
   .qflow-steps, .gwaf-pipeline-nodes { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .qflow-arrow { display: none; }
   .github-grid { grid-template-columns: repeat(2, 1fr); }
   .nova-panel { width: min(340px, calc(100vw - 32px)); right: -16px; }
   footer { flex-direction: column; gap: 12px; text-align: center; }
+
+  /* Mobile Fallback: Disable Horizontal Pinning, Stack Vertically */
+  .pinned-section-container { height: auto !important; overflow: visible !important; }
+  .horizontal-track { display: flex !important; flex-direction: column !important; width: 100% !important; transform: none !important; }
+  .h-panel { width: 100% !important; height: auto !important; padding: 60px 20px !important; }
+  .directional-cue { display: none !important; }
 }
 @media (max-width: 600px) {
   .cred-grid, .cert-grid, .principles-grid, .metrics-grid { grid-template-columns: 1fr; }
-  .nr-stats { grid-template-columns: 1fr 1fr; }
   .hero-name { letter-spacing: -1px; }
   .gwaf-pipeline-nodes { grid-template-columns: 1fr; }
 }
@@ -2239,7 +1489,7 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
 <body>
 
 <div id="cur"></div>
-<div id="cur-r"></div>
+<div id="cur-r"><span id="cur-badge"></span></div>
 <div id="prog"></div>
 <div class="toast" id="toast"></div>
 
@@ -2249,7 +1499,8 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
     <span style="color:var(--amber)">⚡</span> AADHIDHARMAR.AI
   </a>
   <ul class="nav-links">
-    <li><a href="#neuralrag">NeuralRAG</a></li>
+    <li><a href="#neuralrag-pin">NeuralRAG</a></li>
+    <li><a href="#guardwaf-pin">GuardWAF</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#building">Building</a></li>
     <li><a href="#cred">Credibility</a></li>
@@ -2271,13 +1522,16 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
   </div>
 </nav>
 
-<!-- ═══════════ HERO SECTION ═══════════ -->
+<!-- ═══════════ HERO SECTION (VERTICAL ENTRANCE) ═══════════ -->
 <section id="hero">
   <!-- Three.js 3D WebGL Latent Space Background -->
   <canvas id="heroCanvas"></canvas>
   
   <div class="hero-container">
     <div class="hero-wrap">
+      <div class="hero-boot-log" id="heroBootLog">
+        <span>⚡ [SYSTEM INITIALIZING]</span> &bull; <span>AI SYSTEMS ONLINE</span>
+      </div>
       <div class="hero-badge">
         <span style="width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 2s infinite;display:inline-block"></span>
         AVAILABLE FOR AI ENGINEERING ROLES
@@ -2294,14 +1548,14 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
       </p>
       
       <div class="hero-actions">
-        <a href="#neuralrag" class="btn-primary">View NeuralRAG →</a>
-        <a href="assets/Aadhi_Dharmar_AI_Engineer_Resume.pdf" download="Aadhi_Dharmar_AI_Engineer_Resume.pdf" target="_blank" class="btn-ghost">📄 Resume (PDF)</a>
-        <a href="#contact" class="btn-ghost">🤝 Hire Me</a>
+        <a href="#neuralrag-pin" class="btn-primary" data-cursor="EXPLORE">View NeuralRAG →</a>
+        <a href="assets/Aadhi_Dharmar_AI_Engineer_Resume.pdf" download="Aadhi_Dharmar_AI_Engineer_Resume.pdf" target="_blank" class="btn-ghost" data-cursor="OPEN">📄 Resume (PDF)</a>
+        <a href="#contact" class="btn-ghost" data-cursor="CLICK">🤝 Hire Me</a>
       </div>
       
       <div class="hero-metrics">
         <div class="hero-metric">
-          <div class="hero-metric-num">5+</div>
+          <div class="hero-metric-num" data-count="5">5+</div>
           <div class="hero-metric-label">SYSTEMS BUILT</div>
         </div>
         <div class="hero-metric">
@@ -2321,7 +1575,7 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
 
     <!-- HERO PORTRAIT DISPLAY WITH 3D TILT -->
     <div class="hero-profile-container" id="heroPortraitContainer">
-      <div class="hero-profile-blend-wrap" id="heroPortraitCard">
+      <div class="hero-profile-blend-wrap" id="heroPortraitCard" data-cursor="VIEW">
         <div class="hero-profile-glow"></div>
         <div class="hero-chip-top">
           <span style="width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);animation:blink 2s infinite"></span>
@@ -2337,7 +1591,7 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
 
   <div class="hero-scroll">
     <div class="hero-scroll-line"></div>
-    SCROLL TO EXPLORE
+    SCROLL DOWN TO EXPLORE PIPELINE →
   </div>
 </section>
 
@@ -2346,38 +1600,61 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
   <div class="marquee-track" id="mtrack"></div>
 </div>
 
-<!-- ═══════════ NEURALRAG SHOWCASE ═══════════ -->
-<section id="neuralrag">
-  <div class="container">
-    <div class="nr-hero">
-      <div class="gsap-reveal">
-        <div class="nr-badge">⚡ FLAGSHIP PROJECT</div>
-        <h2 class="nr-title">Neural<span class="g2">RAG</span></h2>
-        <p class="nr-desc">
-          A production-grade agentic AI system that doesn't just retrieve documents — it routes queries intelligently, reasons across sources, and generates grounded responses with memory. Built on LangGraph state machines + ChromaDB vector search.
-        </p>
-        <div class="nr-stats">
-          <div class="nr-stat">
-            <div class="nr-stat-num">&lt;800ms</div>
-            <div class="nr-stat-label">AVG LATENCY</div>
+<!-- ═══════════ NEURALRAG: HORIZONTAL DIRECTIONAL SCROLL (LEFT → RIGHT) ═══════════ -->
+<div class="pinned-section-container" id="neuralrag-pin">
+  <div class="directional-cue" id="nrCue">SCROLL TO TRAVEL THROUGH PIPELINE →</div>
+  <div class="horizontal-track" id="nrTrack">
+    
+    <!-- PANEL 1: OVERVIEW & METRICS -->
+    <div class="h-panel">
+      <div class="h-panel-inner">
+        <div class="sec-tag">STAGE 01 // OVERVIEW</div>
+        <div class="nr-hero-row">
+          <div>
+            <div style="display:inline-flex;align-items:center;gap:8px;padding:5px 14px;background:rgba(45,212,191,0.1);border:1px solid rgba(45,212,191,0.25);border-radius:4px;font-family:var(--mono);font-size:10px;color:var(--teal);letter-spacing:2px;margin-bottom:16px">⚡ FLAGSHIP SYSTEM</div>
+            <h2 class="sec-title">Neural<span class="g">RAG</span></h2>
+            <p class="sec-sub">
+              A production-grade agentic AI reasoning system. Intelligently routes queries, reasons across sources, and generates grounded responses with memory using LangGraph state machines and ChromaDB vector search.
+            </p>
+            <div style="display:flex;gap:12px">
+              <a href="https://neuralrag.streamlit.app/" target="_blank" class="btn-teal" data-cursor="OPEN">🌐 Live App →</a>
+              <a href="https://github.com/Aadhidharmar001" target="_blank" class="btn-ghost" data-cursor="OPEN">⚡ GitHub</a>
+            </div>
           </div>
-          <div class="nr-stat">
-            <div class="nr-stat-num">1536-d</div>
-            <div class="nr-stat-label">EMBEDDING DIM</div>
+          <div>
+            <div class="metrics-grid" style="margin-top:0">
+              <div class="metric-card">
+                <div class="metric-val">&lt;800ms</div>
+                <div class="metric-name">LATENCY</div>
+                <div class="metric-trend">Async retrieval</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-val">1536</div>
+                <div class="metric-name">DIMENSIONS</div>
+                <div class="metric-trend">OpenAI embedding</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-val">Top-5</div>
+                <div class="metric-name">CHUNKS</div>
+                <div class="metric-trend">Cosine reranked</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-val">4-Node</div>
+                <div class="metric-name">STATE GRAPH</div>
+                <div class="metric-trend">LangGraph agents</div>
+              </div>
+            </div>
           </div>
-          <div class="nr-stat">
-            <div class="nr-stat-num">Top-5</div>
-            <div class="nr-stat-label">RETRIEVAL K</div>
-          </div>
-        </div>
-        <div class="nr-links">
-          <a href="https://neuralrag.streamlit.app/" target="_blank" class="btn-teal" style="background:rgba(45,212,191,.2);border-color:var(--teal);color:var(--teal);font-weight:700">🌐 Live App →</a>
-          <a href="https://github.com/Aadhidharmar001" target="_blank" class="btn-ghost">⚡ GitHub</a>
         </div>
       </div>
-      
-      <!-- NeuralRAG Architecture Diagram -->
-      <div class="gsap-reveal">
+    </div>
+
+    <!-- PANEL 2: STATE GRAPH ARCHITECTURE -->
+    <div class="h-panel">
+      <div class="h-panel-inner">
+        <div class="sec-tag">STAGE 02 // ARCHITECTURE</div>
+        <h2 class="sec-title" style="font-size:36px;margin-bottom:12px">Stateful <span class="g">Graph Flow</span></h2>
+        <p class="sec-sub" style="margin-bottom:24px">Live animated data packets traveling through the 4-node LangGraph orchestration state machine.</p>
         <div class="arch-flow">
           <div class="arch-header">
             <div class="arch-dots">
@@ -2385,127 +1662,225 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
               <div class="arch-dot" style="background:#febc2e"></div>
               <div class="arch-dot" style="background:#28c840"></div>
             </div>
-            <span>NeuralRAG — Stateful Graph Architecture</span>
+            <span>NeuralRAG Graph: Query → Router → Vector Retrieval → Reranker → GPT-4o</span>
           </div>
           <div class="arch-body">
-            <canvas id="archCanvas" width="480" height="280" style="width:100%;border-radius:8px"></canvas>
+            <canvas id="archCanvas" width="600" height="260" style="width:100%;border-radius:8px"></canvas>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Performance Metrics (Polished Glass Grid) -->
-    <div class="gsap-reveal">
-      <div class="sec-tag">PERFORMANCE</div>
-      <div class="metrics-grid">
-        <div class="metric-card">
-          <div class="metric-val">&lt;800ms</div>
-          <div class="metric-name">END-TO-END LATENCY</div>
-          <div class="metric-trend">↑ optimized via async retrieval</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-val">1536</div>
-          <div class="metric-name">EMBEDDING DIMENSIONS</div>
-          <div class="metric-trend">OpenAI text-embedding-3-small</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-val">Top-5</div>
-          <div class="metric-name">RETRIEVAL CHUNKS</div>
-          <div class="metric-trend">cosine similarity reranking</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-val">4-Node</div>
-          <div class="metric-name">LANGGRAPH AGENTS</div>
-          <div class="metric-trend">router → retrieve → search → generate</div>
+    <!-- PANEL 3: INTERACTIVE QUERY PIPELINE & TELEMETRY -->
+    <div class="h-panel">
+      <div class="h-panel-inner">
+        <div class="sec-tag">STAGE 03 // LIVE DEMO & TELEMETRY</div>
+        <h2 class="sec-title" style="font-size:36px;margin-bottom:12px">Interactive <span class="g">Pipeline Telemetry</span></h2>
+        <div class="qflow-wrap">
+          <div class="qflow-input-row">
+            <input class="qflow-input" id="qflow-q" placeholder="Type a query: e.g. What is RAG architecture?" value="What is RAG architecture?">
+            <button class="qflow-run" onclick="runQflow()" data-cursor="CLICK">▶ RUN PIPELINE</button>
+          </div>
+          <div class="qflow-steps" id="qflow-steps">
+            <div class="qflow-step" id="qs1">
+              <div class="qflow-step-num">STEP 01</div>
+              <div class="qflow-step-icon">🧭</div>
+              <div class="qflow-step-name">Router Agent</div>
+              <div class="qflow-step-status" id="qs1-s">Waiting for query...</div>
+            </div>
+            <div class="qflow-step" id="qs2">
+              <div class="qflow-step-num">STEP 02</div>
+              <div class="qflow-step-icon">🔍</div>
+              <div class="qflow-step-name">Vector Retrieval</div>
+              <div class="qflow-step-status" id="qs2-s">ChromaDB idle</div>
+            </div>
+            <div class="qflow-step" id="qs3">
+              <div class="qflow-step-num">STEP 03</div>
+              <div class="qflow-step-icon">⚖️</div>
+              <div class="qflow-step-name">Reranking</div>
+              <div class="qflow-step-status" id="qs3-s">Awaiting chunks</div>
+            </div>
+            <div class="qflow-step" id="qs4">
+              <div class="qflow-step-num">STEP 04</div>
+              <div class="qflow-step-icon">✨</div>
+              <div class="qflow-step-name">LLM Generation</div>
+              <div class="qflow-step-status" id="qs4-s">GPT-4o ready</div>
+            </div>
+          </div>
+          <!-- Live Event Log Stream -->
+          <div class="telemetry-box" id="nrTelemetryLog">
+            <div><span class="log-time">[12:41:00]</span> <span class="log-act">NEURALRAG INITIALIZED</span> — ChromaDB connected (1536-d)</div>
+            <div><span class="log-time">[12:41:01]</span> <span class="log-act">ROUTER READY</span> — LangGraph state machine standing by</div>
+          </div>
+          <div class="qflow-output" id="qflow-out"></div>
         </div>
       </div>
     </div>
 
-    <!-- Interactive Query Flow -->
-    <div class="gsap-reveal">
-      <div class="sec-tag">LIVE DEMO — QUERY PIPELINE</div>
-      <div class="qflow-wrap">
-        <div class="qflow-title">// TRY THE PIPELINE — TYPE A QUERY AND WATCH IT FLOW</div>
-        <div class="qflow-input-row">
-          <input class="qflow-input" id="qflow-q" placeholder="e.g. What are the symptoms of diabetes? or What is RAG architecture?" value="">
-          <button class="qflow-run" onclick="runQflow()">▶ RUN PIPELINE</button>
-        </div>
-        <div class="qflow-steps" id="qflow-steps">
-          <div class="qflow-step" id="qs1">
-            <div class="qflow-step-num">STEP 01</div>
-            <div class="qflow-step-icon">🧭</div>
-            <div class="qflow-step-name">Router Agent</div>
-            <div class="qflow-step-status" id="qs1-s">Waiting for query...</div>
-            <div class="qflow-arrow">→</div>
+    <!-- PANEL 4: HYPERPARAMETER TUNING PLAYGROUND -->
+    <div class="h-panel">
+      <div class="h-panel-inner">
+        <div class="sec-tag">STAGE 04 // TUNING PLAYGROUND</div>
+        <h2 class="sec-title" style="font-size:36px;margin-bottom:12px">Parameter <span class="g">Simulator</span></h2>
+        <p class="sec-sub" style="margin-bottom:24px">Adjust hyperparameters in real time to observe simulated impact on retrieval precision and latency.</p>
+        <div style="background:var(--card);border:1px solid var(--borderA);border-radius:14px;padding:32px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;flex-wrap:wrap;gap:12px">
+            <div style="font-family:var(--display);font-size:20px;font-weight:700;color:var(--text)">Live System Telemetry</div>
+            <div style="font-family:var(--mono);font-size:12px;color:var(--teal);background:rgba(45,212,191,0.08);padding:8px 18px;border-radius:6px;border:1px solid rgba(45,212,191,0.2)" id="rag-sim-out">Latency: ~640ms | Precision: 94.2%</div>
           </div>
-          <div class="qflow-step" id="qs2">
-            <div class="qflow-step-num">STEP 02</div>
-            <div class="qflow-step-icon">🔍</div>
-            <div class="qflow-step-name">Vector Retrieval</div>
-            <div class="qflow-step-status" id="qs2-s">ChromaDB idle</div>
-            <div class="qflow-arrow">→</div>
-          </div>
-          <div class="qflow-step" id="qs3">
-            <div class="qflow-step-num">STEP 03</div>
-            <div class="qflow-step-icon">⚖️</div>
-            <div class="qflow-step-name">Reranking</div>
-            <div class="qflow-step-status" id="qs3-s">Awaiting chunks</div>
-            <div class="qflow-arrow">→</div>
-          </div>
-          <div class="qflow-step" id="qs4">
-            <div class="qflow-step-num">STEP 04</div>
-            <div class="qflow-step-icon">✨</div>
-            <div class="qflow-step-name">LLM Generation</div>
-            <div class="qflow-step-status" id="qs4-s">GPT-4o ready</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:28px">
+            <div>
+              <label style="font-family:var(--mono);font-size:11px;color:var(--amber);display:flex;justify-content:space-between;margin-bottom:10px">
+                <span>Top-K Retrieval Chunks</span><span id="v-topk">5</span>
+              </label>
+              <input type="range" min="1" max="10" value="5" id="sl-topk" oninput="updateRagSim()" style="width:100%;accent-color:var(--amber);cursor:pointer">
+            </div>
+            <div>
+              <label style="font-family:var(--mono);font-size:11px;color:var(--teal);display:flex;justify-content:space-between;margin-bottom:10px">
+                <span>Cosine Similarity Threshold</span><span id="v-thresh">0.75</span>
+              </label>
+              <input type="range" min="0.50" max="0.95" step="0.05" value="0.75" id="sl-thresh" oninput="updateRagSim()" style="width:100%;accent-color:var(--teal);cursor:pointer">
+            </div>
+            <div>
+              <label style="font-family:var(--mono);font-size:11px;color:var(--indigo);display:flex;justify-content:space-between;margin-bottom:10px">
+                <span>Generation Temperature</span><span id="v-temp">0.20</span>
+              </label>
+              <input type="range" min="0.0" max="1.0" step="0.05" value="0.20" id="sl-temp" oninput="updateRagSim()" style="width:100%;accent-color:var(--indigo);cursor:pointer">
+            </div>
           </div>
         </div>
-        <div class="qflow-output" id="qflow-out"></div>
       </div>
     </div>
 
-    <!-- Interactive RAG Parameter Simulator -->
-    <div class="gsap-reveal" style="margin-top:48px">
-      <div class="sec-tag">INTERACTIVE TUNING PLAYGROUND</div>
-      <div style="background:var(--card);border:1px solid var(--borderA);border-radius:12px;padding:28px">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px">
-          <div>
-            <div style="font-family:var(--display);font-size:18px;font-weight:700;color:var(--text)">RAG Hyperparameter Simulator</div>
-            <div style="font-size:12px;color:var(--text2)">Adjust parameters to see real-time simulated impact on retrieval precision and latency.</div>
-          </div>
-          <div style="font-family:var(--mono);font-size:11px;color:var(--teal);background:rgba(45,212,191,0.08);padding:6px 14px;border-radius:6px;border:1px solid rgba(45,212,191,0.2)" id="rag-sim-out">Latency: ~640ms | Precision: 94.2%</div>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
-          <div>
-            <label style="font-family:var(--mono);font-size:11px;color:var(--amber);display:flex;justify-content:space-between;margin-bottom:8px">
-              <span>Top-K Chunks</span><span id="v-topk">5</span>
-            </label>
-            <input type="range" min="1" max="10" value="5" id="sl-topk" oninput="updateRagSim()" style="width:100%;accent-color:var(--amber);cursor:pointer">
-          </div>
-          <div>
-            <label style="font-family:var(--mono);font-size:11px;color:var(--teal);display:flex;justify-content:space-between;margin-bottom:8px">
-              <span>Cosine Threshold</span><span id="v-thresh">0.75</span>
-            </label>
-            <input type="range" min="0.50" max="0.95" step="0.05" value="0.75" id="sl-thresh" oninput="updateRagSim()" style="width:100%;accent-color:var(--teal);cursor:pointer">
-          </div>
-          <div>
-            <label style="font-family:var(--mono);font-size:11px;color:var(--indigo);display:flex;justify-content:space-between;margin-bottom:8px">
-              <span>Temperature</span><span id="v-temp">0.20</span>
-            </label>
-            <input type="range" min="0.0" max="1.0" step="0.05" value="0.20" id="sl-temp" oninput="updateRagSim()" style="width:100%;accent-color:var(--indigo);cursor:pointer">
-          </div>
-        </div>
-      </div>
+  </div>
+</div>
+
+<!-- ═══════════ TRANSITION BRIDGE: NEURALRAG → GUARDWAF ═══════════ -->
+<div class="transition-bridge-sec" id="transitionBridge">
+  <div class="container">
+    <div style="font-family:var(--mono);font-size:11px;color:var(--amber);letter-spacing:2px">// INFRASTRUCTURE BRIDGE</div>
+    <p style="font-family:var(--display);font-size:20px;font-weight:700;color:var(--text);margin-top:6px">NeuralRAG Generated Action → Agent Tool Execution Request</p>
+    <div class="bridge-flow-wrap">
+      <div class="bridge-node">🤖 NeuralRAG Agent</div>
+      <div class="bridge-arrow">→</div>
+      <div class="bridge-node highlight">📦 Tool Request Payload</div>
+      <div class="bridge-arrow">→</div>
+      <div class="bridge-node">🛡️ GuardWAF Security Gateway</div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ═══════════ PROJECTS SHOWCASE ═══════════ -->
+<!-- ═══════════ GUARDWAF: REVERSE HORIZONTAL DIRECTIONAL SCROLL (RIGHT → LEFT) ═══════════ -->
+<div class="pinned-section-container" id="guardwaf-pin">
+  <div class="directional-cue" id="gwafCue" style="color:var(--amber);border-color:rgba(245,158,11,0.25);background:rgba(245,158,11,0.08)">← TRACING BACKWARD THROUGH SECURITY LAYERS</div>
+  <div class="horizontal-track" id="gwafTrack">
+    
+    <!-- GUARDWAF PANEL 1: OVERVIEW & AWS ECS -->
+    <div class="h-panel">
+      <div class="h-panel-inner">
+        <div class="sec-tag">STAGE 01 // SECURITY GATEWAY</div>
+        <div class="nr-hero-row">
+          <div>
+            <div style="display:inline-flex;align-items:center;gap:8px;padding:5px 14px;background:rgba(45,212,191,0.1);border:1px solid rgba(45,212,191,0.25);border-radius:4px;font-family:var(--mono);font-size:10px;color:var(--teal);letter-spacing:2px;margin-bottom:16px">🛡️ ENTERPRISE AI SECURITY</div>
+            <h2 class="sec-title">Guard<span class="g">WAF</span></h2>
+            <p class="sec-sub">
+              Security reverse proxy governing autonomous LLM agent actions, rate-limiting runaway loops, and enforcing YAML policies before tool execution. Deployed live on AWS ECS Fargate.
+            </p>
+            <div style="display:flex;gap:12px">
+              <a href="http://43.205.239.119:8000/static/index.html" target="_blank" class="btn-teal" data-cursor="OPEN">🌐 Live AWS ECS Demo →</a>
+              <a href="https://github.com/Aadhidharmar001" target="_blank" class="btn-ghost" data-cursor="OPEN">⚡ GitHub</a>
+            </div>
+          </div>
+          <div>
+            <div class="metrics-grid" style="margin-top:0">
+              <div class="metric-card">
+                <div class="metric-val">0.38ms</div>
+                <div class="metric-name">PROXY LATENCY</div>
+                <div class="metric-trend">Sub-millisecond inspection</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-val">100%</div>
+                <div class="metric-name">TOOL AUDIT</div>
+                <div class="metric-trend">PostgreSQL logs</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-val">AWS ECS</div>
+                <div class="metric-name">FARGATE CLOUD</div>
+                <div class="metric-trend">Serverless Docker containers</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-val">HITL</div>
+                <div class="metric-name">RISK APPROVAL</div>
+                <div class="metric-trend">Real-time SSE dashboard</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GUARDWAF PANEL 2: REVERSE ARCHITECTURE & LIVE SIMULATION -->
+    <div class="h-panel">
+      <div class="h-panel-inner">
+        <div class="sec-tag">STAGE 02 // REVERSE PIPELINE SIMULATION</div>
+        <h2 class="sec-title" style="font-size:34px;margin-bottom:10px">Interactive <span class="g">Security Simulator</span></h2>
+        <div class="gwaf-visualizer-wrap">
+          <div style="font-family:var(--mono);font-size:11px;color:var(--teal);letter-spacing:1.5px;margin-bottom:8px">// GUARDWAF REVERSE PROXY PIPELINE</div>
+          <div class="gwaf-pipeline-nodes">
+            <div class="gwaf-node" id="gn1">
+              <div class="gwaf-node-icon">🤖</div>
+              <div class="gwaf-node-title">LLM Agent</div>
+              <div class="gwaf-node-sub">Tool Request</div>
+            </div>
+            <div class="gwaf-node" id="gn2">
+              <div class="gwaf-node-icon">⚡</div>
+              <div class="gwaf-node-title">GuardWAF</div>
+              <div class="gwaf-node-sub">Reverse Proxy</div>
+            </div>
+            <div class="gwaf-node" id="gn3">
+              <div class="gwaf-node-icon">⏱️</div>
+              <div class="gwaf-node-title">Rate Limiter</div>
+              <div class="gwaf-node-sub">Sliding Window</div>
+            </div>
+            <div class="gwaf-node" id="gn4">
+              <div class="gwaf-node-icon">📋</div>
+              <div class="gwaf-node-title">Policy Engine</div>
+              <div class="gwaf-node-sub">YAML Validation</div>
+            </div>
+            <div class="gwaf-node" id="gn5">
+              <div class="gwaf-node-icon">👤</div>
+              <div class="gwaf-node-title">HITL / Risk</div>
+              <div class="gwaf-node-sub">Risk Analyzer</div>
+            </div>
+            <div class="gwaf-node" id="gn6">
+              <div class="gwaf-node-icon">☁️</div>
+              <div class="gwaf-node-title">Target API</div>
+              <div class="gwaf-node-sub">AWS ECS / SQL</div>
+            </div>
+          </div>
+          <div class="gwaf-controls">
+            <button class="gwaf-sim-btn" onclick="simGuardWAF('valid')" data-cursor="CLICK">▶ Simulate Normal Request</button>
+            <button class="gwaf-sim-btn" onclick="simGuardWAF('loop')" data-cursor="CLICK">⚠️ Simulate Runaway Agent Loop</button>
+            <button class="gwaf-sim-btn" onclick="simGuardWAF('sqli')" data-cursor="CLICK">🚫 Simulate Malicious SQL Payload</button>
+          </div>
+          <div class="gwaf-status-display" id="gwafStatus">
+            <span>Status: <strong style="color:var(--green)">IDLE — AWS ECS FARGATE HEALTHY</strong></span>
+            <span style="color:var(--text3)">Latency: 0.42ms · Threat Level: Low</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════ PROJECTS SHOWCASE (DEPTH PERSPECTIVE) ═══════════ -->
 <section id="projects">
   <div class="container">
     <div class="gsap-reveal">
       <div class="sec-tag">DEPLOYED SYSTEMS</div>
       <h2 class="sec-title">What I've <span class="g">Shipped</span></h2>
-      <p class="sec-sub">Production systems, not homework. Each one solves a real problem with live architecture.</p>
+      <p class="sec-sub">Production systems solving real problems with live architectures.</p>
     </div>
 
     <!-- Category Filter Chips -->
@@ -2520,7 +1895,7 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
     <div class="projects-list">
 
       <!-- PROJECT 01: NEURALRAG -->
-      <div class="proj-row gsap-reveal" data-cat="agentic live" onclick="toggleProj(1)">
+      <div class="proj-row gsap-reveal" data-cat="agentic live" onclick="toggleProj(1)" data-cursor="VIEW">
         <div class="proj-num-box">01</div>
         <div class="proj-info">
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
@@ -2556,18 +1931,18 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
             </div>
           </div>
           <div style="display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start">
-            <span class="proj-tag" style="padding:6px 14px">LangGraph</span>
-            <span class="proj-tag" style="padding:6px 14px">ChromaDB</span>
-            <span class="proj-tag" style="padding:6px 14px">GPT-4o</span>
-            <span class="proj-tag" style="padding:6px 14px">Streamlit</span>
-            <span class="proj-tag" style="padding:6px 14px">Python</span>
-            <span class="proj-tag live" style="padding:6px 14px">● Production Live</span>
+            <span class="proj-tag">LangGraph</span>
+            <span class="proj-tag">ChromaDB</span>
+            <span class="proj-tag">GPT-4o</span>
+            <span class="proj-tag">Streamlit</span>
+            <span class="proj-tag">Python</span>
+            <span class="proj-tag live">● Production Live</span>
           </div>
         </div>
       </div>
 
       <!-- PROJECT 02: GUARDWAF -->
-      <div class="proj-row gsap-reveal" data-cat="security live" onclick="toggleProj(2)">
+      <div class="proj-row gsap-reveal" data-cat="security live" onclick="toggleProj(2)" data-cursor="VIEW">
         <div class="proj-num-box" style="background:rgba(45,212,191,.08);border-color:rgba(45,212,191,.25);color:var(--teal)">02</div>
         <div class="proj-info">
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
@@ -2590,81 +1965,29 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
       <div class="proj-detail" id="pd2" data-cat="security live">
         <div class="proj-detail-grid">
           <div>
-            <div style="font-family:var(--mono);font-size:11px;color:var(--amber);margin-bottom:6px">PROBLEM &bull; UNGOVERNED AGENT ACTIONS</div>
-            <p style="font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.6">Autonomous AI agents executing API/tool calls can enter infinite loops, exceed permission scopes, or execute malicious SQL/parameter payloads if left un-intercepted.</p>
-            <div style="font-family:var(--mono);font-size:11px;color:var(--teal);margin-bottom:6px">SOLUTION &bull; SECURE AGENT MIDDLEWARE GATEWAY</div>
-            <ul class="proj-feat-list" style="margin-bottom:16px">
-              <li><strong>Tool Execution Governance:</strong> Intercepts &amp; audits tool/API calls before execution to prevent out-of-scope LLM agent actions.</li>
-              <li><strong>Sliding-Window Rate Limiting:</strong> Enforces execution speed limits to halt runaway agent loops and multi-step workflow exploits.</li>
-              <li><strong>YAML Security Policy Engine:</strong> Configurable rules for session-aware data scope verification, parameter validation, and SQLi detection.</li>
-              <li><strong>Human-in-the-Loop (HITL) Approvals:</strong> Automated risk scoring for high-sensitivity actions paired with real-time SSE audit logging dashboard.</li>
+            <ul class="proj-feat-list">
+              <li><strong>Tool Execution Governance:</strong> Intercepts &amp; audits tool/API calls before execution.</li>
+              <li><strong>Sliding-Window Rate Limiting:</strong> Halts runaway agent loops and multi-step exploits.</li>
+              <li><strong>YAML Security Policy Engine:</strong> Parameter validation and SQLi detection.</li>
+              <li><strong>Human-in-the-Loop (HITL) Approvals:</strong> Risk scoring paired with real-time SSE audit logging.</li>
             </ul>
             <div class="proj-actions">
-              <a href="http://43.205.239.119:8000/static/index.html" target="_blank" class="btn-sm btn-sm-a">🌐 Live AWS ECS Gateway Demo →</a>
+              <a href="http://43.205.239.119:8000/static/index.html" target="_blank" class="btn-sm btn-sm-a">🌐 Live AWS ECS Demo →</a>
               <a href="https://github.com/Aadhidharmar001" target="_blank" class="btn-sm btn-sm-g">GitHub →</a>
             </div>
           </div>
           <div style="display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start">
-            <span class="proj-tag" style="padding:6px 14px">AWS ECS Fargate</span>
-            <span class="proj-tag" style="padding:6px 14px">Docker</span>
-            <span class="proj-tag" style="padding:6px 14px">PostgreSQL</span>
-            <span class="proj-tag" style="padding:6px 14px">SQLAlchemy</span>
-            <span class="proj-tag" style="padding:6px 14px">FastAPI</span>
-            <span class="proj-tag" style="padding:6px 14px">CloudWatch</span>
-            <span class="proj-tag" style="padding:6px 14px">HITL Approvals</span>
-            <span class="proj-tag live" style="padding:6px 14px">● Production Gateway</span>
-          </div>
-        </div>
-
-        <!-- GuardWAF Interactive Pipeline Visualizer -->
-        <div class="gwaf-visualizer-wrap">
-          <div style="font-family:var(--mono);font-size:11px;color:var(--teal);letter-spacing:1.5px;margin-bottom:10px">// LIVE GUARDWAF GATEWAY INTERACTIVE TELEMETRY</div>
-          <div class="gwaf-pipeline-nodes">
-            <div class="gwaf-node" id="gn1">
-              <div class="gwaf-node-icon">🤖</div>
-              <div class="gwaf-node-title">LLM Agent</div>
-              <div class="gwaf-node-sub">Tool Request</div>
-            </div>
-            <div class="gwaf-node" id="gn2">
-              <div class="gwaf-node-icon">⚡</div>
-              <div class="gwaf-node-title">GuardWAF</div>
-              <div class="gwaf-node-sub">Reverse Proxy</div>
-            </div>
-            <div class="gwaf-node" id="gn3">
-              <div class="gwaf-node-icon">⏱️</div>
-              <div class="gwaf-node-title">Rate Limiter</div>
-              <div class="gwaf-node-sub">Sliding Window</div>
-            </div>
-            <div class="gwaf-node" id="gn4">
-              <div class="gwaf-node-icon">📋</div>
-              <div class="gwaf-node-title">Policy Engine</div>
-              <div class="gwaf-node-sub">YAML Validation</div>
-            </div>
-            <div class="gwaf-node" id="gn5">
-              <div class="gwaf-node-icon">👤</div>
-              <div class="gwaf-node-title">HITL / Risk</div>
-              <div class="gwaf-node-sub">Risk Analyzer</div>
-            </div>
-            <div class="gwaf-node" id="gn6">
-              <div class="gwaf-node-icon">☁️</div>
-              <div class="gwaf-node-title">Target API</div>
-              <div class="gwaf-node-sub">AWS ECS / SQL</div>
-            </div>
-          </div>
-          <div class="gwaf-controls">
-            <button class="gwaf-sim-btn" onclick="simGuardWAF('valid')">▶ Simulate Normal Request</button>
-            <button class="gwaf-sim-btn" onclick="simGuardWAF('loop')">⚠️ Simulate Runaway Agent Loop</button>
-            <button class="gwaf-sim-btn" onclick="simGuardWAF('sqli')">🚫 Simulate Malicious SQL Payload</button>
-          </div>
-          <div class="gwaf-status-display" id="gwafStatus">
-            <span>Status: <strong style="color:var(--green)">IDLE — AWS ECS FARGATE HEALTHY</strong></span>
-            <span style="color:var(--text3)">Latency: 0.42ms · Threat Level: Low</span>
+            <span class="proj-tag">AWS ECS Fargate</span>
+            <span class="proj-tag">Docker</span>
+            <span class="proj-tag">PostgreSQL</span>
+            <span class="proj-tag">FastAPI</span>
+            <span class="proj-tag live">● Production Gateway</span>
           </div>
         </div>
       </div>
 
       <!-- PROJECT 03: INTELLIGENT SEARCH ENGINE -->
-      <div class="proj-row gsap-reveal" data-cat="agentic live" onclick="toggleProj(3)">
+      <div class="proj-row gsap-reveal" data-cat="agentic live" onclick="toggleProj(3)" data-cursor="VIEW">
         <div class="proj-num-box" style="background:rgba(129,140,248,.08);border-color:rgba(129,140,248,.25);color:var(--indigo)">03</div>
         <div class="proj-info">
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
@@ -2691,7 +2014,6 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
               <li>Semantic search beyond keyword matching — understands deep query intent</li>
               <li>Grounded responses with visible, verifiable source citations</li>
               <li>Flask REST API backend with reactive Streamlit frontend</li>
-              <li>Deployed and running live on Render Cloud</li>
             </ul>
             <div class="proj-actions">
               <a href="https://search-grounded-ai-assistant.onrender.com/" target="_blank" class="btn-sm btn-sm-a">🌐 Live Demo →</a>
@@ -2699,18 +2021,16 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
             </div>
           </div>
           <div style="display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start">
-            <span class="proj-tag" style="padding:6px 14px">Flask</span>
-            <span class="proj-tag" style="padding:6px 14px">OpenAI</span>
-            <span class="proj-tag" style="padding:6px 14px">Vector Search</span>
-            <span class="proj-tag" style="padding:6px 14px">Streamlit</span>
-            <span class="proj-tag" style="padding:6px 14px">Python</span>
-            <span class="proj-tag live" style="padding:6px 14px">● Production</span>
+            <span class="proj-tag">Flask</span>
+            <span class="proj-tag">OpenAI</span>
+            <span class="proj-tag">Vector Search</span>
+            <span class="proj-tag live">● Production</span>
           </div>
         </div>
       </div>
 
       <!-- PROJECT 04: SPEECH EMOTION RECOGNITION -->
-      <div class="proj-row gsap-reveal" data-cat="ml" onclick="toggleProj(4)">
+      <div class="proj-row gsap-reveal" data-cat="ml" onclick="toggleProj(4)" data-cursor="VIEW">
         <div class="proj-num-box" style="background:rgba(251,113,133,.08);border-color:rgba(251,113,133,.25);color:var(--rose)">04</div>
         <div class="proj-info">
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
@@ -2721,9 +2041,8 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
           <div class="proj-desc">Multi-modal CNN + BERT deep neural architecture analyzing voice audio features (MFCC) and text transcript embeddings for real-time sentiment &amp; emotion detection.</div>
           <div class="proj-tech-highlights">
             <span class="proj-highlight-chip">🎙️ Dual Audio+Text Stream</span>
-            <span class="proj-highlight-chip">📊 CNN Spectral Feature Extractor</span>
+            <span class="proj-highlight-chip">📊 CNN Spectral Features</span>
             <span class="proj-highlight-chip">🤖 BERT Transformer</span>
-            <span class="proj-highlight-chip">🎯 6 Emotion Classes</span>
           </div>
         </div>
         <div class="proj-right">
@@ -2735,26 +2054,23 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
           <div>
             <ul class="proj-feat-list">
               <li>Dual-stream architecture: acoustic spectrogams (MFCC via CNN) + transcript embeddings (BERT)</li>
-              <li>CNN feature extractor tuned for pitch, energy, and formants</li>
               <li>Real-time emotion classification output with confidence probability distribution</li>
-              <li>Detects: Happy, Sad, Angry, Fearful, Neutral, Surprised</li>
             </ul>
             <div class="proj-actions">
               <a href="https://github.com/Aadhidharmar001" target="_blank" class="btn-sm btn-sm-g">GitHub →</a>
             </div>
           </div>
           <div style="display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start">
-            <span class="proj-tag" style="padding:6px 14px">PyTorch</span>
-            <span class="proj-tag" style="padding:6px 14px">HuggingFace</span>
-            <span class="proj-tag" style="padding:6px 14px">LibROSA</span>
-            <span class="proj-tag" style="padding:6px 14px">BERT</span>
-            <span class="proj-tag" style="padding:6px 14px">CNN</span>
+            <span class="proj-tag">PyTorch</span>
+            <span class="proj-tag">HuggingFace</span>
+            <span class="proj-tag">BERT</span>
+            <span class="proj-tag">CNN</span>
           </div>
         </div>
       </div>
 
       <!-- PROJECT 05: AI MEDICAL CHATBOT -->
-      <div class="proj-row gsap-reveal" data-cat="agentic" onclick="toggleProj(5)">
+      <div class="proj-row gsap-reveal" data-cat="agentic" onclick="toggleProj(5)" data-cursor="VIEW">
         <div class="proj-num-box" style="background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.3);color:#fbbf24">05</div>
         <div class="proj-info">
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
@@ -2767,7 +2083,6 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
             <span class="proj-highlight-chip">⏱️ Built in 24 Hours</span>
             <span class="proj-highlight-chip">🏆 15th / Hundreds of Teams</span>
             <span class="proj-highlight-chip">🩺 Symptom Triage</span>
-            <span class="proj-highlight-chip">🔗 LangChain Agent</span>
           </div>
         </div>
         <div class="proj-right">
@@ -2781,17 +2096,15 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
               <li>Medical Q&amp;A system with symptom triage and specialist referral routing</li>
               <li>Built in a high-intensity 24-hour hackathon sprint under strict time limits</li>
               <li>Secured 15th place at VIT against hundreds of competing engineering teams</li>
-              <li>LangChain + OpenAI + Streamlit full-stack architecture</li>
             </ul>
             <div class="proj-actions">
               <a href="https://github.com/Aadhidharmar001" target="_blank" class="btn-sm btn-sm-g">GitHub →</a>
             </div>
           </div>
           <div style="display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start">
-            <span class="proj-tag" style="padding:6px 14px">LangChain</span>
-            <span class="proj-tag" style="padding:6px 14px">OpenAI</span>
-            <span class="proj-tag" style="padding:6px 14px">Streamlit</span>
-            <span class="proj-tag" style="padding:6px 14px">Python</span>
+            <span class="proj-tag">LangChain</span>
+            <span class="proj-tag">OpenAI</span>
+            <span class="proj-tag">Streamlit</span>
           </div>
         </div>
       </div>
@@ -2838,71 +2151,10 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
         <div class="build-progress-label"><span>Planning</span><span>10%</span></div>
       </div>
     </div>
-
-    <!-- Roadmap -->
-    <div class="roadmap gsap-reveal">
-      <div class="roadmap-title">// NEURALRAG ROADMAP</div>
-      <div class="roadmap-item">
-        <div class="roadmap-status rs-done"></div>
-        <div class="roadmap-info">
-          <div class="roadmap-label">Basic RAG pipeline with ChromaDB</div>
-          <div class="roadmap-sub">DONE — LangChain + OpenAI + vector retrieval</div>
-        </div>
-      </div>
-      <div class="roadmap-item">
-        <div class="roadmap-status rs-done"></div>
-        <div class="roadmap-info">
-          <div class="roadmap-label">LangGraph agentic orchestration</div>
-          <div class="roadmap-sub">DONE — stateful graph with conditional routing</div>
-        </div>
-      </div>
-      <div class="roadmap-item">
-        <div class="roadmap-status rs-done"></div>
-        <div class="roadmap-info">
-          <div class="roadmap-label">Live Streamlit Cloud Deployment</div>
-          <div class="roadmap-sub">DONE — Deployed live at <a href="https://neuralrag.streamlit.app/" target="_blank" style="color:var(--teal)">neuralrag.streamlit.app</a></div>
-        </div>
-      </div>
-      <div class="roadmap-item">
-        <div class="roadmap-status rs-active"></div>
-        <div class="roadmap-info">
-          <div class="roadmap-label">Autonomous Multi-Agent Supervisor Swarm</div>
-          <div class="roadmap-sub">IN PROGRESS — specialized agent networks with state handoffs</div>
-        </div>
-      </div>
-      <div class="roadmap-item">
-        <div class="roadmap-status rs-active"></div>
-        <div class="roadmap-info">
-          <div class="roadmap-label">Self-correcting reflection loop</div>
-          <div class="roadmap-sub">IN PROGRESS — re-querying & self-healing when confidence &lt; threshold</div>
-        </div>
-      </div>
-      <div class="roadmap-item">
-        <div class="roadmap-status rs-soon"></div>
-        <div class="roadmap-info">
-          <div class="roadmap-label">RAGAS evaluation &amp; LoRA fine-tuning</div>
-          <div class="roadmap-sub">NEXT — automated quality scoring &amp; custom domain weights</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Currently Learning -->
-    <div class="gsap-reveal" style="margin-top:40px">
-      <div class="sec-tag">CURRENTLY LEARNING</div>
-      <div class="learning-strip">
-        <div class="learning-chip">📖 RAGAS Evaluation</div>
-        <div class="learning-chip">🔬 LangGraph Multi-Agent</div>
-        <div class="learning-chip">🧠 LoRA Fine-tuning</div>
-        <div class="learning-chip">⚡ Async RAG pipelines</div>
-        <div class="learning-chip">🏗️ Production MLOps</div>
-        <div class="learning-chip">🔐 AI Safety Patterns</div>
-        <div class="learning-chip">📊 Vector DB optimization</div>
-      </div>
-    </div>
   </div>
 </section>
 
-<!-- ═══════════ CREDIBILITY ═══════════ -->
+<!-- ═══════════ CREDIBILITY & PROOF OF WORK ═══════════ -->
 <section id="cred">
   <div class="container">
     <div class="gsap-reveal">
@@ -2928,24 +2180,6 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
         <div class="cred-card-title">Production Deployments</div>
         <div class="cred-card-sub">Not just GitHub repos — actual live deployments. Intelligent Search Engine running on Render, accessible right now.</div>
         <div><a href="https://search-grounded-ai-assistant.onrender.com/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;color:var(--teal);font-family:var(--mono);font-size:10px;letter-spacing:1px;text-decoration:none">🌐 VISIT LIVE DEMO →</a></div>
-      </div>
-      <div class="cred-card gsap-reveal">
-        <div class="cred-card-icon">🔗</div>
-        <div class="cred-card-title">LangChain Ecosystem</div>
-        <div class="cred-card-sub">Deep practitioner-level knowledge of LangChain, LangGraph, and the modern GenAI stack — not surface-level tutorials, but shipped systems.</div>
-        <div class="cred-badge">LangChain · LangGraph · RAG · Agents</div>
-      </div>
-      <div class="cred-card gsap-reveal">
-        <div class="cred-card-icon">⚡</div>
-        <div class="cred-card-title">GitHub Activity</div>
-        <div class="cred-card-sub">Consistent builder. Open-source projects, real commits, documented code. Every project linked and public on GitHub.</div>
-        <div><a href="https://github.com/Aadhidharmar001" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;color:var(--amber);font-family:var(--mono);font-size:10px;letter-spacing:1px;text-decoration:none">⚡ VIEW GITHUB →</a></div>
-      </div>
-      <div class="cred-card gsap-reveal">
-        <div class="cred-card-icon">🧠</div>
-        <div class="cred-card-title">RAG Specialist</div>
-        <div class="cred-card-sub">End-to-end RAG expertise: chunking strategies, embedding models, vector stores, reranking, hallucination reduction, and evaluation with RAGAS.</div>
-        <div class="cred-badge">Rare skill in junior AI market</div>
       </div>
     </div>
 
@@ -2994,7 +2228,7 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
       <!-- Card 1: DataCamp OpenAI -->
       <div class="cert-card gsap-reveal" data-cat="genai">
         <div>
-          <div class="cert-img-wrap" onclick="openCertModal('assets/certificates/datacamp_openai.png', 'Working with the OpenAI API', 'DataCamp', 'Jun 04, 2026', '#47,804,564')">
+          <div class="cert-img-wrap" onclick="openCertModal('assets/certificates/datacamp_openai.png', 'Working with the OpenAI API', 'DataCamp', 'Jun 04, 2026', '#47,804,564')" data-cursor="VIEW">
             <img src="assets/certificates/datacamp_openai.png" alt="Working with the OpenAI API" loading="lazy">
             <div class="cert-img-overlay">👁️ VIEW CERTIFICATE</div>
           </div>
@@ -3003,15 +2237,11 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
             <span class="cert-cat-pill cat-genai">GenAI &amp; LLMs</span>
           </div>
           <h3 class="cert-title">Working with the OpenAI API</h3>
-          <div class="cert-meta">
-            <span>📅 Jun 04, 2026</span>
-            <span>⏱️ 3 Hours</span>
-          </div>
+          <div class="cert-meta"><span>📅 Jun 04, 2026</span><span>⏱️ 3 Hours</span></div>
           <div class="cert-skills">
             <span class="cert-skill-tag">OpenAI API</span>
             <span class="cert-skill-tag">LLM Integration</span>
             <span class="cert-skill-tag">Python</span>
-            <span class="cert-skill-tag">Prompting</span>
           </div>
         </div>
         <div class="cert-footer">
@@ -3023,7 +2253,7 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
       <!-- Card 2: Microsoft & LinkedIn -->
       <div class="cert-card gsap-reveal" data-cat="genai">
         <div>
-          <div class="cert-img-wrap" onclick="openCertModal('assets/certificates/microsoft_generative_ai.jpg', 'Career Essentials in Generative AI', 'Microsoft & LinkedIn', 'Aug 07, 2024', 'b74788c496eeca9e517fb888bf717c8dcdac02e8011e81f0322e3afa6460c2c0')">
+          <div class="cert-img-wrap" onclick="openCertModal('assets/certificates/microsoft_generative_ai.jpg', 'Career Essentials in Generative AI', 'Microsoft & LinkedIn', 'Aug 07, 2024', 'b74788c496eeca9e517fb888bf717c8dcdac02e8011e81f0322e3afa6460c2c0')" data-cursor="VIEW">
             <img src="assets/certificates/microsoft_generative_ai.jpg" alt="Career Essentials in Generative AI" loading="lazy">
             <div class="cert-img-overlay">👁️ VIEW CERTIFICATE</div>
           </div>
@@ -3032,14 +2262,10 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
             <span class="cert-cat-pill cat-genai">GenAI &amp; LLMs</span>
           </div>
           <h3 class="cert-title">Career Essentials in Generative AI</h3>
-          <div class="cert-meta">
-            <span>📅 Aug 07, 2024</span>
-            <span>⏱️ 5.7 Hours</span>
-          </div>
+          <div class="cert-meta"><span>📅 Aug 07, 2024</span><span>⏱️ 5.7 Hours</span></div>
           <div class="cert-skills">
             <span class="cert-skill-tag">Generative AI</span>
             <span class="cert-skill-tag">AI Ethics</span>
-            <span class="cert-skill-tag">LLM Systems</span>
           </div>
         </div>
         <div class="cert-footer">
@@ -3051,7 +2277,7 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
       <!-- Card 3: Simplilearn Prompt Engineering -->
       <div class="cert-card gsap-reveal" data-cat="genai">
         <div>
-          <div class="cert-img-wrap" onclick="openCertModal('assets/certificates/simplilearn_prompt_engineering.png', 'Introduction to Prompt Engineering', 'Simplilearn SkillUp', 'Feb 06, 2026', '9810874')">
+          <div class="cert-img-wrap" onclick="openCertModal('assets/certificates/simplilearn_prompt_engineering.png', 'Introduction to Prompt Engineering', 'Simplilearn SkillUp', 'Feb 06, 2026', '9810874')" data-cursor="VIEW">
             <img src="assets/certificates/simplilearn_prompt_engineering.png" alt="Introduction to Prompt Engineering" loading="lazy">
             <div class="cert-img-overlay">👁️ VIEW CERTIFICATE</div>
           </div>
@@ -3060,187 +2286,15 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
             <span class="cert-cat-pill cat-genai">GenAI &amp; LLMs</span>
           </div>
           <h3 class="cert-title">Introduction to Prompt Engineering</h3>
-          <div class="cert-meta">
-            <span>📅 Feb 06, 2026</span>
-            <span>🎓 Online Course</span>
-          </div>
+          <div class="cert-meta"><span>📅 Feb 06, 2026</span><span>🎓 Online Course</span></div>
           <div class="cert-skills">
             <span class="cert-skill-tag">Prompt Design</span>
-            <span class="cert-skill-tag">Context Window</span>
             <span class="cert-skill-tag">Few-Shot Prompting</span>
           </div>
         </div>
         <div class="cert-footer">
           <span style="font-family:var(--mono);font-size:10px;color:var(--green)">✓ VERIFIED</span>
           <button class="cert-id-badge" onclick="copyCertId('9810874', 'Simplilearn Prompt Eng')">📋 Code: 9810874</button>
-        </div>
-      </div>
-
-      <!-- Card 4: Tavily Web Search API -->
-      <div class="cert-card gsap-reveal" data-cat="genai">
-        <div>
-          <div class="cert-img-wrap" onclick="openCertModal('assets/certificates/tavily_web_search.png', 'Web Search API Certification', 'Tavily', 'Verified Course', 'Tavily-WebSearch-API')">
-            <img src="assets/certificates/tavily_web_search.png" alt="Web Search API Certification" loading="lazy">
-            <div class="cert-img-overlay">👁️ VIEW CERTIFICATE</div>
-          </div>
-          <div class="cert-card-top">
-            <div class="cert-issuer-badge">🌐 Tavily</div>
-            <span class="cert-cat-pill cat-genai">GenAI &amp; LLMs</span>
-          </div>
-          <h3 class="cert-title">Web Search API Certification</h3>
-          <div class="cert-meta">
-            <span>📅 Verified Course</span>
-            <span>⚡ Search RAG</span>
-          </div>
-          <div class="cert-skills">
-            <span class="cert-skill-tag">Real-Time Search</span>
-            <span class="cert-skill-tag">RAG Grounding</span>
-            <span class="cert-skill-tag">Tavily API</span>
-          </div>
-        </div>
-        <div class="cert-footer">
-          <span style="font-family:var(--mono);font-size:10px;color:var(--green)">✓ VERIFIED</span>
-          <button class="cert-id-badge" onclick="copyCertId('Tavily-WebSearch-API', 'Tavily API')">📋 Tavily Verified</button>
-        </div>
-      </div>
-
-      <!-- Card 5: Infosys NLP -->
-      <div class="cert-card gsap-reveal" data-cat="datascience">
-        <div>
-          <div class="cert-img-wrap" onclick="openCertModal('assets/certificates/infosys_nlp.jpg', 'Introduction to Natural Language Processing', 'Infosys Springboard', 'Jun 08, 2025', 'verify.onwingspan.com')">
-            <img src="assets/certificates/infosys_nlp.jpg" alt="Introduction to Natural Language Processing" loading="lazy">
-            <div class="cert-img-overlay">👁️ VIEW CERTIFICATE</div>
-          </div>
-          <div class="cert-card-top">
-            <div class="cert-issuer-badge">💬 Infosys Springboard</div>
-            <span class="cert-cat-pill cat-datascience">Data Science &amp; NLP</span>
-          </div>
-          <h3 class="cert-title">Introduction to Natural Language Processing</h3>
-          <div class="cert-meta">
-            <span>📅 Jun 08, 2025</span>
-            <span>📚 Infosys ETA</span>
-          </div>
-          <div class="cert-skills">
-            <span class="cert-skill-tag">NLP Fundamentals</span>
-            <span class="cert-skill-tag">Text Processing</span>
-            <span class="cert-skill-tag">Tokenization</span>
-          </div>
-        </div>
-        <div class="cert-footer">
-          <span style="font-family:var(--mono);font-size:10px;color:var(--green)">✓ VERIFIED</span>
-          <button class="cert-id-badge" onclick="copyCertId('verify.onwingspan.com', 'Infosys NLP')">🌐 verify.onwingspan.com</button>
-        </div>
-      </div>
-
-      <!-- Card 6: Infosys Data Science -->
-      <div class="cert-card gsap-reveal" data-cat="datascience">
-        <div>
-          <div class="cert-img-wrap" onclick="openCertModal('assets/certificates/infosys_data_science.jpg', 'Introduction to Data Science', 'Infosys Springboard', 'Jun 06, 2025', 'verify.onwingspan.com')">
-            <img src="assets/certificates/infosys_data_science.jpg" alt="Introduction to Data Science" loading="lazy">
-            <div class="cert-img-overlay">👁️ VIEW CERTIFICATE</div>
-          </div>
-          <div class="cert-card-top">
-            <div class="cert-issuer-badge">📘 Infosys Springboard</div>
-            <span class="cert-cat-pill cat-datascience">Data Science &amp; NLP</span>
-          </div>
-          <h3 class="cert-title">Introduction to Data Science</h3>
-          <div class="cert-meta">
-            <span>📅 Jun 06, 2025</span>
-            <span>📊 Infosys ETA</span>
-          </div>
-          <div class="cert-skills">
-            <span class="cert-skill-tag">Data Science</span>
-            <span class="cert-skill-tag">Analytics</span>
-            <span class="cert-skill-tag">Python</span>
-          </div>
-        </div>
-        <div class="cert-footer">
-          <span style="font-family:var(--mono);font-size:10px;color:var(--green)">✓ VERIFIED</span>
-          <button class="cert-id-badge" onclick="copyCertId('verify.onwingspan.com', 'Infosys Data Science')">🌐 verify.onwingspan.com</button>
-        </div>
-      </div>
-
-      <!-- Card 7: TATA Data Visualisation -->
-      <div class="cert-card gsap-reveal" data-cat="datascience">
-        <div>
-          <div class="cert-img-wrap" onclick="openCertModal('assets/certificates/tata_data_visualisation.png', 'Data Visualisation: Empowering Business', 'TATA / Forage', 'Aug 18, 2025', 'x3dBAJWK4PfeP6MNF')">
-            <img src="assets/certificates/tata_data_visualisation.png" alt="Data Visualisation: Empowering Business" loading="lazy">
-            <div class="cert-img-overlay">👁️ VIEW CERTIFICATE</div>
-          </div>
-          <div class="cert-card-top">
-            <div class="cert-issuer-badge">📊 TATA / Forage</div>
-            <span class="cert-cat-pill cat-datascience">Data Science &amp; NLP</span>
-          </div>
-          <h3 class="cert-title">Data Visualisation: Empowering Business</h3>
-          <div class="cert-meta">
-            <span>📅 Aug 18, 2025</span>
-            <span>🎯 Practical Simulation</span>
-          </div>
-          <div class="cert-skills">
-            <span class="cert-skill-tag">Business Insights</span>
-            <span class="cert-skill-tag">Visual Analytics</span>
-            <span class="cert-skill-tag">Executive Reporting</span>
-          </div>
-        </div>
-        <div class="cert-footer">
-          <span style="font-family:var(--mono);font-size:10px;color:var(--green)">✓ VERIFIED</span>
-          <button class="cert-id-badge" onclick="copyCertId('x3dBAJWK4PfeP6MNF', 'TATA Forage')">📋 Code: x3dBAJWK...</button>
-        </div>
-      </div>
-
-      <!-- Card 8: Intel & CBSE Appreciate -->
-      <div class="cert-card gsap-reveal" data-cat="foundations">
-        <div>
-          <div class="cert-img-wrap" onclick="openCertModal('assets/certificates/intel_ai_appreciate.jpg', 'AI For All — AI Appreciate Stage', 'Intel & Digital India (CBSE)', 'Jul 06, 2025', 'Intel-CBSE-AI-Appreciate-2025')">
-            <img src="assets/certificates/intel_ai_appreciate.jpg" alt="AI For All — AI Appreciate Stage" loading="lazy">
-            <div class="cert-img-overlay">👁️ VIEW CERTIFICATE</div>
-          </div>
-          <div class="cert-card-top">
-            <div class="cert-issuer-badge">🔷 Intel &amp; CBSE</div>
-            <span class="cert-cat-pill cat-foundations">Foundations</span>
-          </div>
-          <h3 class="cert-title">AI For All — AI Appreciate Stage</h3>
-          <div class="cert-meta">
-            <span>📅 Jul 06, 2025</span>
-            <span>🏛️ Digital India Initiative</span>
-          </div>
-          <div class="cert-skills">
-            <span class="cert-skill-tag">AI Concepts</span>
-            <span class="cert-skill-tag">Machine Learning</span>
-            <span class="cert-skill-tag">AI Ethics</span>
-          </div>
-        </div>
-        <div class="cert-footer">
-          <span style="font-family:var(--mono);font-size:10px;color:var(--green)">✓ VERIFIED</span>
-          <button class="cert-id-badge" onclick="copyCertId('Intel-CBSE-AI-Appreciate-2025', 'Intel AI Appreciate')">📋 Intel Verified</button>
-        </div>
-      </div>
-
-      <!-- Card 9: Intel & CBSE Aware -->
-      <div class="cert-card gsap-reveal" data-cat="foundations">
-        <div>
-          <div class="cert-img-wrap" onclick="openCertModal('assets/certificates/intel_ai_aware.jpg', 'AI For All — AI Aware Stage', 'Intel & Digital India (CBSE)', 'Jul 06, 2025', 'Intel-CBSE-AI-Aware-2025')">
-            <img src="assets/certificates/intel_ai_aware.jpg" alt="AI For All — AI Aware Stage" loading="lazy">
-            <div class="cert-img-overlay">👁️ VIEW CERTIFICATE</div>
-          </div>
-          <div class="cert-card-top">
-            <div class="cert-issuer-badge">🔷 Intel &amp; CBSE</div>
-            <span class="cert-cat-pill cat-foundations">Foundations</span>
-          </div>
-          <h3 class="cert-title">AI For All — AI Aware Stage</h3>
-          <div class="cert-meta">
-            <span>📅 Jul 06, 2025</span>
-            <span>🏛️ Digital India Initiative</span>
-          </div>
-          <div class="cert-skills">
-            <span class="cert-skill-tag">AI Literacy</span>
-            <span class="cert-skill-tag">Social Impact</span>
-            <span class="cert-skill-tag">Digital India</span>
-          </div>
-        </div>
-        <div class="cert-footer">
-          <span style="font-family:var(--mono);font-size:10px;color:var(--green)">✓ VERIFIED</span>
-          <button class="cert-id-badge" onclick="copyCertId('Intel-CBSE-AI-Aware-2025', 'Intel AI Aware')">📋 Intel Verified</button>
         </div>
       </div>
 
@@ -3273,96 +2327,31 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
       <div class="tl-item gsap-reveal">
         <div class="tl-dot">🌱</div>
         <div class="tl-content">
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
-            <div class="tl-year">2024</div>
-            <span class="tag" style="color:var(--text3);border-color:var(--border)">FOUNDATION</span>
-          </div>
+          <div class="tl-year">2024</div>
           <div class="tl-title">AI Foundations &amp; ML Theory</div>
           <div class="tl-desc">Deep-dived into machine learning theory, neural network math, and Python ecosystem. Mastered core algorithms before moving to LLM engineering.</div>
-          <div class="tl-tags"><span class="tag">Python</span><span class="tag">TensorFlow</span><span class="tag">Scikit-Learn</span><span class="tag">ML Math</span></div>
-        </div>
-      </div>
-
-      <div class="tl-item gsap-reveal">
-        <div class="tl-dot">🎙️</div>
-        <div class="tl-content">
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
-            <div class="tl-year">2025 — Q1</div>
-            <span class="tag" style="color:var(--teal);border-color:rgba(45,212,191,.3);background:rgba(45,212,191,.06)">COMPLETED ✓</span>
-          </div>
-          <div class="tl-title">Multi-modal Speech Emotion Recognition</div>
-          <div class="tl-desc">Built a dual-stream neural system combining audio spectrogram CNN features with BERT transcript embeddings for real-time sentiment analysis.</div>
-          <div class="tl-tags"><span class="tag">PyTorch</span><span class="tag">BERT</span><span class="tag">CNN</span><span class="tag">LibROSA</span></div>
+          <div class="tl-tags"><span class="tag">Python</span><span class="tag">TensorFlow</span><span class="tag">Scikit-Learn</span></div>
         </div>
       </div>
 
       <div class="tl-item gsap-reveal">
         <div class="tl-dot">⚡</div>
         <div class="tl-content">
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
-            <div class="tl-year">2025 — Q2</div>
-            <span class="tag" style="color:#fbbf24;border-color:rgba(251,191,36,.3);background:rgba(251,191,36,.06)">AWARD WINNER 🏆</span>
-          </div>
+          <div class="tl-year">2025 — Q2</div>
           <div class="tl-title">VIT Hackathon — 15th Place</div>
           <div class="tl-desc">Built and shipped an AI Medical Chatbot in a 24-hour sprint. Placed 15th out of hundreds of competing engineering teams.</div>
-          <div class="tl-tags"><span class="tag">LangChain</span><span class="tag">OpenAI</span><span class="tag">Streamlit</span><span class="tag">15th Place</span></div>
-        </div>
-      </div>
-
-      <div class="tl-item gsap-reveal">
-        <div class="tl-dot">🛡️</div>
-        <div class="tl-content">
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
-            <div class="tl-year">2025 — Q3</div>
-            <span class="tag" style="color:var(--amber);border-color:var(--borderA);background:rgba(245,158,11,.08)">DEPLOYED 🌐</span>
-          </div>
-          <div class="tl-title">GuardWAF &amp; Intelligent Search Engine</div>
-          <div class="tl-desc">Engineered GuardWAF AI security proxy and shipped the Intelligent Search Engine live on Render with semantic vector retrieval.</div>
-          <div class="tl-tags"><span class="tag">GuardWAF</span><span class="tag">AI Security</span><span class="tag">Flask</span><span class="tag">Render</span></div>
+          <div class="tl-tags"><span class="tag">LangChain</span><span class="tag">OpenAI</span><span class="tag">Streamlit</span></div>
         </div>
       </div>
 
       <div class="tl-item gsap-reveal">
         <div class="tl-dot">🚀</div>
         <div class="tl-content">
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
-            <div class="tl-year">2025 — Q4 / 2026</div>
-            <span class="tag" style="color:var(--green);border-color:rgba(52,211,153,.3);background:rgba(52,211,153,.08)">COMPLETED &amp; SHIPPED 🌐</span>
-          </div>
-          <div class="tl-title">NeuralRAG — Stateful Agentic RAG System</div>
-          <div class="tl-desc">Completed and deployed flagship system: LangGraph state machine + ChromaDB + GPT-4o with intelligent query routing and citations. <a href="https://neuralrag.streamlit.app/" target="_blank" style="color:var(--teal);text-decoration:underline">Live Demo →</a></div>
-          <div class="tl-tags"><span class="tag">NeuralRAG</span><span class="tag">LangGraph</span><span class="tag">ChromaDB</span><span class="tag">Streamlit</span></div>
+          <div class="tl-year">2025 — Q4 / 2026</div>
+          <div class="tl-title">NeuralRAG &amp; GuardWAF Systems</div>
+          <div class="tl-desc">Completed and deployed flagship systems: LangGraph state machine + ChromaDB + GPT-4o with intelligent query routing and citations.</div>
+          <div class="tl-tags"><span class="tag">NeuralRAG</span><span class="tag">GuardWAF</span><span class="tag">LangGraph</span><span class="tag">AWS ECS</span></div>
         </div>
-      </div>
-
-      <div class="tl-item gsap-reveal" style="border-left:2px solid var(--amber);padding-left:12px;margin-left:-13px">
-        <div class="tl-dot" style="border-color:var(--amber);box-shadow:var(--gA);background:rgba(245,158,11,.1)">🤖</div>
-        <div class="tl-content">
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
-            <div class="tl-year" style="color:var(--amber)">2026 — PRESENT</div>
-            <span class="tag" style="color:var(--amber);border-color:var(--borderA);background:rgba(245,158,11,.15);font-weight:700">🔥 ACTIVE FRONTIER</span>
-          </div>
-          <div class="tl-title" style="color:var(--text)">Autonomous Multi-Agent Swarms &amp; Fine-Tuning</div>
-          <div class="tl-desc">Building multi-agent supervisor topologies, reflection &amp; self-correcting agentic loops, tool-calling agents, RAGAS automated evaluations, and domain-specific LoRA/QLoRA model fine-tuning.</div>
-          <div class="tl-tags"><span class="tag" style="border-color:var(--borderA);color:var(--amber)">Multi-Agent Swarms</span><span class="tag" style="border-color:var(--borderA);color:var(--teal)">Reflection Loops</span><span class="tag" style="border-color:var(--borderA);color:var(--indigo)">LoRA Fine-tuning</span><span class="tag">RAGAS</span></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Focus Spectrum -->
-    <div class="gsap-reveal" style="margin-top:40px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px">
-      <div style="font-family:var(--mono);font-size:11px;color:var(--amber);letter-spacing:2px;margin-bottom:12px">// CURRENT ACTIVE FOCUS SPECTRUM</div>
-      <div style="height:8px;background:var(--bg3);border-radius:4px;display:flex;overflow:hidden;margin-bottom:12px">
-        <div style="width:40%;background:var(--amber)" title="Multi-Agent Systems (40%)"></div>
-        <div style="width:30%;background:var(--teal)" title="RAG & Vector Retrieval (30%)"></div>
-        <div style="width:20%;background:var(--indigo)" title="Model Fine-Tuning & Eval (20%)"></div>
-        <div style="width:10%;background:var(--green)" title="Production MLOps (10%)"></div>
-      </div>
-      <div style="display:flex;flex-wrap:wrap;gap:16px;font-family:var(--mono);font-size:10px;color:var(--text2)">
-        <span style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:var(--amber)"></span>Multi-Agent Swarms 40%</span>
-        <span style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:var(--teal)"></span>RAG &amp; Vector DBs 30%</span>
-        <span style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:var(--indigo)"></span>LoRA &amp; RAGAS Eval 20%</span>
-        <span style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:var(--green)"></span>MLOps &amp; Security 10%</span>
       </div>
     </div>
   </div>
@@ -3384,7 +2373,7 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
   <div class="skill-tip" id="skillTip"></div>
 </section>
 
-<!-- ═══════════ PHILOSOPHY / ENGINEERING PRINCIPLES ═══════════ -->
+<!-- ═══════════ PHILOSOPHY ═══════════ -->
 <section id="principles">
   <div class="container">
     <div class="sec-center gsap-reveal">
@@ -3425,38 +2414,6 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
         <h3 class="principle-title">Secure AI Before Deployment</h3>
         <p class="principle-desc">Implement proxy gateways, sliding-window rate limiters, and payload verification to prevent agent loops.</p>
       </div>
-      <div class="principle-card gsap-reveal">
-        <div class="principle-card-header">
-          <div class="principle-icon-pod" style="background:rgba(52,211,153,.08);border-color:rgba(52,211,153,.25)">👤</div>
-          <span class="principle-tag">PRINCIPLE // 05</span>
-        </div>
-        <h3 class="principle-title">Human-in-the-Loop</h3>
-        <p class="principle-desc">Automate low-risk queries while requiring explicit human authorization for high-sensitivity actions.</p>
-      </div>
-      <div class="principle-card gsap-reveal">
-        <div class="principle-card-header">
-          <div class="principle-icon-pod">⚙️</div>
-          <span class="principle-tag">PRINCIPLE // 06</span>
-        </div>
-        <h3 class="principle-title">Reliability Over Complexity</h3>
-        <p class="principle-desc">Prefer clean state machines and modular APIs over over-engineered multi-layer abstractions.</p>
-      </div>
-      <div class="principle-card gsap-reveal">
-        <div class="principle-card-header">
-          <div class="principle-icon-pod" style="background:rgba(45,212,191,.08);border-color:rgba(45,212,191,.25)">☁️</div>
-          <span class="principle-tag">PRINCIPLE // 07</span>
-        </div>
-        <h3 class="principle-title">Cloud-Native Infrastructure</h3>
-        <p class="principle-desc">Containerize microservices with Docker and deploy to elastic cloud setups (AWS ECS, Render).</p>
-      </div>
-      <div class="principle-card gsap-reveal">
-        <div class="principle-card-header">
-          <div class="principle-icon-pod" style="background:rgba(129,140,248,.08);border-color:rgba(129,140,248,.25)">🧩</div>
-          <span class="principle-tag">PRINCIPLE // 08</span>
-        </div>
-        <h3 class="principle-title">Clean &amp; Maintainable Code</h3>
-        <p class="principle-desc">Structure clean schemas, strict type definitions, and modular REST endpoints built to scale.</p>
-      </div>
     </div>
   </div>
 </section>
@@ -3476,27 +2433,22 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
       <div class="gsap-reveal">
         <div style="display:inline-flex;align-items:center;gap:8px;padding:5px 14px;background:rgba(45,212,191,0.1);border:1px solid rgba(45,212,191,0.25);border-radius:4px;font-family:var(--mono);font-size:10px;color:var(--teal);letter-spacing:1.5px;margin-bottom:16px">● AVAILABLE FOR AI ENGINEER ROLES</div>
         <h3 style="font-family:var(--display);font-size:32px;font-weight:800;margin-bottom:16px;line-height:1.2">Let's build production <span class="g">AI together.</span></h3>
-        <p style="color:var(--text2);font-size:15px;line-height:1.8;margin-bottom:28px">I'm actively looking for AI Engineer opportunities where I can build secure, scalable, production-ready AI systems and contribute to products used by real users.</p>
         <div class="contact-links">
-          <a href="assets/Aadhi_Dharmar_AI_Engineer_Resume.pdf" download="Aadhi_Dharmar_AI_Engineer_Resume.pdf" target="_blank" class="contact-link" style="border-color:var(--amber);background:rgba(245,158,11,0.06)">
+          <a href="assets/Aadhi_Dharmar_AI_Engineer_Resume.pdf" download="Aadhi_Dharmar_AI_Engineer_Resume.pdf" target="_blank" class="contact-link" style="border-color:var(--amber);background:rgba(245,158,11,0.06)" data-cursor="OPEN">
             <div class="contact-link-icon">📄</div>
             <div><div class="contact-link-label" style="color:var(--amber)">DOWNLOAD RESUME</div><div class="contact-link-val">Official Resume (PDF)</div></div>
           </a>
-          <a href="mailto:dharmaraadhi@gmail.com" class="contact-link">
+          <a href="mailto:dharmaraadhi@gmail.com" class="contact-link" data-cursor="OPEN">
             <div class="contact-link-icon">📧</div>
             <div><div class="contact-link-label">EMAIL</div><div class="contact-link-val">dharmaraadhi@gmail.com</div></div>
           </a>
-          <a href="https://github.com/Aadhidharmar001" target="_blank" class="contact-link">
+          <a href="https://github.com/Aadhidharmar001" target="_blank" class="contact-link" data-cursor="OPEN">
             <div class="contact-link-icon">⚡</div>
             <div><div class="contact-link-label">GITHUB</div><div class="contact-link-val">Aadhidharmar001</div></div>
           </a>
-          <a href="https://www.linkedin.com/in/aadhi-dharmar-a35679293" target="_blank" class="contact-link">
+          <a href="https://www.linkedin.com/in/aadhi-dharmar-a35679293" target="_blank" class="contact-link" data-cursor="OPEN">
             <div class="contact-link-icon">💼</div>
             <div><div class="contact-link-label">LINKEDIN</div><div class="contact-link-val">aadhi-dharmar-a35679293</div></div>
-          </a>
-          <a href="tel:+916380072080" class="contact-link">
-            <div class="contact-link-icon">📱</div>
-            <div><div class="contact-link-label">PHONE</div><div class="contact-link-val">+91 6380072080</div></div>
           </a>
         </div>
       </div>
@@ -3505,7 +2457,7 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
           <div class="form-group"><label>NAME</label><input type="text" id="fn" placeholder="Your name"></div>
           <div class="form-group"><label>EMAIL</label><input type="email" id="fe" placeholder="you@company.com"></div>
           <div class="form-group"><label>MESSAGE</label><textarea id="fm" placeholder="Tell me about the role or project..."></textarea></div>
-          <button class="submit-btn" onclick="submitForm()">⚡ SEND MESSAGE</button>
+          <button class="submit-btn" onclick="submitForm()" data-cursor="CLICK">⚡ SEND MESSAGE</button>
         </div>
         <div id="form-success" style="display:none;text-align:center;padding:48px 24px;">
           <div style="font-size:56px;margin-bottom:16px">✅</div>
@@ -3523,17 +2475,12 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
     <div style="font-family:var(--display);font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px">Aadhidharmar T</div>
     <p>AI Product Builder · RAG Specialist · GenAI Developer</p>
   </div>
-  <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap">
-    <a href="mailto:dharmaraadhi@gmail.com" style="color:var(--text3);font-family:var(--mono);font-size:11px;text-decoration:none">dharmaraadhi@gmail.com</a>
-    <a href="https://github.com/Aadhidharmar001" target="_blank" style="color:var(--text3);font-family:var(--mono);font-size:11px;text-decoration:none">GitHub</a>
-    <a href="https://www.linkedin.com/in/aadhi-dharmar-a35679293" target="_blank" style="color:var(--text3);font-family:var(--mono);font-size:11px;text-decoration:none">LinkedIn</a>
-  </div>
-  <p><span id="livetime"></span> &nbsp;·&nbsp; <span style="color:var(--text3);font-family:var(--mono);font-size:11px">Production v3.0 GSAP • Lenis • Three.js</span> &nbsp;·&nbsp; Live at <a href="https://aadhidharmar-portfolio-1.vercel.app/" target="_blank" style="color:var(--amber);text-decoration:none">aadhidharmar-portfolio-1.vercel.app</a></p>
+  <p><span id="livetime"></span> &nbsp;·&nbsp; <span style="color:var(--text3);font-family:var(--mono);font-size:11px">Production v3.1 Directional Motion</span> &nbsp;·&nbsp; Live at <a href="https://aadhidharmar-portfolio-1.vercel.app/" target="_blank" style="color:var(--amber);text-decoration:none">aadhidharmar-portfolio-1.vercel.app</a></p>
 </footer>
 
 <!-- ═══════════ NOVA AI CHATBOT ═══════════ -->
 <div id="nova-fab">
-  <button class="nova-btn" onclick="toggleNova()" title="Ask NOVA">🤖</button>
+  <button class="nova-btn" onclick="toggleNova()" title="Ask NOVA" data-cursor="CLICK">🤖</button>
   <div class="nova-panel" id="novaPanel">
     <div class="nova-hdr">
       <div class="nova-av">🧠</div>
@@ -3571,7 +2518,7 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
       <span style="margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--text3)">ESC to close</span>
     </div>
     <div class="term-body" id="termBody">
-      <div class="tl to">Aadhidharmar AI Portfolio — Terminal v3.0 Supercharged</div>
+      <div class="tl to">Aadhidharmar AI Portfolio — Terminal v3.1</div>
       <div class="tl" style="color:var(--text3)">Commands: whoami | architecture | launch guardwaf | launch neuralrag | certs | cat resume | matrix | help</div>
       <div class="tl" style="color:var(--text3);margin-bottom:12px">─────────────────────────────────────────</div>
     </div>
@@ -3609,21 +2556,14 @@ gsap.registerPlugin(ScrollTrigger, TextPlugin);
 let lenis;
 try {
   lenis = new Lenis({
-    duration: 1.2,
+    duration: 1.1,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     smoothWheel: true,
     touchMultiplier: 1.8,
   });
 
-  // Synchronize Lenis scroll position with ScrollTrigger
   lenis.on('scroll', ScrollTrigger.update);
-
-  // Add Lenis requestAnimationFrame to GSAP Ticker
-  gsap.ticker.add((time) => {
-    lenis.raf(time * 1000);
-  });
-
-  // Turn off GSAP ticker lag smoothing for fluid motion
+  gsap.ticker.add((time) => { lenis.raf(time * 1000); });
   gsap.ticker.lagSmoothing(0);
 } catch (e) {
   console.warn("Lenis initialization skipped", e);
@@ -3638,7 +2578,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       if (targetEl) {
         e.preventDefault();
         if (lenis) {
-          lenis.scrollTo(targetEl, { offset: -70, duration: 1.2 });
+          lenis.scrollTo(targetEl, { offset: -40, duration: 1.2 });
         } else {
           targetEl.scrollIntoView({ behavior: 'smooth' });
         }
@@ -3651,7 +2591,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 let heroScene, heroCamera, heroRenderer, heroParticles, heroMeshRing;
 let mouseX = 0, mouseY = 0, targetMouseX = 0, targetMouseY = 0;
 let windowHalfX = window.innerWidth / 2, windowHalfY = window.innerHeight / 2;
-let themeColorHex = 0xf59e0b;
 
 function initThreeHero() {
   const canvas = document.getElementById('heroCanvas');
@@ -3665,15 +2604,14 @@ function initThreeHero() {
   heroRenderer.setSize(window.innerWidth, window.innerHeight);
   heroRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-  // 3D Latent Vector Embedding Cloud
-  const particleCount = window.innerWidth < 768 ? 450 : 900;
+  const particleCount = window.innerWidth < 768 ? 350 : 750;
   const geometry = new THREE.BufferGeometry();
   const positions = new Float32Array(particleCount * 3);
   const colors = new Float32Array(particleCount * 3);
 
-  const color1 = new THREE.Color(0xf59e0b); // Amber
-  const color2 = new THREE.Color(0x2dd4bf); // Teal
-  const color3 = new THREE.Color(0x818cf8); // Indigo
+  const color1 = new THREE.Color(0xf59e0b);
+  const color2 = new THREE.Color(0x2dd4bf);
+  const color3 = new THREE.Color(0x818cf8);
 
   for (let i = 0; i < particleCount; i++) {
     positions[i * 3] = (Math.random() - 0.5) * 1400;
@@ -3689,54 +2627,49 @@ function initThreeHero() {
   geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
   geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-  // Particle Material
   const material = new THREE.PointsMaterial({
-    size: 3.5,
+    size: 3.2,
     vertexColors: true,
     transparent: true,
-    opacity: 0.75,
+    opacity: 0.7,
     blending: THREE.AdditiveBlending
   });
 
   heroParticles = new THREE.Points(geometry, material);
   heroScene.add(heroParticles);
 
-  // Rotating Tensor Torus in the background
   const torusGeo = new THREE.TorusGeometry(260, 2, 16, 100);
-  const torusMat = new THREE.MeshBasicMaterial({ color: 0xf59e0b, wireframe: true, transparent: true, opacity: 0.15 });
+  const torusMat = new THREE.MeshBasicMaterial({ color: 0xf59e0b, wireframe: true, transparent: true, opacity: 0.12 });
   heroMeshRing = new THREE.Mesh(torusGeo, torusMat);
   heroMeshRing.rotation.x = Math.PI / 4;
   heroScene.add(heroMeshRing);
 
-  window.addEventListener('resize', onThreeResize);
-}
-
-function onThreeResize() {
-  if (!heroCamera || !heroRenderer) return;
-  windowHalfX = window.innerWidth / 2;
-  windowHalfY = window.innerHeight / 2;
-  heroCamera.aspect = window.innerWidth / window.innerHeight;
-  heroCamera.updateProjectionMatrix();
-  heroRenderer.setSize(window.innerWidth, window.innerHeight);
+  window.addEventListener('resize', () => {
+    if (!heroCamera || !heroRenderer) return;
+    windowHalfX = window.innerWidth / 2;
+    windowHalfY = window.innerHeight / 2;
+    heroCamera.aspect = window.innerWidth / window.innerHeight;
+    heroCamera.updateProjectionMatrix();
+    heroRenderer.setSize(window.innerWidth, window.innerHeight);
+  });
 }
 
 function animateThreeHero() {
   requestAnimationFrame(animateThreeHero);
   if (!heroParticles || !heroRenderer) return;
 
-  targetMouseX += (mouseX - targetMouseX) * 0.05;
-  targetMouseY += (mouseY - targetMouseY) * 0.05;
+  targetMouseX += (mouseX - targetMouseX) * 0.04;
+  targetMouseY += (mouseY - targetMouseY) * 0.04;
 
-  heroParticles.rotation.y += 0.0012;
-  heroParticles.rotation.x += 0.0006;
+  heroParticles.rotation.y += 0.0008;
+  heroParticles.rotation.x += 0.0004;
 
   if (heroMeshRing) {
-    heroMeshRing.rotation.z += 0.002;
-    heroMeshRing.rotation.y += 0.001;
+    heroMeshRing.rotation.z += 0.0015;
   }
 
-  heroCamera.position.x = (targetMouseX * 0.2);
-  heroCamera.position.y = (-targetMouseY * 0.2);
+  heroCamera.position.x = (targetMouseX * 0.15);
+  heroCamera.position.y = (-targetMouseY * 0.15);
   heroCamera.lookAt(heroScene.position);
 
   heroRenderer.render(heroScene, heroCamera);
@@ -3750,9 +2683,10 @@ document.addEventListener('mousemove', (e) => {
 initThreeHero();
 animateThreeHero();
 
-// ── 3. GSAP CURSOR & SPOTLIGHT ENGINE ────────────────────────────────
+// ── 3. GSAP CURSOR & CONTEXTUAL BADGES ────────────────────────────────
 const cur = document.getElementById('cur');
 const curR = document.getElementById('cur-r');
+const curBadge = document.getElementById('cur-badge');
 
 const setCurX = gsap.quickTo(cur, "left", { duration: 0.05, ease: "power3" });
 const setCurY = gsap.quickTo(cur, "top", { duration: 0.05, ease: "power3" });
@@ -3765,7 +2699,6 @@ window.addEventListener('mousemove', (e) => {
   setRingX(e.clientX);
   setRingY(e.clientY);
 
-  // Card mouse spotlights
   const target = e.target.closest('.hero-metric, .proj-row, .cred-card, .cert-card, .principle-card, .build-card, .metric-card, .qflow-wrap, .contact-form, .hero-profile-blend-wrap');
   if (target) {
     const rect = target.getBoundingClientRect();
@@ -3774,14 +2707,18 @@ window.addEventListener('mousemove', (e) => {
   }
 });
 
-document.querySelectorAll('a, button, .proj-row, .build-card, .cred-card, .tl-item, .principle-card, .cert-card, .metric-card').forEach(el => {
+document.querySelectorAll('[data-cursor], a, button, .proj-row, .cert-card, .build-card').forEach(el => {
   el.addEventListener('mouseenter', () => {
-    gsap.to(cur, { scale: 2.2, duration: 0.2 });
-    gsap.to(curR, { width: 54, height: 54, borderColor: "rgba(245, 158, 11, 0.8)", duration: 0.2 });
+    const badgeText = el.dataset.cursor || 'CLICK';
+    curBadge.textContent = badgeText;
+    curBadge.style.opacity = '1';
+    gsap.to(curR, { width: 58, height: 58, backgroundColor: "rgba(245, 158, 11, 0.9)", borderColor: "var(--amber)", duration: 0.2 });
+    gsap.to(cur, { opacity: 0, duration: 0.1 });
   });
   el.addEventListener('mouseleave', () => {
-    gsap.to(cur, { scale: 1, duration: 0.2 });
-    gsap.to(curR, { width: 36, height: 36, borderColor: "rgba(245, 158, 11, 0.4)", duration: 0.2 });
+    curBadge.style.opacity = '0';
+    gsap.to(curR, { width: 36, height: 36, backgroundColor: "transparent", borderColor: "rgba(245, 158, 11, 0.4)", duration: 0.2 });
+    gsap.to(cur, { opacity: 1, duration: 0.1 });
   });
 });
 
@@ -3807,19 +2744,19 @@ if (portraitContainer && portraitCard) {
   });
 }
 
-// ── 5. GSAP SCROLLTRIGGER REVEALS & TIMELINE BEAM ─────────────────────
-// Navbar glass transformation on scroll
-ScrollTrigger.create({
-  start: "top -50",
-  onUpdate: (self) => {
-    const nav = document.getElementById('navbar');
-    if (self.direction === 1 && self.progress > 0.02) {
-      nav.classList.add('scrolled');
-    } else if (self.progress <= 0.02) {
-      nav.classList.remove('scrolled');
-    }
-  }
-});
+// ── 5. HERO CINEMATIC ENTRANCE SEQUENCE ──────────────────────────────
+const heroBootLog = document.getElementById('heroBootLog');
+const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+heroTl
+  .to(heroBootLog, { opacity: 1, duration: 0.4, delay: 0.1 })
+  .fromTo(".hero-badge", { opacity: 0, y: -15 }, { opacity: 1, y: 0, duration: 0.5 }, "-=0.2")
+  .fromTo(".hero-name .line1", { opacity: 0, x: -25, filter: "blur(6px)" }, { opacity: 1, x: 0, filter: "blur(0px)", duration: 0.7 }, "-=0.3")
+  .fromTo(".hero-name .line2", { opacity: 0, x: -25, filter: "blur(6px)" }, { opacity: 1, x: 0, filter: "blur(0px)", duration: 0.7 }, "-=0.5")
+  .fromTo(".hero-sub", { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.5 }, "-=0.4")
+  .fromTo(".hero-actions", { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.5 }, "-=0.3")
+  .fromTo(".hero-metrics", { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.5 }, "-=0.2")
+  .fromTo("#heroPortraitCard", { opacity: 0, scale: 0.94 }, { opacity: 1, scale: 1, duration: 0.8 }, "-=0.6");
 
 // Scroll progress bar
 ScrollTrigger.create({
@@ -3831,30 +2768,83 @@ ScrollTrigger.create({
   }
 });
 
-// Staggered batch reveals for all `.gsap-reveal` elements
+// Staggered batch reveals for standard sections
 ScrollTrigger.batch(".gsap-reveal", {
   interval: 0.1,
   batchMax: 6,
   onEnter: (batch) => {
     gsap.fromTo(batch, 
-      { opacity: 0, y: 35 }, 
-      { opacity: 1, y: 0, stagger: 0.12, duration: 0.8, ease: "power3.out", overwrite: "auto" }
+      { opacity: 0, y: 30 }, 
+      { opacity: 1, y: 0, stagger: 0.1, duration: 0.7, ease: "power3.out", overwrite: "auto" }
     );
   },
   start: "top 88%",
   once: true
 });
 
-// Hero entrance timeline
-const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
-heroTl
-  .fromTo(".hero-badge", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.7, delay: 0.2 })
-  .fromTo(".hero-name .line1", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.8 }, "-=0.4")
-  .fromTo(".hero-name .line2", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.8 }, "-=0.6")
-  .fromTo(".hero-sub", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7 }, "-=0.5")
-  .fromTo(".hero-actions", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6 }, "-=0.4")
-  .fromTo(".hero-metrics", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7 }, "-=0.3")
-  .fromTo("#heroPortraitCard", { opacity: 0, scale: 0.9, rotationY: 15 }, { opacity: 1, scale: 1, rotationY: 0, duration: 1 }, "-=0.8");
+// ── 6. PHASE 1: DIRECTIONAL SCROLL STORYTELLING (GSAP MATCHMEDIA) ─────
+const mm = gsap.matchMedia();
+
+mm.add("(min-width: 901px)", () => {
+  // 1. NeuralRAG: Directional Horizontal Scroll (Left → Right)
+  const nrTrack = document.getElementById('nrTrack');
+  const nrCue = document.getElementById('nrCue');
+  
+  if (nrTrack) {
+    const nrScrollLength = () => nrTrack.scrollWidth - window.innerWidth;
+    
+    gsap.to(nrTrack, {
+      x: () => -nrScrollLength(),
+      ease: "none",
+      scrollTrigger: {
+        trigger: "#neuralrag-pin",
+        start: "top top",
+        end: () => `+=${nrScrollLength() + 300}`,
+        pin: true,
+        scrub: 1,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          if (nrCue && self.progress > 0.05) {
+            gsap.to(nrCue, { opacity: 0, duration: 0.3 });
+          } else if (nrCue && self.progress <= 0.05) {
+            gsap.to(nrCue, { opacity: 0.8, duration: 0.3 });
+          }
+        }
+      }
+    });
+  }
+
+  // 2. GuardWAF: Reverse Directional Horizontal Scroll (Right → Left)
+  const gwafTrack = document.getElementById('gwafTrack');
+  const gwafCue = document.getElementById('gwafCue');
+  
+  if (gwafTrack) {
+    const gwafScrollLength = () => gwafTrack.scrollWidth - window.innerWidth;
+    
+    gsap.fromTo(gwafTrack,
+      { x: () => -gwafScrollLength() },
+      {
+        x: 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#guardwaf-pin",
+          start: "top top",
+          end: () => `+=${gwafScrollLength() + 300}`,
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            if (gwafCue && self.progress > 0.05) {
+              gsap.to(gwafCue, { opacity: 0, duration: 0.3 });
+            } else if (gwafCue && self.progress <= 0.05) {
+              gsap.to(gwafCue, { opacity: 0.8, duration: 0.3 });
+            }
+          }
+        }
+      }
+    );
+  }
+});
 
 // SVG Timeline progress beam
 const timelineContainer = document.getElementById('timelineContainer');
@@ -3872,34 +2862,7 @@ if (timelineContainer && timelineBeam) {
   });
 }
 
-// Active Nav highlight based on viewport section
-document.querySelectorAll('section[id]').forEach(sec => {
-  ScrollTrigger.create({
-    trigger: sec,
-    start: "top center",
-    end: "bottom center",
-    onToggle: (self) => {
-      if (self.isActive) {
-        document.querySelectorAll('.nav-links a').forEach(a => {
-          a.classList.toggle('active', a.getAttribute('href') === '#' + sec.id);
-        });
-      }
-    }
-  });
-});
-
-// Animate build progress bars on scroll
-document.querySelectorAll('.build-progress-bar').forEach(bar => {
-  ScrollTrigger.create({
-    trigger: bar,
-    start: "top 90%",
-    onEnter: () => {
-      bar.style.width = bar.dataset.w || '50%';
-    }
-  });
-});
-
-// ── 6. GSAP MAGNETIC BUTTONS ─────────────────────────────────────────
+// ── 7. GSAP MAGNETIC BUTTONS ─────────────────────────────────────────
 document.querySelectorAll('.btn-primary, .btn-ghost, .btn-teal, .submit-btn').forEach(btn => {
   const setX = gsap.quickTo(btn, "x", { duration: 0.3, ease: "power2.out" });
   const setY = gsap.quickTo(btn, "y", { duration: 0.3, ease: "power2.out" });
@@ -3918,7 +2881,7 @@ document.querySelectorAll('.btn-primary, .btn-ghost, .btn-teal, .submit-btn').fo
   });
 });
 
-// ── 7. TYPING ANIMATION (HERO SUBTITLE) ───────────────────────────────
+// ── 8. TYPING ANIMATION (HERO SUBTITLE) ───────────────────────────────
 const phrases = [
   'architect RAG pipelines.',
   'build agentic AI systems.',
@@ -3949,26 +2912,26 @@ function type() {
     }
   }
 }
-setTimeout(type, 1800);
+setTimeout(type, 1500);
 
-// ── 8. MARQUEE CONTENT POPULATION ────────────────────────────────────
+// ── 9. MARQUEE CONTENT POPULATION ────────────────────────────────────
 const tags = ['Python', 'LangGraph', 'LangChain', 'OpenAI GPT-4o', 'ChromaDB', 'RAG', 'BERT', 'PyTorch', 'TensorFlow', 'Streamlit', 'Flask', 'SQL', 'Vector Search', 'Agentic AI', 'NLP', 'GenAI', 'Deep Learning', 'Scikit-Learn', 'AWS ECS', 'Docker'];
 const mHTML = tags.map(t => `<span class="m-item"><span class="m-dot"></span>${t}</span>`).join('');
 document.getElementById('mtrack').innerHTML = mHTML + mHTML;
 
-// ── 9. NEURALRAG ARCHITECTURE CANVAS ────────────────────────────────
+// ── 10. NEURALRAG ARCHITECTURE CANVAS ────────────────────────────────
 const ac = document.getElementById('archCanvas');
 if (ac) {
   const ax = ac.getContext('2d');
-  const W = 480, H = 280;
+  const W = 600, H = 260;
   ac.width = W; ac.height = H;
   const nodes = [
-    { x: 240, y: 40, label: 'User Query', color: '#f59e0b', r: 22 },
-    { x: 90, y: 120, label: 'Router\nAgent', color: '#818cf8', r: 26 },
-    { x: 240, y: 120, label: 'ChromaDB\nRetrieval', color: '#2dd4bf', r: 26 },
-    { x: 390, y: 120, label: 'Web\nSearch', color: '#2dd4bf', r: 26 },
-    { x: 240, y: 205, label: 'Reranker', color: '#fb7185', r: 22 },
-    { x: 240, y: 270, label: 'GPT-4o\nGenerate', color: '#34d399', r: 26 },
+    { x: 300, y: 35, label: 'User Query', color: '#f59e0b', r: 20 },
+    { x: 120, y: 110, label: 'Router Agent', color: '#818cf8', r: 24 },
+    { x: 300, y: 110, label: 'ChromaDB 1536-d', color: '#2dd4bf', r: 24 },
+    { x: 480, y: 110, label: 'Web Search', color: '#2dd4bf', r: 24 },
+    { x: 300, y: 185, label: 'Cosine Reranker', color: '#fb7185', r: 20 },
+    { x: 300, y: 245, label: 'GPT-4o Synthesis', color: '#34d399', r: 24 },
   ];
   const edges = [[0,1],[1,2],[1,3],[2,4],[3,4],[4,5]];
   let at = 0;
@@ -4005,40 +2968,44 @@ if (ac) {
       ax.lineWidth = 1.5;
       ax.stroke();
 
-      const lines = n.label.split('\n');
       ax.fillStyle = n.color;
-      ax.font = 'bold 10px JetBrains Mono, monospace';
+      ax.font = 'bold 9px JetBrains Mono, monospace';
       ax.textAlign = 'center';
       ax.textBaseline = 'middle';
-      if (lines.length === 1) {
-        ax.fillText(lines[0], n.x, n.y);
-      } else {
-        ax.fillText(lines[0], n.x, n.y - 6);
-        ax.fillText(lines[1], n.x, n.y + 7);
-      }
+      ax.fillText(n.label, n.x, n.y);
     });
     requestAnimationFrame(drawArch);
   }
   drawArch();
 }
 
-// ── 10. QFLOW (NEURALRAG LIVE INTERACTIVE QUERY PIPELINE) ─────────────
+// ── 11. QFLOW (NEURALRAG LIVE QUERY PIPELINE & TELEMETRY STREAM) ──────
 const qOutputs = {
-  medical: ['Routing to: document retrieval + medical knowledge base', 'Searching ChromaDB: 2,847 medical chunks indexed → top-5 retrieved', 'Cosine scores: 0.91, 0.88, 0.86, 0.82, 0.79 — reranked by relevance', 'GPT-4o generating grounded response with citations...'],
-  rag: ['Routing to: technical knowledge base retrieval', 'Searching ChromaDB: 1,203 AI/ML chunks → top-5 retrieved', 'Cosine scores: 0.94, 0.91, 0.88, 0.83, 0.80 — all above threshold', 'GPT-4o synthesizing explanation with source attribution...'],
-  default: ['Analyzing query intent with LLM router...', 'Searching ChromaDB vector store → top-5 chunks retrieved by cosine similarity', 'Reranking by relevance score — filtering low-confidence chunks', 'GPT-4o generating context-aware response...'],
+  medical: ['Routing to: medical knowledge base', 'Searching ChromaDB: 2,847 medical chunks indexed → top-5 retrieved', 'Cosine scores: 0.91, 0.88, 0.86, 0.82, 0.79 — reranked', 'GPT-4o generating grounded response with citations...'],
+  rag: ['Routing to: AI/ML engineering knowledge base', 'Searching ChromaDB: 1,203 AI/ML chunks → top-5 retrieved', 'Cosine scores: 0.94, 0.91, 0.88, 0.83, 0.80 — threshold passed', 'GPT-4o synthesizing grounded answer with citations...'],
+  default: ['Analyzing query intent with LLM router...', 'Searching ChromaDB vector store → top-5 chunks retrieved', 'Reranking by relevance score', 'GPT-4o generating context-aware response...'],
 };
 const qAnswers = {
-  medical: `Based on the retrieved medical literature:\n\nDiabetes presents with: polyuria (frequent urination), polydipsia (excessive thirst), unexplained weight loss, fatigue, and blurred vision. Type 1 diabetes may have rapid onset; Type 2 is often gradual.\n\n<span class="source-chip">📄 MedDB chunk #2847</span><span class="source-chip">📄 WHO Guidelines 2023</span><span class="source-chip">📄 Clinical Manual §4.2</span>`,
-  rag: `RAG (Retrieval Augmented Generation) works in 4 stages:\n\n1. Query is embedded into a vector (1536-d)\n2. ChromaDB finds top-k semantically similar chunks\n3. Chunks are reranked by relevance\n4. An LLM generates a grounded answer with citations\n\n<span class="source-chip">📄 Lewis et al. 2020</span><span class="source-chip">📄 NeuralRAG docs</span>`,
-  default: `Based on the retrieved context from ChromaDB (top-5 chunks, avg similarity 0.87):\n\nI found relevant information across multiple indexed sources. The LangGraph router classified this as a general knowledge query and retrieved the most semantically similar passages.\n\n<span class="source-chip">📄 Source chunk #1</span><span class="source-chip">📄 Source chunk #3</span><span class="source-chip">📄 Source chunk #5</span>`,
+  medical: `Based on retrieved medical literature:\n\nDiabetes presents with: polyuria, polydipsia, unexplained weight loss, and fatigue.\n\n<span class="source-chip">📄 MedDB chunk #2847</span><span class="source-chip">📄 WHO Guidelines 2023</span>`,
+  rag: `RAG (Retrieval Augmented Generation) operates in 4 stages:\n\n1. Query vector embedding (1536-d)\n2. ChromaDB semantic search\n3. Cosine reranking\n4. Grounded GPT-4o synthesis\n\n<span class="source-chip">📄 Lewis et al. 2020</span><span class="source-chip">📄 NeuralRAG docs</span>`,
+  default: `Context retrieved from ChromaDB (top-5 chunks, avg similarity 0.88):\n\nQuery processed by LangGraph router and synthesized by GPT-4o with verifiable citations.\n\n<span class="source-chip">📄 Source chunk #1</span><span class="source-chip">📄 Source chunk #2</span>`,
 };
 
 function getQtype(q) {
   const ql = q.toLowerCase();
-  if (ql.includes('diabet') || ql.includes('symptom') || ql.includes('medical') || ql.includes('health')) return 'medical';
-  if (ql.includes('rag') || ql.includes('retriev') || ql.includes('embed') || ql.includes('vector')) return 'rag';
+  if (ql.includes('diabet') || ql.includes('symptom') || ql.includes('medical')) return 'medical';
+  if (ql.includes('rag') || ql.includes('retriev') || ql.includes('vector')) return 'rag';
   return 'default';
+}
+
+function appendTelemetryLog(msg) {
+  const box = document.getElementById('nrTelemetryLog');
+  if (!box) return;
+  const time = new Date().toTimeString().split(' ')[0];
+  const div = document.createElement('div');
+  div.innerHTML = `<span class="log-time">[${time}]</span> <span class="log-act">${msg}</span>`;
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
 }
 
 function resetSteps() {
@@ -4060,6 +3027,8 @@ function runQflow() {
   const qtype = getQtype(q);
   const msgs = qOutputs[qtype];
   resetSteps();
+  appendTelemetryLog(`QUERY RECEIVED: "${q}"`);
+
   const steps = [1, 2, 3, 4];
   steps.forEach((step, idx) => {
     setTimeout(() => {
@@ -4068,6 +3037,8 @@ function runQflow() {
       const s = document.getElementById('qs' + step + '-s');
       s.textContent = msgs[idx];
       s.className = 'qflow-step-status running';
+      appendTelemetryLog(msgs[idx]);
+
       if (idx > 0) {
         const prev = document.getElementById('qs' + (step - 1));
         prev.classList.remove('active');
@@ -4081,18 +3052,19 @@ function runQflow() {
           el.classList.add('done');
           s.className = 'qflow-step-status done';
           s.textContent = 'Response generated ✓';
+          appendTelemetryLog('RESPONSE GROUNDED & VERIFIED ✓');
           const out = document.getElementById('qflow-out');
           out.style.display = 'block';
-          out.innerHTML = `<div style="font-family:var(--mono);font-size:10px;color:var(--teal);letter-spacing:1px;margin-bottom:10px">// NEURALRAG RESPONSE</div>${qAnswers[qtype]}`;
+          out.innerHTML = `<div style="font-family:var(--mono);font-size:10px;color:var(--teal);letter-spacing:1px;margin-bottom:10px">// NEURALRAG GROUNDED RESPONSE</div>${qAnswers[qtype]}`;
           gsap.fromTo(out, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.4 });
         }, 600);
       }
-    }, idx * 800);
+    }, idx * 750);
   });
 }
 document.getElementById('qflow-q')?.addEventListener('keydown', e => { if (e.key === 'Enter') runQflow(); });
 
-// ── 11. GUARDWAF SIMULATOR ───────────────────────────────────────────
+// ── 12. GUARDWAF SIMULATOR ───────────────────────────────────────────
 function simGuardWAF(type) {
   const nodes = [1, 2, 3, 4, 5, 6].map(i => document.getElementById('gn' + i));
   const statusEl = document.getElementById('gwafStatus');
@@ -4104,9 +3076,10 @@ function simGuardWAF(type) {
       setTimeout(() => {
         nodes[idx].classList.add('active');
         if (i === 5) {
-          statusEl.innerHTML = `<span>Status: <strong style="color:var(--green)">✓ 200 OK — AUTHORIZED & EXECUTED</strong></span><span>Latency: 0.42ms · Threat: None</span>`;
+          statusEl.innerHTML = `<span>Status: <strong style="color:var(--green)">✓ 200 OK — AUTHORIZED & EXECUTED</strong></span><span>Latency: 0.38ms · Threat: None</span>`;
+          showToast('GuardWAF: 200 OK Authorized & Executed ✓');
         }
-      }, i * 250);
+      }, i * 220);
     });
   } else if (type === 'loop') {
     statusEl.innerHTML = `<span>Status: <strong style="color:var(--amber)">INSPECTING AGENT CALL FREQUENCY...</strong></span><span>Calls: 48/sec</span>`;
@@ -4117,7 +3090,7 @@ function simGuardWAF(type) {
           statusEl.innerHTML = `<span>Status: <strong style="color:var(--rose)">🛑 429 BLOCKED — RATE LIMIT TRIGGERED (Runaway Loop Halted)</strong></span><span>Action: Cooldown active</span>`;
           showToast('GuardWAF: Runaway Loop Intercepted & Halted 🛡️');
         }
-      }, i * 300);
+      }, i * 260);
     });
   } else if (type === 'sqli') {
     statusEl.innerHTML = `<span>Status: <strong style="color:var(--amber)">SCANNING PAYLOAD SYNTAX...</strong></span><span>Deep Inspection</span>`;
@@ -4128,12 +3101,12 @@ function simGuardWAF(type) {
           statusEl.innerHTML = `<span>Status: <strong style="color:var(--rose)">🚫 403 FORBIDDEN — SQL INJECTION ATTEMPT NEUTRALIZED</strong></span><span>Threat: Critical · OWASP Top 10</span>`;
           showToast('GuardWAF: Malicious SQL Query Blocked 🛡️');
         }
-      }, i * 300);
+      }, i * 260);
     });
   }
 }
 
-// ── 12. PROJECT ACCORDION & FILTERING ────────────────────────────────
+// ── 13. PROJECT ACCORDION & FILTERING ────────────────────────────────
 function toggleProj(n) {
   const d = document.getElementById('pd' + n);
   const isOpen = d.classList.contains('open');
@@ -4166,28 +3139,23 @@ function filterProjects(cat, btn) {
   });
 }
 
-// ── 13. SKILLS NEURAL MAP CANVAS ─────────────────────────────────────
+// ── 14. SKILLS NEURAL MAP CANVAS ─────────────────────────────────────
 const bc = document.getElementById('brainCanvas');
 if (bc) {
   const bx = bc.getContext('2d');
   const skills = [
-    { id: 0, x: 0.5, y: 0.5, label: 'AI CORE', desc: 'The center of everything. Python-first AI system builder.', size: 34, color: '#f59e0b', core: true, projects: ['All Projects'] },
+    { id: 0, x: 0.5, y: 0.5, label: 'AI CORE', desc: 'Python-first AI system builder.', size: 34, color: '#f59e0b', core: true, projects: ['All Projects'] },
     { id: 1, x: 0.2, y: 0.22, label: 'Python', desc: 'Primary language. 2+ years production build.', size: 22, color: '#818cf8', projects: ['All'] },
     { id: 2, x: 0.8, y: 0.22, label: 'LangChain', desc: 'LLM chains, tools, memory, structured outputs.', size: 22, color: '#2dd4bf', projects: ['NeuralRAG', 'Medical Bot', 'Search Engine'] },
-    { id: 3, x: 0.14, y: 0.5, label: 'ML/DL', desc: 'Supervised, unsupervised, neural nets, embeddings.', size: 22, color: '#818cf8', projects: ['Speech Emotion', 'NeuralRAG'] },
+    { id: 3, x: 0.14, y: 0.5, label: 'ML/DL', desc: 'Neural nets & embeddings.', size: 22, color: '#818cf8', projects: ['Speech Emotion', 'NeuralRAG'] },
     { id: 4, x: 0.86, y: 0.5, label: 'OpenAI', desc: 'GPT-4o, embeddings, function calling.', size: 22, color: '#2dd4bf', projects: ['NeuralRAG', 'Medical Bot'] },
     { id: 5, x: 0.2, y: 0.78, label: 'RAG', desc: 'Full RAG stack: chunking → embed → retrieve → generate.', size: 24, color: '#f59e0b', projects: ['NeuralRAG', 'Search Engine'] },
     { id: 6, x: 0.5, y: 0.14, label: 'LangGraph', desc: 'Stateful agentic pipelines. My specialization.', size: 22, color: '#f59e0b', projects: ['NeuralRAG'] },
     { id: 7, x: 0.8, y: 0.78, label: 'ChromaDB', desc: 'Vector store, cosine similarity, top-k retrieval.', size: 20, color: '#2dd4bf', projects: ['NeuralRAG'] },
     { id: 8, x: 0.5, y: 0.86, label: 'BERT/NLP', desc: 'Transformers, embeddings, classification.', size: 20, color: '#818cf8', projects: ['Speech Emotion'] },
-    { id: 9, x: 0.36, y: 0.3, label: 'PyTorch', desc: 'Deep learning research & training.', size: 18, color: '#818cf8', projects: ['Speech Emotion'] },
-    { id: 10, x: 0.64, y: 0.3, label: 'Streamlit', desc: 'Rapid AI app deployment.', size: 18, color: '#f59e0b', projects: ['NeuralRAG', 'Medical Bot'] },
-    { id: 11, x: 0.36, y: 0.7, label: 'Flask', desc: 'REST API for AI model serving.', size: 18, color: '#f59e0b', projects: ['Search Engine'] },
-    { id: 12, x: 0.64, y: 0.7, label: 'CNN', desc: 'Convolutional nets for audio/image spectral data.', size: 18, color: '#2dd4bf', projects: ['Speech Emotion'] },
-    { id: 13, x: 0.12, y: 0.35, label: 'AWS ECS', desc: 'Cloud containers & serverless Fargate deployments.', size: 16, color: '#475569', projects: ['GuardWAF'] },
-    { id: 14, x: 0.88, y: 0.65, label: 'GitHub', desc: 'Version control, open source pipelines.', size: 16, color: '#475569', projects: ['All Projects'] },
+    { id: 9, x: 0.12, y: 0.35, label: 'AWS ECS', desc: 'Cloud containers & serverless Fargate deployments.', size: 16, color: '#475569', projects: ['GuardWAF'] },
   ];
-  const edges = [[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8],[1,3],[1,9],[2,4],[2,5],[2,7],[2,10],[4,7],[5,7],[5,8],[6,2],[8,12],[3,9],[3,12],[10,11],[13,1],[14,1]];
+  const edges = [[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8],[1,3],[2,4],[2,5],[2,7],[4,7],[5,7],[5,8],[6,2],[9,1]];
   let hovSk = null, bAnim = 0;
 
   function resizeBrain() {
@@ -4269,9 +3237,8 @@ if (bc) {
   resizeBrain();
   drawBrain();
 
-  // Skill legend
   const legendEl = document.getElementById('skill-legend');
-  [['#f59e0b','Core / RAG / Frameworks'],['#818cf8','ML / Deep Learning'],['#2dd4bf','GenAI / Vector DB'],['#475569','Tools / Infrastructure']].forEach(([c,l]) => {
+  [['#f59e0b','Core / RAG / Frameworks'],['#818cf8','ML / Deep Learning'],['#2dd4bf','GenAI / Vector DB'],['#475569','Tools / Cloud']].forEach(([c,l]) => {
     const d = document.createElement('div');
     d.style.cssText = `display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:.5px`;
     d.innerHTML = `<span style="width:10px;height:10px;border-radius:50%;background:${c};box-shadow:0 0 8px ${c}"></span>${l}`;
@@ -4279,7 +3246,7 @@ if (bc) {
   });
 }
 
-// ── 14. CERTIFICATIONS FILTER & MODAL ────────────────────────────────
+// ── 15. CERTIFICATIONS FILTER & MODAL ────────────────────────────────
 function filterCerts(cat, btn) {
   document.querySelectorAll('.cert-tab').forEach(t => t.classList.remove('active'));
   if (btn) btn.classList.add('active');
@@ -4325,7 +3292,7 @@ function closeCertModal(e) {
   modal.classList.remove('open');
 }
 
-// ── 15. RAG SIMULATOR LOGIC ──────────────────────────────────────────
+// ── 16. RAG SIMULATOR LOGIC ──────────────────────────────────────────
 function updateRagSim() {
   const topk = parseInt(document.getElementById('sl-topk').value);
   const thresh = parseFloat(document.getElementById('sl-thresh').value);
@@ -4339,44 +3306,34 @@ function updateRagSim() {
   document.getElementById('rag-sim-out').textContent = `Latency: ~${estLatency}ms | Precision: ${estPrecision}%`;
 }
 
-// ── 16. THEME SWITCHER ───────────────────────────────────────────────
+// ── 17. THEME SWITCHER ───────────────────────────────────────────────
 function setTheme(name) {
   document.querySelectorAll('.theme-dot').forEach(d => d.classList.remove('active'));
   const root = document.documentElement;
   if (name === 'amber') {
     root.style.setProperty('--amber', '#f59e0b');
-    root.style.setProperty('--amber2', '#d97706');
-    root.style.setProperty('--amber3', '#fbbf24');
     root.style.setProperty('--borderA', 'rgba(245,158,11,0.25)');
-    themeColorHex = 0xf59e0b;
-    showToast('Theme set to Warm Amber 🟠');
+    showToast('Theme: Warm Amber 🟠');
   } else if (name === 'teal') {
     root.style.setProperty('--amber', '#2dd4bf');
-    root.style.setProperty('--amber2', '#14b8a6');
-    root.style.setProperty('--amber3', '#5eead4');
     root.style.setProperty('--borderA', 'rgba(45,212,191,0.25)');
-    themeColorHex = 0x2dd4bf;
-    showToast('Theme set to Cyber Teal 🌐');
+    showToast('Theme: Cyber Teal 🌐');
   } else if (name === 'violet') {
     root.style.setProperty('--amber', '#a855f7');
-    root.style.setProperty('--amber2', '#9333ea');
-    root.style.setProperty('--amber3', '#c084fc');
     root.style.setProperty('--borderA', 'rgba(168,85,247,0.25)');
-    themeColorHex = 0xa855f7;
-    showToast('Theme set to Neon Violet 💜');
+    showToast('Theme: Neon Violet 💜');
   }
 }
 
-// ── 17. NOVA AI CHATBOT SYSTEM ───────────────────────────────────────
+// ── 18. NOVA AI CHATBOT ──────────────────────────────────────────────
 const novaKB = {
-  neuralrag: `NeuralRAG is Aadhidharmar's flagship agentic system:\n\n🌐 **Live App**: https://neuralrag.streamlit.app/\n🔗 **LangGraph Router** — 4-node state machine (router → retrieve → rerank → generate)\n📚 **ChromaDB Vector DB** — 1536-dim embeddings with cosine similarity\n🤖 **GPT-4o Reasoning** — grounded context generation with source citations\n⚡ **<800ms Latency** — end-to-end performance\n\nDeployed live on Streamlit Cloud!`,
-  guardwaf: `🛡️ **GuardWAF — Enterprise AI Agent Guardrail Gateway**:\n\n🌐 **Live AWS Proxy**: http://43.205.239.119:8000/static/index.html\n⚡ **Sub-Millisecond Reverse Proxy** — real-time HTTP payload inspection\n🧠 **ML Anomaly Engine** — flags OWASP Top 10 exploits & malicious parameters\n📊 **Risk Engine & HITL** — automated rate limiting + Human-in-the-Loop approval dashboard\n🔧 **Tech**: AWS ECS Fargate, Docker, Python, FastAPI, PostgreSQL, PyTorch`,
-  architecture: `🏗️ **System Architecture Overview**:\n\n1. **NeuralRAG Flow**: Query → LangGraph Router → ChromaDB Vector Retrieval → Cosine Reranker → GPT-4o Generation.\n2. **GuardWAF Gateway Flow**: LLM Agent Tool Request → Reverse Proxy Inspector → Sliding-Window Rate Limiter → YAML Policy Validation → PostgreSQL Audit Log → Execution Authorization.\n3. **Deployments**: AWS ECS Fargate, Streamlit Cloud, Render.`,
-  skills: `Core Technical Stack:\n\n🧠 **AI/ML**: Python, PyTorch, TensorFlow, Scikit-Learn, LibROSA, BERT\n🔗 **GenAI & Agents**: LangGraph, LangChain, OpenAI GPT-4o, Groq API\n📚 **Vector Search & RAG**: ChromaDB, Cosine Retrieval, RAGAS Eval\n🛡️ **AI Security**: GuardWAF, Reverse Proxies, OWASP Top 10, HITL Workflows\n🚀 **Cloud & DevOps**: AWS ECS Fargate, Docker, FastAPI, Flask, Render, Streamlit, PostgreSQL`,
-  hire: `Why Hire Aadhidharmar:\n\n⚡ **Production Builder** — 5 shipped systems (NeuralRAG deployed live, GuardWAF live on AWS)\n🧠 **RAG & AI Security Specialist** — rare depth in stateful graphs & proxy security\n🏆 **Hackathon Proven** — 15th place out of hundreds of teams at VIT Hackathon\n📈 **Active Focus** — Autonomous Multi-Agent Swarms & LoRA Fine-Tuning\n🎯 **Graduating 2027** — Available for AI Engineering roles`,
-  building: `Currently Building:\n\n🤖 **Autonomous Multi-Agent Swarms** — LangGraph supervisor patterns\n🔄 **Self-Correcting Reflection Loops** — automated query re-evaluation graphs\n📊 **RAGAS Automated Evaluation** — precision & recall scoring pipelines\n🛡️ **GuardWAF AWS Telemetry** — real-time threat map & SSE rate limiting`,
+  neuralrag: `NeuralRAG is Aadhidharmar's flagship agentic system:\n\n🌐 **Live App**: https://neuralrag.streamlit.app/\n🔗 **LangGraph Router** — 4-node state machine\n📚 **ChromaDB Vector DB** — 1536-dim embeddings\n🤖 **GPT-4o Reasoning** — grounded context with citations\n⚡ **<800ms Latency**`,
+  guardwaf: `🛡️ **GuardWAF — Enterprise AI Agent Guardrail Gateway**:\n\n🌐 **Live AWS Proxy**: http://43.205.239.119:8000/static/index.html\n⚡ **Sub-Millisecond Reverse Proxy**\n🧠 **ML Anomaly Engine**\n📊 **Risk Engine & HITL**\n🔧 **Tech**: AWS ECS Fargate, Docker, FastAPI, PostgreSQL`,
+  architecture: `🏗️ **System Architecture Overview**:\n\n1. **NeuralRAG Flow**: Query → LangGraph Router → ChromaDB Vector Retrieval → Cosine Reranker → GPT-4o Generation.\n2. **GuardWAF Gateway Flow**: Tool Request → Reverse Proxy → Sliding-Window Rate Limiter → YAML Policy Engine → PostgreSQL Audit → Target API.`,
+  skills: `Core Technical Stack:\n\n🧠 **AI/ML**: Python, PyTorch, TensorFlow, Scikit-Learn, BERT\n🔗 **GenAI & Agents**: LangGraph, LangChain, OpenAI GPT-4o\n📚 **Vector Search & RAG**: ChromaDB, Cosine Retrieval\n🛡️ **AI Security**: GuardWAF, Reverse Proxies, OWASP Top 10, HITL Workflows\n🚀 **Cloud & DevOps**: AWS ECS Fargate, Docker, FastAPI, Render, Streamlit`,
+  hire: `Why Hire Aadhidharmar:\n\n⚡ **Production Builder** — 5 shipped systems\n🧠 **RAG & AI Security Specialist** — stateful graphs & proxy security\n🏆 **Hackathon Proven** — 15th place at VIT Hackathon\n🎯 **Graduating 2027** — Available for AI Engineering roles`,
   contact: `Reach Aadhidharmar Directly:\n\n📧 dharmaraadhi@gmail.com\n📱 +91 6380072080\n⚡ github.com/Aadhidharmar001\n💼 linkedin.com/in/aadhi-dharmar-a35679293`,
-  resume: `📄 **Resume Access**:\n\nYou can download the complete PDF resume directly by clicking below or typing **/resume**!\n\n👉 [Download Resume PDF](assets/Aadhi_Dharmar_AI_Engineer_Resume.pdf)`
+  resume: `📄 **Resume Access**:\n\n👉 [Download Resume PDF](assets/Aadhi_Dharmar_AI_Engineer_Resume.pdf)`
 };
 
 function getNovaResp(q) {
@@ -4386,22 +3343,14 @@ function getNovaResp(q) {
     window.open('assets/Aadhi_Dharmar_AI_Engineer_Resume.pdf', '_blank'); 
     return "Downloading Aadhidharmar's Resume PDF! 📄"; 
   }
-  if (ql.startsWith('/theme') || ql.includes('theme')) {
-    if (ql.includes('teal')) setTheme('teal');
-    else if (ql.includes('violet')) setTheme('violet');
-    else setTheme('amber');
-    return "Updated UI Color Palette! 🎨";
-  }
   if (ql.includes('guardwaf') || ql.includes('waf') || ql.includes('security')) return novaKB.guardwaf;
   if (ql.includes('neuralrag') || ql.includes('rag') || ql.includes('langgraph')) return novaKB.neuralrag;
   if (ql.includes('arch') || ql.includes('flow')) return novaKB.architecture;
   if (ql.includes('skill') || ql.includes('tech') || ql.includes('stack')) return novaKB.skills;
   if (ql.includes('hire') || ql.includes('why') || ql.includes('recruit')) return novaKB.hire;
-  if (ql.includes('build') || ql.includes('now') || ql.includes('current')) return novaKB.building;
   if (ql.includes('contact') || ql.includes('email') || ql.includes('phone')) return novaKB.contact;
   if (ql.includes('resume') || ql.includes('cv') || ql.includes('pdf')) return novaKB.resume;
-  if (ql.includes('hello') || ql.includes('hi')) return "Hey! 👋 I'm NOVA — Aadhidharmar's personal AI agent. Ask me about NeuralRAG, GuardWAF AWS proxy, architecture, or why to hire him!";
-  return `Great question! Aadhidharmar specializes in RAG, Agentic AI, and AI Security. He architected NeuralRAG (Streamlit live) and GuardWAF (AWS ECS live). Try asking "Tell me about GuardWAF", "Architecture", or "Why hire him?" 💡`;
+  return `Great question! Aadhidharmar specializes in RAG, Agentic AI, and AI Security. Try asking about "NeuralRAG", "GuardWAF AWS", or "Why hire him?" 💡`;
 }
 
 function toggleNova() { document.getElementById('novaPanel').classList.toggle('open'); }
@@ -4413,35 +3362,20 @@ function addNMsg(text, role) {
   m.appendChild(d);
   m.scrollTop = 99999;
 }
-function showTyping() {
-  const d = document.createElement('div');
-  d.className = 'nova-msg bot';
-  d.id = 'nova-typing';
-  d.innerHTML = '<span style="display:flex;gap:4px"><span style="width:5px;height:5px;border-radius:50%;background:var(--amber);animation:blink 1s .0s infinite"></span><span style="width:5px;height:5px;border-radius:50%;background:var(--amber);animation:blink 1s .2s infinite"></span><span style="width:5px;height:5px;border-radius:50%;background:var(--amber);animation:blink 1s .4s infinite"></span></span>';
-  const m = document.getElementById('novaMsgs');
-  m.appendChild(d);
-  m.scrollTop = 99999;
-  return d;
-}
 function sendNova() {
   const inp = document.getElementById('novaInp');
   const q = inp.value.trim();
   if (!q) return;
   addNMsg(q, 'user');
   inp.value = '';
-  const t = showTyping();
-  setTimeout(() => { t.remove(); addNMsg(getNovaResp(q), 'bot'); }, 450 + Math.random() * 250);
+  setTimeout(() => { addNMsg(getNovaResp(q), 'bot'); }, 400);
 }
 function askNova(q) {
   addNMsg(q, 'user');
-  const t = showTyping();
-  setTimeout(() => { t.remove(); addNMsg(getNovaResp(q), 'bot'); }, 450 + Math.random() * 200);
+  setTimeout(() => { addNMsg(getNovaResp(q), 'bot'); }, 400);
 }
 
-// ── 18. TERMINAL SYSTEM ───────────────────────────────────────────────
-let cmdHistory = [];
-let cmdIdx = -1;
-
+// ── 19. TERMINAL SYSTEM ───────────────────────────────────────────────
 function openTerm() {
   document.getElementById('term-overlay').classList.add('open');
   setTimeout(() => document.getElementById('term-in').focus(), 80);
@@ -4456,152 +3390,57 @@ document.addEventListener('keydown', e => {
 
 const tcmds = {
   whoami: () => [
-    { c: 'to', t: '┌──────────────────────────────────────────────────────────┐' },
-    { c: 'to', t: '│  NAME:     Aadhidharmar T                                │' },
-    { c: 'to', t: '│  ROLE:     AI Product Builder · RAG Specialist            │' },
-    { c: 'to', t: '│  SPECIAL:  Stateful Agent Graphs & AI WAF Security Proxies │' },
-    { c: 'to', t: '│  EDU:      B.Tech AI & DS — Sri Shakthi Inst. (CGPA 7.23)│' },
-    { c: 'to', t: '│  GRADUATION: 2027                                        │' },
-    { c: 'to', t: '│  STATUS:   Available for AI Engineering Roles            │' },
-    { c: 'to', t: '│  CONTACT:  dharmaraadhi@gmail.com                        │' },
-    { c: 'to', t: '└──────────────────────────────────────────────────────────┘' }
-  ],
-  'show achievements': () => [
-    { c: 'ti', t: '🏆 VERIFIED RECEIPTS & DEPLOYMENTS LOG' },
-    { c: 'to', t: '[1] GuardWAF — Enterprise AI Security Gateway (AWS ECS Fargate Live)' },
-    { c: 'to', t: '[2] NeuralRAG — Stateful Agentic RAG System (Streamlit Live)' },
-    { c: 'to', t: '[3] Intelligent Search Engine — Grounded AI Search (Render Live)' },
-    { c: 'to', t: '[4] Speech Emotion Recognition — Dual-Stream Audio CNN + BERT' },
-    { c: 'to', t: '[5] VIT 24hr Hackathon — 15th Place Winner / AI Medical Diagnostic Chatbot' }
+    { c: 'to', t: 'NAME:     Aadhidharmar T' },
+    { c: 'to', t: 'ROLE:     AI Product Builder · RAG Specialist' },
+    { c: 'to', t: 'SPECIAL:  Stateful Agent Graphs & AI WAF Security Proxies' },
+    { c: 'to', t: 'STATUS:   Available for AI Engineering Roles' }
   ],
   'launch guardwaf': () => {
-    setTimeout(() => window.open('http://43.205.239.119:8000/static/index.html', '_blank'), 700);
-    return [
-      { c: 'to', t: '[BOOT] Initializing GuardWAF AWS ECS Security Proxy v1.2...' },
-      { c: 'to', t: '[OK]   Deep Packet Inspector ...... ✓' },
-      { c: 'to', t: '[OK]   PyTorch ML Anomaly Model Engine ...... ✓' },
-      { c: 'ti', t: '🛡️ GUARDWAF ONLINE. Redirecting to AWS ECS Live Proxy...' }
-    ];
+    setTimeout(() => window.open('http://43.205.239.119:8000/static/index.html', '_blank'), 600);
+    return [{ c: 'ti', t: '🛡️ GUARDWAF ONLINE. Redirecting to AWS ECS Live Proxy...' }];
   },
   'launch neuralrag': () => {
-    setTimeout(() => window.open('https://neuralrag.streamlit.app/', '_blank'), 700);
-    return [
-      { c: 'to', t: '[BOOT] Initializing NeuralRAG LangGraph Engine v1.0...' },
-      { c: 'to', t: '[OK]   LangGraph 4-Node State Graph Machine ...... ✓' },
-      { c: 'to', t: '[OK]   ChromaDB 1536-dim Vector Store Engine ...... ✓' },
-      { c: 'ti', t: '✅ NEURALRAG ONLINE. Launching Streamlit Cloud App...' }
-    ];
+    setTimeout(() => window.open('https://neuralrag.streamlit.app/', '_blank'), 600);
+    return [{ c: 'ti', t: '✅ NEURALRAG ONLINE. Launching Streamlit Cloud App...' }];
   },
-  architecture: () => [
-    { c: 'ti', t: '⚡ NEURALRAG AGENT GRAPH ARCHITECTURE:' },
-    { c: 'to', t: '[Query] ──> (LangGraph Router) ──> [ChromaDB Vector Store]' },
-    { c: 'to', t: '                                         │' },
-    { c: 'to', t: '[Response] <── (GPT-4o Synthesis) <── (Cosine Reranker)' }
+  help: () => [
+    { c: 'ti', t: 'COMMANDS: whoami, launch guardwaf, launch neuralrag, matrix, clear, exit' }
   ],
-  hire: () => [
-    { c: 'ti', t: 'WHY HIRE AADHIDHARMAR T.:' },
-    { c: 'to', t: '✦ SHIPS REAL SYSTEMS — NeuralRAG (Streamlit) & GuardWAF (AWS ECS) deployed live' },
-    { c: 'to', t: '✦ RAG & AI SECURITY SPECIALIST — Rare depth in stateful graphs & WAF proxies' },
-    { c: 'to', t: '✦ HACKATHON PROVEN — 15th place out of hundreds of teams at VIT Hackathon' }
-  ],
-  skills: () => [
-    { c: 'ti', t: 'CORE TECHNICAL STACK:' },
-    { c: 'to', t: '  AI/ML:      Python · PyTorch · TensorFlow · Scikit-Learn · BERT' },
-    { c: 'to', t: '  GenAI:      LangGraph · LangChain · OpenAI GPT-4o' },
-    { c: 'to', t: '  RAG & DB:   ChromaDB · Vector Search · Cosine Reranking' },
-    { c: 'to', t: '  AI Security:GuardWAF WAF Proxy · Rate Limiting · HITL Approvals' }
-  ],
-  'cat resume': () => [
-    { c: 'ti', t: '📄 RESUME SUMMARY — AADHIDHARMAR T.' },
-    { c: 'to', t: 'SUMMARY: B.Tech AI & DS student (CGPA 7.23, Graduating 2027)' },
-    { c: 'to', t: 'FOCUS:   Agentic RAG Workflows, AI Security Gateways, GenAI' },
-    { c: 'ti', t: 'Type "download resume" to fetch the official PDF file.' }
-  ],
-  'download resume': () => {
-    window.open('assets/Aadhi_Dharmar_AI_Engineer_Resume.pdf', '_blank');
-    return [{ c: 'ti', t: '📄 DOWNLOADING RESUME PDF... (Aadhi_Dharmar_AI_Engineer_Resume.pdf)' }];
-  },
   matrix: () => {
     const body = document.getElementById('termBody');
     body.innerHTML = '';
-    const chars = '01010101AADHIDHARMAR_AI_RAG_GUARDWAF_LANGGRAPH_NEURALRAG';
-    for (let i = 0; i < 12; i++) {
+    const chars = '01010101AADHIDHARMAR_AI_RAG_GUARDWAF';
+    for (let i = 0; i < 10; i++) {
       setTimeout(() => {
         let line = '';
-        for (let j = 0; j < 45; j++) line += chars[Math.floor(Math.random() * chars.length)];
+        for (let j = 0; j < 40; j++) line += chars[Math.floor(Math.random() * chars.length)];
         const d = document.createElement('div');
         d.className = 'tl';
         d.style.color = '#2dd4bf';
         d.textContent = line;
         body.appendChild(d);
         body.scrollTop = 99999;
-      }, i * 120);
+      }, i * 100);
     }
     return [];
   },
-  help: () => [
-    { c: 'ti', t: 'AVAILABLE TERMINAL COMMANDS:' },
-    { c: 'to', t: '  whoami, show achievements, skills, architecture, certs' },
-    { c: 'to', t: '  launch guardwaf, launch neuralrag, matrix, hire, cat resume' },
-    { c: 'to', t: '  download resume, theme <amber|teal|violet>, clear, exit' }
-  ],
   clear: () => 'CLEAR',
   exit: () => { closeTerm(); return []; }
 };
 
 function handleTerm(e) {
   const inp = document.getElementById('term-in');
-  if (e.key === 'ArrowUp') {
-    if (cmdHistory.length > 0) {
-      cmdIdx = Math.min(cmdIdx + 1, cmdHistory.length - 1);
-      inp.value = cmdHistory[cmdHistory.length - 1 - cmdIdx] || '';
-    }
-    e.preventDefault();
-    return;
-  }
-  if (e.key === 'ArrowDown') {
-    if (cmdIdx > 0) {
-      cmdIdx--;
-      inp.value = cmdHistory[cmdHistory.length - 1 - cmdIdx] || '';
-    } else {
-      cmdIdx = -1;
-      inp.value = '';
-    }
-    e.preventDefault();
-    return;
-  }
-  if (e.key === 'Tab') {
-    e.preventDefault();
-    const val = inp.value.trim().toLowerCase();
-    if (!val) return;
-    const matches = Object.keys(tcmds).filter(c => c.startsWith(val));
-    if (matches.length === 1) inp.value = matches[0];
-    return;
-  }
   if (e.key !== 'Enter') return;
   const rawCmd = inp.value.trim();
   const cmd = rawCmd.toLowerCase();
   inp.value = '';
-  cmdIdx = -1;
   if (!cmd) return;
-  cmdHistory.push(rawCmd);
 
   const body = document.getElementById('termBody');
   const pl = document.createElement('div');
   pl.className = 'tl';
   pl.innerHTML = `<span class="tp">aadhidharmar@ai:~$</span> ${rawCmd}`;
   body.appendChild(pl);
-
-  if (cmd.startsWith('theme ')) {
-    const themeName = cmd.replace('theme ', '').trim();
-    if (window.setTheme) setTheme(themeName);
-    const d = document.createElement('div');
-    d.className = 'tl ti';
-    d.textContent = `Palette updated to ${themeName}! 🎨`;
-    body.appendChild(d);
-    body.scrollTop = 99999;
-    return;
-  }
 
   const h = tcmds[cmd];
   if (h) {
@@ -4616,13 +3455,13 @@ function handleTerm(e) {
   } else {
     const d = document.createElement('div');
     d.className = 'tl te';
-    d.textContent = `command not found: '${cmd}'. Type 'help' for available commands.`;
+    d.textContent = `command not found: '${cmd}'. Type 'help'`;
     body.appendChild(d);
   }
   body.scrollTop = 99999;
 }
 
-// ── 19. CONTACT FORM & LIVE CLOCK ────────────────────────────────────
+// ── 20. CONTACT FORM & CLOCK ─────────────────────────────────────────
 function submitForm() {
   const n = document.getElementById('fn').value.trim();
   const e = document.getElementById('fe').value.trim();
@@ -4634,13 +3473,7 @@ function submitForm() {
   fetch('https://formsubmit.co/ajax/dharmaraadhi@gmail.com', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-    body: JSON.stringify({
-      name: n,
-      email: e,
-      message: m,
-      _subject: `New Portfolio Inquiry from ${n} (${e})`,
-      _template: 'table'
-    })
+    body: JSON.stringify({ name: n, email: e, message: m, _subject: `Portfolio Contact from ${n}` })
   }).then(r => r.json()).then(() => {
     document.getElementById('cform').style.display = 'none';
     document.getElementById('form-success').style.display = 'block';
@@ -4677,8 +3510,7 @@ tick();
     }).catch(() => {});
 })();
 
-console.log('%cAADHIDHARMAR.AI v3.0 Powered by GSAP · Lenis · Three.js', 'color:#f59e0b;font-family:monospace;font-size:16px;font-weight:bold');
-console.log('%cPress Ctrl+` to launch terminal', 'color:#2dd4bf;font-family:monospace;font-size:12px');
+console.log('%cAADHIDHARMAR.AI v3.1 Directional Scroll Storytelling', 'color:#f59e0b;font-family:monospace;font-size:16px;font-weight:bold');
 </script>
 </body>
 </html>
