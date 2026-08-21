@@ -93,6 +93,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* GSAP REVEAL BASE STYLES */
+.gsap-reveal {
+  will-change: transform, opacity;
+}
+
 /* CUSTOM CURSOR */
 #cur {
   position: fixed;
@@ -809,13 +814,59 @@ section {
   padding: 24px;
 }
 
+/* ── PERFORMANCE METRICS GRID (FIXED & POLISHED) ── */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 48px;
+  margin-top: 12px;
+}
+.metric-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 20px;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+.metric-card:hover {
+  border-color: rgba(45, 212, 191, 0.45);
+  transform: translateY(-4px);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(45, 212, 191, 0.18);
+}
+.metric-val {
+  font-family: var(--display);
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--teal);
+  margin-bottom: 8px;
+  line-height: 1.1;
+}
+.metric-name {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.metric-trend {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+  line-height: 1.4;
+}
+
 /* Interactive query flow */
 .qflow-wrap {
   background: var(--card2);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 32px;
-  margin-top: 32px;
+  margin-top: 16px;
 }
 .qflow-title {
   font-family: var(--mono);
@@ -1613,12 +1664,13 @@ section {
 .cert-img-wrap:hover img { transform: scale(1.06); }
 .cert-img-wrap:hover .cert-img-overlay { opacity: 1; }
 
+/* ── CERTIFICATE MODAL LIGHTBOX STYLES ── */
 .cert-modal-overlay {
   position: fixed;
   inset: 0;
   z-index: 99999;
   background: rgba(5, 6, 9, 0.88);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
   display: none;
   align-items: center;
   justify-content: center;
@@ -1637,7 +1689,7 @@ section {
   overflow-y: auto;
   position: relative;
   padding: 24px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(245, 158, 11, 0.2);
 }
 .cert-modal-close {
   position: absolute;
@@ -2169,7 +2221,7 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
   .hero-metrics { justify-content: center; gap: 16px; }
   .hero-profile-blend-wrap { max-width: 300px; margin: 0 auto; }
   .nr-hero, .contact-grid, .building-grid, .proj-detail-grid { grid-template-columns: 1fr; }
-  .cred-grid, .cert-grid, .principles-grid { grid-template-columns: 1fr 1fr; }
+  .cred-grid, .cert-grid, .principles-grid, .metrics-grid { grid-template-columns: 1fr 1fr; }
   .qflow-steps, .gwaf-pipeline-nodes { grid-template-columns: 1fr 1fr; gap: 10px; }
   .qflow-arrow { display: none; }
   .github-grid { grid-template-columns: repeat(2, 1fr); }
@@ -2177,7 +2229,7 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
   footer { flex-direction: column; gap: 12px; text-align: center; }
 }
 @media (max-width: 600px) {
-  .cred-grid, .cert-grid, .principles-grid { grid-template-columns: 1fr; }
+  .cred-grid, .cert-grid, .principles-grid, .metrics-grid { grid-template-columns: 1fr; }
   .nr-stats { grid-template-columns: 1fr 1fr; }
   .hero-name { letter-spacing: -1px; }
   .gwaf-pipeline-nodes { grid-template-columns: 1fr; }
@@ -2342,7 +2394,7 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
       </div>
     </div>
 
-    <!-- Performance Metrics -->
+    <!-- Performance Metrics (Polished Glass Grid) -->
     <div class="gsap-reveal">
       <div class="sec-tag">PERFORMANCE</div>
       <div class="metrics-grid">
@@ -3530,6 +3582,24 @@ footer p { color: var(--text3); font-family: var(--mono); font-size: 11px; }
   </div>
 </div>
 
+<!-- ═══════════ CERTIFICATE MODAL LIGHTBOX ═══════════ -->
+<div class="cert-modal-overlay" id="certModal" onclick="closeCertModal(event)">
+  <div class="cert-modal-content">
+    <button class="cert-modal-close" onclick="closeCertModal()" title="Close">&times;</button>
+    <div class="cert-modal-body">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:8px">
+        <h3 id="certModalTitle" style="font-family:var(--display);font-size:20px;font-weight:700;color:var(--text)">Certificate Preview</h3>
+        <span id="certModalBadge" class="cert-issuer-badge">Verified</span>
+      </div>
+      <img id="certModalImg" class="cert-modal-img" src="" alt="Certificate Preview">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding-top:12px;border-top:1px solid var(--border2)">
+        <span id="certModalMeta" style="font-family:var(--mono);font-size:11px;color:var(--text3)">Issued Date</span>
+        <button id="certModalCopyBtn" class="btn-sm btn-sm-a" style="font-size:11px">📋 Copy Credential Code</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ═══════════ MASTER JAVASCRIPT: GSAP + LENIS + THREE.JS ═══════════ -->
 <script>
 // Register GSAP Plugins
@@ -3704,7 +3774,7 @@ window.addEventListener('mousemove', (e) => {
   }
 });
 
-document.querySelectorAll('a, button, .proj-row, .build-card, .cred-card, .tl-item, .principle-card, .cert-card').forEach(el => {
+document.querySelectorAll('a, button, .proj-row, .build-card, .cred-card, .tl-item, .principle-card, .cert-card, .metric-card').forEach(el => {
   el.addEventListener('mouseenter', () => {
     gsap.to(cur, { scale: 2.2, duration: 0.2 });
     gsap.to(curR, { width: 54, height: 54, borderColor: "rgba(245, 158, 11, 0.8)", duration: 0.2 });
